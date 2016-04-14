@@ -1,5 +1,6 @@
 
-
+//temporales variables
+var PACIENTE = 1104;
 /**
 		var peticion='./guardar.php';
 		var metodo='POST';
@@ -353,7 +354,7 @@ function GetProcedurePaciente(){
 		type: "POST",
 		url:"./core/getProceduresPaciente.php",
 		dataType:'json',
-		data:{paciente:'1104'},
+		data:{paciente:PACIENTE},
 		error: function(jqXHR,estado,error){
 			
 			console.log(jqXHR);			
@@ -460,8 +461,5 @@ function PaintColorZoneDent( zone, resource, location ){
 		location += " .CervicalVestibularS ";
 
 	$(location).css("fill","#"+resource);
-	
-
-
 
 }
