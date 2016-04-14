@@ -1,0 +1,18 @@
+.figureFoot
+{
+	display: inline-block;
+	position: relative;
+	float: left;
+	vertical-align: top;
+	width: 29%;
+}
+.figureFoot svg
+{
+	width: 100%;
+}
+.figurePaintPoints
+{
+	fill:none;
+	stroke:red;
+	stroke-width:49.6621;
+}

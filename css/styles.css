@@ -1,0 +1,102 @@
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+@import url(http://fonts.googleapis.com/css?family=Orbitron:400,900);
+
+body
+{
+	font-size: 17px;
+	font-family: 'Open Sans', sans-serif;
+	background-color: rgb(240, 240, 240); 
+}
+
+h1
+{
+	width: 100%;
+
+}
+figure
+{
+	margin: 0 1%;
+}
+
+svg
+{
+	stroke:black;
+	stroke-width:89.1356;
+	fill:none;
+}
+
+
+svg g .dent1:hover
+{
+	fill:none;	
+}
+#diagnosticos .contentOneDent svg g .dent1
+{
+	/*fill: rgb(108,189,202);*/
+}
+
+#tratamientos .contentOneDent svg g .dent1
+{
+	fill: rgb(108,189,202);
+}
+#evolucion .contentOneDent svg g .dent1
+{
+	fill: rgb(108,189,202);
+}
+.contentOneDent
+{
+	width: 9%;
+}
+.textDent
+{
+	text-align: center;
+	font-size: 0.7em;
+}
+.ContentOdontograma
+{
+	width: 68%;
+}
+.contentProcedures
+{
+	margin-left: 0.1%;
+	width: 29%;
+}
+.ContentOdontograma .fileGroup
+{
+	width: 100%;
+}
+.ContentOdontograma .fileGroup .group
+{
+	display: inline-block;
+	vertical-align: top;
+	width: 47%;
+}
+.ContentOdontograma .group .subGroup
+{
+	width: 100%;
+}
+.ContentOdontograma .group .subGroup .contentOneDent
+{
+	vertical-align: top;
+	display: inline-block;
+}
+
+.ContentOdontograma .groupleft
+{
+	margin-right: 1%;
+
+}
+.ContentOdontograma .groupleft .subGroup .contentOneDent
+{
+	
+}
+.ContentOdontograma .groupRigth
+{
+	margin-left: 1%;
+}
+.ContentOdontograma, .contentProcedures
+{
+	display: inline-block;
+	vertical-align: top;
+}

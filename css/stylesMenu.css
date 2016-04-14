@@ -1,0 +1,18 @@
+.contentProcedures, .contentProcedures a
+{
+	font-size: 0.7em;
+}
+.panel-title .btn
+{
+	padding: 0.1em;
+	width: 100%;
+}
+.panel-heading
+{
+	padding: 0.2em;
+}
+.panel-heading i, .panel-heading h4
+{
+	display: inline-block;
+
+}
