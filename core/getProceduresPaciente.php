@@ -11,9 +11,9 @@
 
 	if( $paciente != '' ){
 
-		$sql = "SELECT d.Numero, pp.Zone, pp.Diagnostico, pp.Tipe, i.resource, i.Representacion
+		$sql = "SELECT d.Numero, pp.Zone, pp.Procedure, pp.Tipe, i.resource, i.Representacion
 				FROM pacienteprocedures pp, items i, dientes d
-				WHERE pp.Diente = d.Id AND pp.Diagnostico = i.Id AND pp.Paciente = $paciente";
+				WHERE pp.Diente = d.Id AND pp.Procedure = i.Id AND pp.Paciente = $paciente";
 
 		$result = BuscarDatos( $sql );
 

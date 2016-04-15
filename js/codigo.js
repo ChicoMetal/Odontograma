@@ -1,6 +1,7 @@
 
 //temporales variables
-var PACIENTE = 1104;
+var PACIENTE = '1104';
+var ZONE = '8';
 /**
 		var peticion='./guardar.php';
 		var metodo='POST';
@@ -50,6 +51,12 @@ var PROCEDURE_TIPE_TRATAMIENTO = 2;
 //representacion de un procedimiento
 var REPRESENTACION_COLOR = 1;
 var REPRESENTACION_GRAFICO = 2;
+
+//diente/cara seleccionado para ingresar procedimiento
+var DENT_SELECT_PROCEDURE = '';
+var FACE_SELECT_PROCEDURE = '';
+var SELECT_PROCEDURE = null;
+
 
 $(document).on("ready",function(){
 
@@ -326,7 +333,15 @@ function AddProcedures( result, parent ){
     $(".panel-collapse p").on("click", function(){
     //evento para agregar cada procedimiento de cada grupo
 
-    	alert("item");
+    	SELECT_PROCEDURE = $(this).attr('id');
+
+    	$(".contentOneDent").on("click", function(){
+    		var dent = $(this).attr('id');
+
+    		SaveProcedurePaciente( PACIENTE, dent, ZONE, SELECT_PROCEDURE);//TODO: verificar el uso del numero o codigo del diente
+
+    		SELECT_PROCEDURE = null;
+    	});
 
 	});
 
@@ -341,6 +356,36 @@ function GenerateItemProcedureCode(Id, name, codigo, representacion){
 				</div>";
 
 	return html;
+
+}
+
+function SaveProcedurePaciente(Paciente, Dent, Zone, Procedure ){
+//traer procedimientos asignados a un paciente
+
+	$.ajax({
+		beforeSend:function(){
+
+		},
+		type: "POST",
+		url:"./core/saveProcedurePaciente.php",
+		dataType:'json',
+		data:{paciente:Paciente, dent:Dent, zone: Zone, procedure:Procedure},
+		error: function(jqXHR,estado,error){
+			
+			console.log( jqXHR );			
+			
+		},
+
+		complete: function(jqXHR,estado){
+			
+			//var result = JSON.parse( jqXHR.responseText );
+
+			console.log( jqXHR );
+
+		},
+		setTimeout:10000
+
+	});
 
 }
 
