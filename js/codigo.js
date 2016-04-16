@@ -53,8 +53,8 @@ var REPRESENTACION_COLOR = 1;
 var REPRESENTACION_GRAFICO = 2;
 
 //diente/cara seleccionado para ingresar procedimiento
-var DENT_SELECT_PROCEDURE = '';
-var FACE_SELECT_PROCEDURE = '';
+var DENT_SELECT_PROCEDURE = null;
+var FACE_SELECT_PROCEDURE = null;
 var SELECT_PROCEDURE = null;
 
 
@@ -86,6 +86,8 @@ function GetOdontograma(){//peticion para buscar los dientes a la BD
 		complete: function(jqXHR,estado){
 			
 			var result = JSON.parse( jqXHR.responseText );
+			
+			$('.subGroup').html('');//limpio el contenedor de los dientes
 
 			if( ValidateResponseServer( result ) )
 				AddDents( result );
@@ -98,7 +100,7 @@ function GetOdontograma(){//peticion para buscar los dientes a la BD
 }
 
 
-function ValidateResponseServer( result ){ //Confirmar si la respuesta del server es o no un mensaje
+function ValidateResponseServer( result, HiddenAlert=false ){ //Confirmar si la respuesta del server es o no un mensaje
 	
 	
 	if( ! $.isArray( result ) ){
@@ -110,7 +112,11 @@ function ValidateResponseServer( result ){ //Confirmar si la respuesta del serve
 		var key = result[1];
 
 		var mensaje = MensajeServer( key );
-		alert(mensaje);
+		
+		if( HiddenAlert == true )
+			return ValidateMsmResponse( key );
+		else
+			alert(mensaje);
 
 	}else{
 
@@ -143,6 +149,30 @@ function MensajeServer( codigo ){ //Retornar un mensaje deacuerdo al codigo envi
 	return "Salida inesperada";
 }
 
+function ValidateMsmResponse( msm ){ 
+//Verifico si el mensaje enviado desde el server es de exito o de error, en caso de no necesitar un mensaje
+
+	var mss = new Array(
+		["0000",false],
+		["0001",false],
+		["0010",false],
+		["1000",true],
+		["0100",false],
+		["0011",false],
+		["1100",true],
+		["1101",false]
+	);
+
+	for (var i = mss.length - 1; i >= 0; i--) {
+		
+		if ( mss[i][0] == msm )
+			return mss[i][1];
+
+	};
+
+	return false;
+}
+
 function AddDents( result ){ //agrega los dientes al html
 
 	var keys = result[1];
@@ -153,11 +183,11 @@ function AddDents( result ){ //agrega los dientes al html
 		if( valores[i][ keys[4] ] == 3 || valores[i][ keys[4] ] == 5 ){ //dependiendo si es del lado izquierdo o derecho
 		//confirmo los dientes izquierdos para agregar en orden inverso
 
-			$("."+valores[i][ keys[3] ]).prepend( GenerateDentCode( valores[i][ keys[1] ] ) );
+			$("."+valores[i][ keys[3] ]).prepend( GenerateDentCode( valores[i][ keys[1] ], valores[i][ keys[0] ] ) );
 		
 		}else{
 
-			$("."+valores[i][ keys[3] ]).append( GenerateDentCode( valores[i][ keys[1] ] ) );
+			$("."+valores[i][ keys[3] ]).append( GenerateDentCode( valores[i][ keys[1] ], valores[i][ keys[0] ] ) );
 		
 		}
 	};
@@ -165,9 +195,9 @@ function AddDents( result ){ //agrega los dientes al html
 	GetProcedurePaciente();// traer los diagnosticos que existan
 }
 
-function GenerateDentCode( id ){ //codigo del diente para pintar
+function GenerateDentCode( id, cod ){ //codigo del diente para pintar
 	var dentOne = '\
-	<figure id="'+id+'" class="contentOneDent">\
+	<figure id="'+id+'" cod="'+cod+'" class="contentOneDent">\
 	<div class="textDent headDent">'+id+'</div>\
 		<svg viewBox="0 0 6598 10423">\
 		 <g id="Capa_x0020_1">\
@@ -336,11 +366,15 @@ function AddProcedures( result, parent ){
     	SELECT_PROCEDURE = $(this).attr('id');
 
     	$(".contentOneDent").on("click", function(){
-    		var dent = $(this).attr('id');
 
-    		SaveProcedurePaciente( PACIENTE, dent, ZONE, SELECT_PROCEDURE);//TODO: verificar el uso del numero o codigo del diente
+    		if( SELECT_PROCEDURE != null ){//verifico que se haya seleccionado un procedimiento
 
-    		SELECT_PROCEDURE = null;
+	    		DENT_SELECT_PROCEDURE = $(this).attr('cod');
+
+	    		SaveProcedurePaciente( PACIENTE, DENT_SELECT_PROCEDURE, ZONE, SELECT_PROCEDURE);//TODO: verificar el uso del numero o codigo del diente
+	  		
+    		}
+
     	});
 
 	});
@@ -378,9 +412,14 @@ function SaveProcedurePaciente(Paciente, Dent, Zone, Procedure ){
 
 		complete: function(jqXHR,estado){
 			
-			//var result = JSON.parse( jqXHR.responseText );
+			var result = JSON.parse( jqXHR.responseText );
 
-			console.log( jqXHR );
+			if( ValidateResponseServer(result,true) ){
+				GetOdontograma();
+				SELECT_PROCEDURE = null;
+				DENT_SELECT_PROCEDURE = null;
+			}
+
 
 		},
 		setTimeout:10000
