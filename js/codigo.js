@@ -2,6 +2,7 @@
 //temporales variables
 var PACIENTE = '1104';
 var ZONE = '8';
+
 /**
 		var peticion='./guardar.php';
 		var metodo='POST';
@@ -61,10 +62,12 @@ var SELECT_PROCEDURE = null;
 $(document).on("ready",function(){
 
 
-	GetOdontograma();
-	GetMenuProcedures( 1 );
-	GetMenuProcedures( 2 );
+	GetOdontograma();//mostrar el odontograma
+	GetMenuProcedures( 1 );//traer los procedimientos 
+	GetMenuProcedures( 2 );//traer los procedimientos 
 	
+	
+
 });
 
 
@@ -127,7 +130,7 @@ function ValidateResponseServer( result, HiddenAlert=false ){ //Confirmar si la 
 }
 
 function MensajeServer( codigo ){ //Retornar un mensaje deacuerdo al codigo enviado del server
-
+	 
 	var mss = new Array(
 		["0000","Error al comuncarse con la base de datos"],
 		["0001","Error en la instruccion query"],
@@ -386,7 +389,8 @@ function GenerateItemProcedureCode(Id, name, codigo, representacion){
 //generar cada procedimiento
 
 	var html = "<div class=' itemPainted '>\
-				<p id='"+Id+"' class='"+representacion+"' title='"+codigo+"'> "+name+" </p>\
+				<figure class='figureAloneContent'>"+RetornarFigure("K000","alone")+"</figure>\
+				<p id='"+Id+"' class='"+representacion+" itemProcedure btn' title='"+codigo+"'> "+name+" </p>\
 				</div>";
 
 	return html;
@@ -507,16 +511,14 @@ function GenerateFigureProcedure( resource ){
 	function codeContent( content ){
 
 		var codeContent ="\
-			<figure class='figureFoot'>\
-				<svg viewBox='0 0 442 401'>\
-				 <g id='Capa_x0020_1'>\
-				  "+content+"\
-				 </g>\
-				</svg>\
+			<figure class='figureItemProcedure'>\
+				"+RetornarFigure("K000","alone")+"\
 			</figure>\
 			";
 
+
 		return codeContent;
+		
 	}
 
 

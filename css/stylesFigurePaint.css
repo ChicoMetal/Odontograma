@@ -1,12 +1,14 @@
-.figureFoot
+.figureItemProcedure
 {
 	display: inline-block;
+	height: auto;
 	position: relative;
 	float: left;
 	vertical-align: top;
+	overflow: hidden;
 	width: 29%;
 }
-.figureFoot svg
+.figureItemProcedure svg
 {
 	width: 100%;
 }
@@ -15,4 +17,18 @@
 	fill:none;
 	stroke:red;
 	stroke-width:49.6621;
+}
+.itemPainted figure
+{
+	position: relative;
+	width: 5%;
+}
+.itemPainted figure svg
+{
+	width: 100%;
+}
+.itemPainted figure, .itemPainted p
+{
+	display: inline-block;
+	vertical-align: middle;
 }
