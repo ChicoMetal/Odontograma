@@ -1,7 +1,7 @@
 
 //temporales variables
 var PACIENTE = '1104';
-var ZONE = '8';
+
 
 /**
 		var peticion='./guardar.php';
@@ -57,6 +57,9 @@ var REPRESENTACION_GRAFICO = 2;
 var DENT_SELECT_PROCEDURE = null;
 var FACE_SELECT_PROCEDURE = null;
 var SELECT_PROCEDURE = null;
+
+//zona en la que se podra asignar un procedimiento
+var ZONE_SAVE_PROCEDURE = null
 
 
 $(document).on("ready",function(){
@@ -367,6 +370,7 @@ function AddProcedures( result, parent ){
     //evento para agregar cada procedimiento de cada grupo
 
     	SELECT_PROCEDURE = $(this).attr('id');
+    	GetZoneProcedure( SELECT_PROCEDURE );
 
     	$(".contentOneDent").on("click", function(){
 
@@ -375,7 +379,7 @@ function AddProcedures( result, parent ){
 	    		DENT_SELECT_PROCEDURE = $(this).attr('cod');
 
 	    		SaveProcedurePaciente( PACIENTE, DENT_SELECT_PROCEDURE, ZONE, SELECT_PROCEDURE);//TODO: verificar el uso del numero o codigo del diente
-	  		
+	  			
     		}
 
     	});
@@ -383,6 +387,38 @@ function AddProcedures( result, parent ){
 	});
 
 
+}
+
+function GetZoneProcedure( SELECT_PROCEDURE ){
+	//Busca en base de datos la zona en la que debe representarse el procedimiento, o si no la requiere
+
+	$.ajax({
+		beforeSend:function(){
+
+		},
+		type: "POST",
+		url:"./core/getZoneProcedure.php",
+		dataType:'json',
+		data:{procedure:SELECT_PROCEDURE},
+		error: function(jqXHR,estado,error){
+			
+			console.log(jqXHR);			
+			
+		},
+
+		complete: function(jqXHR,estado){
+			
+			var result = JSON.parse( jqXHR.responseText );
+
+			if( ValidateResponseServer( result ) )
+				ZONE_SAVE_PROCEDURE = result[0][ result[1][1] ];
+
+			console.log( ZONE_SAVE_PROCEDURE );
+
+		},
+		setTimeout:10000
+
+	});
 }
 
 function GenerateItemProcedureCode(Id, name, codigo, representacion){

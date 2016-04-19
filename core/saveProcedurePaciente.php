@@ -15,8 +15,7 @@
 	
 	if( $paciente != '' && $dent != '' && $procedure != '' ){
 		
-		$date = GetFecha( true );//obtengo la fecha "false"(sin hora)
-
+		
 		$sql = "SELECT ti.Id, ti.Nombre
 				FROM items i, groupitemsdent gi, tipeitems ti
 				WHERE i.GroupParent = gi.Id AND gi.Tipe = ti.Id AND i.Id = '$procedure' ";
@@ -40,6 +39,10 @@
 
 			echo json_encode( $result );
 
+		}else{
+
+			echo json_encode( $tipeProcedure );
+			
 		}
 
 
