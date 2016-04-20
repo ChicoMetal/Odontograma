@@ -28,12 +28,12 @@ svg.figureDent
 {
 	stroke:black;
 	stroke-width:89.1356;
-	fill:none;
+	fill:red;
 }
 
 svg.figureDent .faceDent:hover
 {
-	fill:none;	
+	
 }
 .contentOneDent
 {

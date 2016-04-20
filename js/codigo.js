@@ -2,7 +2,16 @@
 //temporales variables
 var PACIENTE = '1104';
 
-
+/*$('.contentOneDent').click(function(e){
+ 
+ });   
+$('.faceDent').mouseover(function(e){
+	console.log('movimiento') ;
+});  
+$('.faceDent').click(function(e){
+	console.log('click') ;
+});   
+*/
 /**
 		var peticion='./guardar.php';
 		var metodo='POST';
@@ -272,7 +281,7 @@ function AddGroupProcedures( result, origin ){//parsea json y agrega el html de 
 
     	if( !$("#collapse"+idGroup).hasClass('in') )
     		$(".panel-collapse").removeClass('in');
-    	
+ 	
 		GetProcedures( idGroup );
 
 	});
@@ -364,7 +373,7 @@ function AddProcedures( result, parent ){
 		);
 
 	}
-
+	 
 
     $(".panel-collapse p").on("click", function(){
     //evento para agregar cada procedimiento de cada grupo
@@ -414,15 +423,15 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 
 	var Zone_save_procedure = null; //lugar en el cual se ubicara el procedimiento
 	var dent_select_procedure = null;
-
-	$(".contentOneDent .faceDent").on("click", function(){
-
+alert('antes');
+	$(".contentOneDent .faceDent").click(function(){
+alert('despues');
 		dent_select_procedure = $(this).parents('.contentOneDent').attr('cod');
 		Zone_save_procedure = $(this).attr('cod');
 
 	});
 
-    $(".contentOneDent").on("click", function(){
+    $(".contentOneDent").click(function(){
 
     	dent_select_procedure = $(this).attr('cod');       
 			
@@ -437,10 +446,10 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 		}
 
 		console.log(dent_select_procedure, Zone_save_procedure );
-
+/*
 		if( dent_select_procedure != null && Zone_save_procedure != null )
 			SaveProcedurePaciente( PACIENTE, dent_select_procedure, Zone_save_procedure, select_procedure);//TODO: verificar el uso del numero o codigo del diente
-		
+		*/
 	});		
 
 	
