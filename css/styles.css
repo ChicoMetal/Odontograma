@@ -24,15 +24,14 @@ figure
 	margin: 0 1%;
 }
 
-svg
+svg.figureDent
 {
 	stroke:black;
 	stroke-width:89.1356;
 	fill:none;
 }
 
-
-svg g .dent1:hover
+svg.figureDent .faceDent:hover
 {
 	fill:none;	
 }

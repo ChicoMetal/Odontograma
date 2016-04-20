@@ -42,8 +42,9 @@ var ZONE_MESIAL = 4;
 var ZONE_DISTAL = 5;
 var ZONE_C_VESTIBULAR_I = 6;
 var ZONE_C_VESTIBULAR_S = 7;
-var ZONE_BOT = 9;
 var ZONE_TOP = 8;
+var ZONE_BOT = 9;
+var ZONE_GENERAL = 10;
 
 //tipo de procedimiento
 var PROCEDURE_TIPE_DIAGNOSTICO = 1;
@@ -54,12 +55,7 @@ var REPRESENTACION_COLOR = 1;
 var REPRESENTACION_GRAFICO = 2;
 
 //diente/cara seleccionado para ingresar procedimiento
-var DENT_SELECT_PROCEDURE = null;
 var FACE_SELECT_PROCEDURE = null;
-var SELECT_PROCEDURE = null;
-
-//zona en la que se podra asignar un procedimiento
-var ZONE_SAVE_PROCEDURE = null
 
 
 $(document).on("ready",function(){
@@ -68,7 +64,6 @@ $(document).on("ready",function(){
 	GetOdontograma();//mostrar el odontograma
 	GetMenuProcedures( 1 );//traer los procedimientos 
 	GetMenuProcedures( 2 );//traer los procedimientos 
-	
 	
 
 });
@@ -104,6 +99,8 @@ function GetOdontograma(){//peticion para buscar los dientes a la BD
 	});
 
 }
+
+
 
 
 function ValidateResponseServer( result, HiddenAlert=false ){ //Confirmar si la respuesta del server es o no un mensaje
@@ -205,15 +202,15 @@ function GenerateDentCode( id, cod ){ //codigo del diente para pintar
 	var dentOne = '\
 	<figure id="'+id+'" cod="'+cod+'" class="contentOneDent">\
 	<div class="textDent headDent">'+id+'</div>\
-		<svg viewBox="0 0 6598 10423">\
+		<svg class="figureDent" viewBox="0 0 6598 10423">\
 		 <g id="Capa_x0020_1">\
-		  <path class="dent1 CervicalVestibularS" d="M1113 2675c-314,-318 -631,-637 -958,-958 1118,-2319 5691,-2126 6257,-42l-908 1018c-580,-562 -1354,-906 -2205,-906 -841,0 -1608,336 -2186,888z"/>\
-		  <ellipse class="dent1 Oclusal" cx="3299" cy="5214" rx="1370" ry="1443"/>\
-		  <path class="dent1 CervicalVestibularI" d="M1111 7751c-314,317 -630,634 -956,955 1118,2319 5691,2126 6257,42l-906 -1016c-580,564 -1355,909 -2207,909 -843,0 -1610,-337 -2188,-890z"/>\
-		  <path class="dent1 Palatina" d="M2487 6371c-472,463 -922,921 -1376,1380 578,553 1345,890 2188,890 852,0 1627,-345 2207,-909l-1293 -1450c-465,404 -1156,510 -1726,89z"/>\
-		  <path class="dent1 Mesial" d="M2484 6374c-471,462 -920,919 -1373,1377 -655,-627 -1066,-1532 -1066,-2537 0,-1008 413,-1914 1071,-2541l-3 2c454,457 903,914 1374,1377l2 -2c-339,263 -560,686 -560,1164 0,475 218,897 555,1160z"/>\
-		  <path class="dent1 Distal" d="M5504 2693c645,626 1049,1524 1049,2521 0,995 -403,1892 -1047,2518l-1290 -1447c278,-264 453,-646 453,-1071 0,-427 -176,-810 -455,-1074l1290 -1447z"/>\
-		  <path class="dent1 Vestibular" d="M3299 1787c851,0 1625,344 2205,906l-1291 1448c-465,-405 -1156,-510 -1726,-89 -471,-463 -920,-920 -1374,-1377 578,-552 1345,-888 2186,-888z"/>\
+		  <path 	cod="'+ZONE_C_VESTIBULAR_S+'" class="faceDent dent1 CervicalVestibularS" d="M1113 2675c-314,-318 -631,-637 -958,-958 1118,-2319 5691,-2126 6257,-42l-908 1018c-580,-562 -1354,-906 -2205,-906 -841,0 -1608,336 -2186,888z"/>\
+		  <ellipse 	cod="'+ZONE_OCLUSAL+'" class="faceDent dent1 Oclusal" cx="3299" cy="5214" rx="1370" ry="1443"/>\
+		  <path 	cod="'+ZONE_C_VESTIBULAR_I+'" class="faceDent dent1 CervicalVestibularI" d="M1111 7751c-314,317 -630,634 -956,955 1118,2319 5691,2126 6257,42l-906 -1016c-580,564 -1355,909 -2207,909 -843,0 -1610,-337 -2188,-890z"/>\
+		  <path 	cod="'+ZONE_PALATINA+'" class="faceDent dent1 Palatina" d="M2487 6371c-472,463 -922,921 -1376,1380 578,553 1345,890 2188,890 852,0 1627,-345 2207,-909l-1293 -1450c-465,404 -1156,510 -1726,89z"/>\
+		  <path 	cod="'+ZONE_MESIAL+'" class="faceDent dent1 Mesial" d="M2484 6374c-471,462 -920,919 -1373,1377 -655,-627 -1066,-1532 -1066,-2537 0,-1008 413,-1914 1071,-2541l-3 2c454,457 903,914 1374,1377l2 -2c-339,263 -560,686 -560,1164 0,475 218,897 555,1160z"/>\
+		  <path 	cod="'+ZONE_DISTAL+'" class="faceDent dent1 Distal" d="M5504 2693c645,626 1049,1524 1049,2521 0,995 -403,1892 -1047,2518l-1290 -1447c278,-264 453,-646 453,-1071 0,-427 -176,-810 -455,-1074l1290 -1447z"/>\
+		  <path 	cod="'+ZONE_VESTIBULAR+'" class="faceDent dent1 Vestibular" d="M3299 1787c851,0 1625,344 2205,906l-1291 1448c-465,-405 -1156,-510 -1726,-89 -471,-463 -920,-920 -1374,-1377 578,-552 1345,-888 2186,-888z"/>\
 		 </g>\
 		</svg>\
 	<figcaption class="textDent footDent"></figcaption>\
@@ -221,6 +218,8 @@ function GenerateDentCode( id, cod ){ //codigo del diente para pintar
 
 	return dentOne;
 }
+
+
 
 function GetMenuProcedures( origin1 ){
 //peticion para buscar los menus de diagnosticos o tratamientos a la BD
@@ -366,30 +365,21 @@ function AddProcedures( result, parent ){
 
 	}
 
+
     $(".panel-collapse p").on("click", function(){
     //evento para agregar cada procedimiento de cada grupo
 
-    	SELECT_PROCEDURE = $(this).attr('id');
-    	GetZoneProcedure( SELECT_PROCEDURE );
+    	var select_procedure = $(this).attr('id');//procedimiento seleccionado   	
 
-    	$(".contentOneDent").on("click", function(){
-
-    		if( SELECT_PROCEDURE != null ){//verifico que se haya seleccionado un procedimiento
-
-	    		DENT_SELECT_PROCEDURE = $(this).attr('cod');
-
-	    		SaveProcedurePaciente( PACIENTE, DENT_SELECT_PROCEDURE, ZONE, SELECT_PROCEDURE);//TODO: verificar el uso del numero o codigo del diente
-	  			
-    		}
-
-    	});
-
+    	if( select_procedure != null)
+    		GetZoneProcedure( select_procedure );
+    	
 	});
 
 
 }
 
-function GetZoneProcedure( SELECT_PROCEDURE ){
+function GetZoneProcedure( select_procedure ){
 	//Busca en base de datos la zona en la que debe representarse el procedimiento, o si no la requiere
 
 	$.ajax({
@@ -399,7 +389,7 @@ function GetZoneProcedure( SELECT_PROCEDURE ){
 		type: "POST",
 		url:"./core/getZoneProcedure.php",
 		dataType:'json',
-		data:{procedure:SELECT_PROCEDURE},
+		data:{procedure:select_procedure},
 		error: function(jqXHR,estado,error){
 			
 			console.log(jqXHR);			
@@ -411,9 +401,7 @@ function GetZoneProcedure( SELECT_PROCEDURE ){
 			var result = JSON.parse( jqXHR.responseText );
 
 			if( ValidateResponseServer( result ) )
-				ZONE_SAVE_PROCEDURE = result[0][ result[1][1] ];
-
-			console.log( ZONE_SAVE_PROCEDURE );
+				EventSaveProcedure( select_procedure, result[0][0][ result[1][1] ] );
 
 		},
 		setTimeout:10000
@@ -421,6 +409,42 @@ function GetZoneProcedure( SELECT_PROCEDURE ){
 	});
 }
 
+function EventSaveProcedure( select_procedure, zone_procedure_default ){
+	//evento que se llama cuando se ha seleccionado un procedimiento
+
+	var Zone_save_procedure = null; //lugar en el cual se ubicara el procedimiento
+	var dent_select_procedure = null;
+
+	$(".contentOneDent .faceDent").on("click", function(){
+
+		dent_select_procedure = $(this).parents('.contentOneDent').attr('cod');
+		Zone_save_procedure = $(this).attr('cod');
+
+	});
+
+    $(".contentOneDent").on("click", function(){
+
+    	dent_select_procedure = $(this).attr('cod');       
+			
+		if ( zone_procedure_default != null || 
+			zone_procedure_default == ZONE_GENERAL ||
+			zone_procedure_default == ZONE_TOP ||
+			zone_procedure_default == ZONE_BOT ){//Reconocer si el procedimiento requiere un cara del diente en especifico
+			
+			Zone_save_procedure = null;
+
+			
+		}
+
+		console.log(dent_select_procedure, Zone_save_procedure );
+
+		if( dent_select_procedure != null && Zone_save_procedure != null )
+			SaveProcedurePaciente( PACIENTE, dent_select_procedure, Zone_save_procedure, select_procedure);//TODO: verificar el uso del numero o codigo del diente
+		
+	});		
+
+	
+}
 function GenerateItemProcedureCode(Id, name, codigo, representacion){
 //generar cada procedimiento
 
@@ -456,8 +480,7 @@ function SaveProcedurePaciente(Paciente, Dent, Zone, Procedure ){
 
 			if( ValidateResponseServer(result,true) ){
 				GetOdontograma();
-				SELECT_PROCEDURE = null;
-				DENT_SELECT_PROCEDURE = null;
+				
 			}
 
 
