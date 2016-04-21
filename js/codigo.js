@@ -378,6 +378,9 @@ function AddProcedures( result, parent ){
     $(".panel-collapse p").on("click", function(){
     //evento para agregar cada procedimiento de cada grupo
 
+    	$(".contentOneDent .faceDent").unbind("click");//remover evento anterior si existe para las caras de los dientes
+		$(".contentOneDent").unbind("click");//remover evento anterior si existe para las caras de los dientes
+
     	var select_procedure = $(this).attr('id');//procedimiento seleccionado   	
 
     	if( select_procedure != null)
@@ -410,7 +413,7 @@ function GetZoneProcedure( select_procedure ){
 			var result = JSON.parse( jqXHR.responseText );
 
 			if( ValidateResponseServer( result ) )
-				EventSaveProcedure( select_procedure, result[0][0][ result[1][1] ] );
+				CreateEventClickFaceDent( select_procedure, result[0][0][ result[1][1] ] );
 
 		},
 		setTimeout:10000
@@ -418,14 +421,34 @@ function GetZoneProcedure( select_procedure ){
 	});
 }
 
+function CreateEventClickFaceDent(select_procedure=null, zone_procedure_default=null){
+
+	this.select_procedure;
+	this.zone_procedure_default;
+
+	if(select_procedure!== null && zone_procedure_default!== null){		
+		this.select_procedure = select_procedure;
+		this.zone_procedure_default = zone_procedure_default;
+	}
+	console.log(this.select_procedure+"...."+this.zone_procedure_default);
+
+	$(".contentOneDent .faceDent").click(function(){
+
+		EventSaveProcedure(this.select_procedure, this.zone_procedure_default);
+
+	});
+
+}
+
+
 function EventSaveProcedure( select_procedure, zone_procedure_default ){
 	//evento que se llama cuando se ha seleccionado un procedimiento
 
 	var Zone_save_procedure = null; //lugar en el cual se ubicara el procedimiento
 	var dent_select_procedure = null;
-alert('antes');
+
 	$(".contentOneDent .faceDent").click(function(){
-alert('despues');
+
 		dent_select_procedure = $(this).parents('.contentOneDent').attr('cod');
 		Zone_save_procedure = $(this).attr('cod');
 
@@ -446,10 +469,10 @@ alert('despues');
 		}
 
 		console.log(dent_select_procedure, Zone_save_procedure );
-/*
+
 		if( dent_select_procedure != null && Zone_save_procedure != null )
-			SaveProcedurePaciente( PACIENTE, dent_select_procedure, Zone_save_procedure, select_procedure);//TODO: verificar el uso del numero o codigo del diente
-		*/
+			SaveProcedurePaciente( PACIENTE, dent_select_procedure, Zone_save_procedure, select_procedure);//TODO: verificar el uso del numero o codigo del diente		
+		
 	});		
 
 	
@@ -487,9 +510,9 @@ function SaveProcedurePaciente(Paciente, Dent, Zone, Procedure ){
 			
 			var result = JSON.parse( jqXHR.responseText );
 
-			if( ValidateResponseServer(result,true) ){
+			if( ValidateResponseServer(result,true) ){				
 				GetOdontograma();
-				
+				CreateEventClickFaceDent();
 			}
 
 
