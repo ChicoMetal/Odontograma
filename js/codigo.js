@@ -478,8 +478,6 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 			
 		}
 
-		console.log(dent_select_procedure, Zone_save_procedure );
-
 		if( dent_select_procedure !== undefined && Zone_save_procedure !== undefined )
 			SaveProcedurePaciente( PACIENTE, dent_select_procedure, Zone_save_procedure, select_procedure);//TODO: verificar el uso del numero o codigo del diente		
 		
@@ -569,6 +567,8 @@ function AddProceduresPaciente( result ){
 	var keys = result[1];
 	var valores = result[0];
 
+	$('.procedureNullRepresentacion').html('');
+	
 	for (var i = valores.length - 1; i >= 0; i--) {
 
 		var location = '';
@@ -578,12 +578,13 @@ function AddProceduresPaciente( result ){
 		else
 			location += " #tratamientos ";
 
-		if( valores[i][ keys[5] ] != null ){ //establezco si posee una zona
+		if( valores[i][ keys[1] ] != ZONE_NULA ){ //establezco si posee una zona
 			
 			location += " figure#"+valores[i][ keys[0] ]; //establezco el diente
 			
 			if( valores[i][ keys[1] ] == ZONE_BOT )
 				location += " figcaption.footDent ";
+
 			else if( valores[i][ keys[1] ] == ZONE_TOP )
 				location += " .headDent ";
 

@@ -110,6 +110,11 @@ svg.figureDent .faceDent:hover
 	border-bottom-color: #7F7F7F;
 	border-bottom-width: 1.5px;		
 }
+.procedureNullRepresentacion
+{
+	position: relative;
+	width: 10%;
+}
 #diagnosticos .contentOneDent svg g .dent1
 {
 	/*fill: rgb(108,189,202);*/
