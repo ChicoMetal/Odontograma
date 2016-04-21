@@ -8,12 +8,12 @@
 	include_once($PATH."/mesages.php");
 	include_once($PATH."/functions.php");
 
-	$paciente = isset( $_POST['paciente'] ) ? $_POST['paciente'] : '1104';
-	$dent = isset( $_POST['dent'] ) ? $_POST['dent'] : '14';
-	$zone = isset( $_POST['zone'] ) ? $_POST['zone'] : '8';
-	$procedure = isset( $_POST['procedure'] ) ? $_POST['procedure'] : '110';
+	$paciente = isset( $_POST['paciente'] ) ? $_POST['paciente'] : '';
+	$dent = isset( $_POST['dent'] ) ? $_POST['dent'] : '';
+	$zone = isset( $_POST['zone'] ) ? $_POST['zone'] : '';
+	$procedure = isset( $_POST['procedure'] ) ? $_POST['procedure'] : '';
 	
-	if( $paciente != '' && $dent != '' && $procedure != '' ){
+	if( $paciente != '' && $dent != '' && $zone != '' && $procedure != '' ){
 		
 		
 		$sql = "SELECT ti.Id, ti.Nombre
@@ -25,15 +25,10 @@
 		if( $tipeProcedure[0] != 'msm' ){//verifico un resuultado esperado 
 
 			$tipe = $tipeProcedure[0][0]->$tipeProcedure[1][0];//diagnostico/tratamiento
-
-
-			if( $zone != '' ){
-				$sql = "INSERT INTO pacienteprocedures(Fecha, Paciente, Diente, Zone, `Procedure`, Tipe) 
-						VALUES(NOW(), '$paciente', '$dent', '$zone', '$procedure', '$tipe')";				
-			}else{
-				$sql = "INSERT INTO pacienteprocedures(Fecha, Paciente, Diente, `Procedure`, Tipe) 
-						VALUES(NOW(), '$paciente', '$dent', '$procedure', '$tipe')";	
-			}
+		
+			$sql = "INSERT INTO pacienteprocedures(Paciente, Diente, Zone, `Procedure`, Tipe) 
+					VALUES('$paciente', '$dent', '$zone', '$procedure', '$tipe')";				
+			
 
 			$result = InsertarDatos( $sql );
 
