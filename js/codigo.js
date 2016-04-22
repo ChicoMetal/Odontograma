@@ -80,7 +80,6 @@ $(document).on("ready",function(){
 	GetMenuProcedures( 1 );//traer los procedimientos 
 	GetMenuProcedures( 2 );//traer los procedimientos 
 	
-
 });
 
 
@@ -281,7 +280,7 @@ function AddGroupProcedures( result, origin ){//parsea json y agrega el html de 
 		
 	}
 
-    $(".btn").on("click", function(){//evento para agregar cada procedimiento de cada grupo
+    $("h4.panel-title .btn").on("click", function(){//evento para agregar cada procedimiento de cada grupo
 
     	var idGroup = $(this).parents(".panel").attr('id');
 
@@ -649,4 +648,41 @@ function PaintColorZoneDent( zone, resource, location ){
 
 	$(location).css("fill","#"+resource);
 
+}
+
+function getProcedureDent(Paciente, Dent, TipoProcedure){
+	//Esta funcion busca en la base de datos los procedimientos que tenga un diente en especifico para mostrarlos al pasar el mouse
+
+	$.ajax({
+		beforeSend:function(){
+
+		},
+		type: "POST",
+		url:"./core/getProcedureDent.php",
+		dataType:'json',
+		data:{paciente:Paciente, dent:Dent, tipoProcedure:TipoProcedure},
+		error: function(jqXHR,estado,error){
+			
+			console.log(jqXHR);			
+			
+		},
+
+		complete: function(jqXHR,estado){
+			
+			var result = JSON.parse( jqXHR.responseText );
+
+			if( ValidateResponseServer( result ) )
+				AddAlertProceduresDent( result );
+
+		},
+		setTimeout:10000
+
+	});
+
+}
+
+function AddProceduresDent( Result ){
+	//Esta funcion agrega la ventana de alerta que muestra los procedimientos que tenga un diente
+	var htmlAlertProcedures = '\
+								';
 }
