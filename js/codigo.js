@@ -2,16 +2,8 @@
 //temporales variables
 var PACIENTE = '1104';
 
-/*$('.contentOneDent').click(function(e){
- 
- });   
-$('.faceDent').mouseover(function(e){
-	console.log('movimiento') ;
-});  
-$('.faceDent').click(function(e){
-	console.log('click') ;
-});   
-*/
+
+
 /**
 		var peticion='./guardar.php';
 		var metodo='POST';
@@ -67,14 +59,18 @@ var REPRESENTACION_GRAFICO = 2;
 //diente/cara seleccionado para ingresar procedimiento
 var FACE_SELECT_PROCEDURE = null;
 
+$(document).ready(function(){
+	
+	$('[rel="popover"]').popover({
+		popover:true,
+		container:false,//no cambiar, o dara error
+		trigger:'hover',
+		placement:"right",
+		title:"Titulo desde codigo",
+		content:"Contenido desde codigo, generado con template, justo lo que necesito!",
+		template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
 
-$(document).on("ready",function(){
-
-
-/*    $(".contentProcedures").on("click", ".panel-collapse p", function(){
-        console.log('Funciona!!!!!!!');
-    });
-    */
+	});
 
 	GetOdontograma();//mostrar el odontograma
 	GetMenuProcedures( 1 );//traer los procedimientos 
@@ -214,9 +210,9 @@ function AddDents( result ){ //agrega los dientes al html
 
 function GenerateDentCode( id, cod ){ //codigo del diente para pintar
 	var dentOne = '\
-	<figure id="'+id+'" cod="'+cod+'" class="contentOneDent">\
+	<figure id="'+id+'" cod="'+cod+'" class="contentOneDent" >\
 	<div class="textDent headDent">'+id+'</div>\
-		<svg class="figureDent" viewBox="0 0 6598 10423">\
+		<svg class="figureDent" viewBox="0 0 6598 10423" >\
 		 <g id="Capa_x0020_1">\
 		  <path 	cod="'+ZONE_C_VESTIBULAR_S+'" class="faceDent dent1 CervicalVestibularS" d="M1113 2675c-314,-318 -631,-637 -958,-958 1118,-2319 5691,-2126 6257,-42l-908 1018c-580,-562 -1354,-906 -2205,-906 -841,0 -1608,336 -2186,888z"/>\
 		  <ellipse 	cod="'+ZONE_OCLUSAL+'" class="faceDent dent1 Oclusal" cx="3299" cy="5214" rx="1370" ry="1443"/>\
