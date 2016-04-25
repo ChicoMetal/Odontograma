@@ -60,21 +60,33 @@ var REPRESENTACION_GRAFICO = 2;
 var FACE_SELECT_PROCEDURE = null;
 
 $(document).ready(function(){
-	
-	$('[rel="popover"]').popover({
-		popover:true,
-		container:false,//no cambiar, o dara error
-		trigger:'hover',
-		placement:"right",
-		title:"Titulo desde codigo",
-		content:"Contenido desde codigo, generado con template, justo lo que necesito!",
-		template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-
-	});
 
 	GetOdontograma();//mostrar el odontograma
 	GetMenuProcedures( 1 );//traer los procedimientos 
 	GetMenuProcedures( 2 );//traer los procedimientos 
+
+	$(".subGroup").on("DOMNodeInserted", function(){//evento q desencadena la vista de los procedimientos agregados en modo de tooltip
+		
+		$('.contentOneDent').popover({
+			popover:true,
+			container:false,//no cambiar, o dara error
+			html:true,
+			trigger:'focus',
+			placement:"right auto",
+			title:"Titulo desde codigo",
+			content:"Contenido desde codigo, generado con template, justo lo que necesito! <button>Aqui va el contenido</button>",
+			template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+
+		});	
+
+		
+	});
+
+	$(".subGroup").on("mouseenter", ".contentOneDent", function(){
+		$(".contentOneDent").popover('hide');
+		$(this).popover('toggle');
+	});
+	
 	
 });
 
@@ -210,7 +222,7 @@ function AddDents( result ){ //agrega los dientes al html
 
 function GenerateDentCode( id, cod ){ //codigo del diente para pintar
 	var dentOne = '\
-	<figure id="'+id+'" cod="'+cod+'" class="contentOneDent" >\
+	<figure id="'+id+'" cod="'+cod+'" class="contentOneDent">\
 	<div class="textDent headDent">'+id+'</div>\
 		<svg class="figureDent" viewBox="0 0 6598 10423" >\
 		 <g id="Capa_x0020_1">\
