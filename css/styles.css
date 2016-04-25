@@ -120,6 +120,30 @@ svg.figureDent .faceDent:hover
 	position: relative;
 	width: 10%;
 }
+.popover
+{
+	min-width: 30%;
+}
+
+.popover-content
+{
+	font-size: 0.8em;
+}
+.popover-content .row
+{
+	border-top: solid;
+	border-top-style: dotted;
+	border-top-color: #7F7F7F;
+	border-top-width: 2px;	
+}
+.popover-content .row div
+{
+	border-left: solid;
+	border-left-style: dotted;
+	border-left-color: #7F7F7F;
+	border-left-width: 2px;		
+	padding: 0;
+}
 #diagnosticos .contentOneDent svg g .dent1
 {
 	/*fill: rgb(108,189,202);*/

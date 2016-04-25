@@ -67,24 +67,17 @@ $(document).ready(function(){
 
 	$(".subGroup").on("DOMNodeInserted", function(){//evento q desencadena la vista de los procedimientos agregados en modo de tooltip
 		
-		$('.contentOneDent').popover({
-			popover:true,
-			container:false,//no cambiar, o dara error
-			html:true,
-			trigger:'focus',
-			placement:"right auto",
-			title:"Titulo desde codigo",
-			content:"Contenido desde codigo, generado con template, justo lo que necesito! <button>Aqui va el contenido</button>",
-			template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
-
-		});	
+			
 
 		
 	});
 
 	$(".subGroup").on("mouseenter", ".contentOneDent", function(){
-		$(".contentOneDent").popover('hide');
-		$(this).popover('toggle');
+		
+		var Dent = $(this).attr('cod');
+
+		getProcedureDent(this, PACIENTE, Dent );
+		
 	});
 	
 	
@@ -658,7 +651,7 @@ function PaintColorZoneDent( zone, resource, location ){
 
 }
 
-function getProcedureDent(Paciente, Dent, TipoProcedure){
+function getProcedureDent(trigger, Paciente, Dent){
 	//Esta funcion busca en la base de datos los procedimientos que tenga un diente en especifico para mostrarlos al pasar el mouse
 
 	$.ajax({
@@ -666,9 +659,9 @@ function getProcedureDent(Paciente, Dent, TipoProcedure){
 
 		},
 		type: "POST",
-		url:"./core/getProcedureDent.php",
+		url:"./core/getProceduresDent.php",
 		dataType:'json',
-		data:{paciente:Paciente, dent:Dent, tipoProcedure:TipoProcedure},
+		data:{paciente:Paciente, dent:Dent},
 		error: function(jqXHR,estado,error){
 			
 			console.log(jqXHR);			
@@ -679,8 +672,8 @@ function getProcedureDent(Paciente, Dent, TipoProcedure){
 			
 			var result = JSON.parse( jqXHR.responseText );
 
-			if( ValidateResponseServer( result ) )
-				AddAlertProceduresDent( result );
+			if( ValidateResponseServer( result, true ) )
+				AddProceduresDentPopover(trigger, result );
 
 		},
 		setTimeout:10000
@@ -689,8 +682,37 @@ function getProcedureDent(Paciente, Dent, TipoProcedure){
 
 }
 
-function AddProceduresDent( Result ){
+function AddProceduresDentPopover(trigger, result ){
 	//Esta funcion agrega la ventana de alerta que muestra los procedimientos que tenga un diente
-	var htmlAlertProcedures = '\
-								';
+
+	var valores = result[0];
+	var keys = result[1];
+
+	var htmlAlertProcedures = '';
+
+	for (var i = valores.length - 1; i >= 0; i--) {
+		
+		htmlAlertProcedures += '\
+									<div cod="'+valores[i][ keys[0] ]+'" class="row">\
+										<div class="col-md-1 ">'+valores[i][ keys[1] ]+'</div>\
+										<div class="col-md-7 ">'+valores[i][ keys[2] ]+'</div>\
+										<div class="col-md-2 ">'+valores[i][ keys[3] ]+'</div>\
+									</div>\
+									';
+	}
+
+	var EstructuraPopover = {
+		popover:true,		
+		html:true,
+		trigger:'focus',
+		placement:"right auto",
+		title:"Procedimientos",
+		content: htmlAlertProcedures,
+		template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+
+	};
+
+	$(trigger).popover(EstructuraPopover);
+	$(".contentOneDent").popover('hide');
+	$(trigger).popover('toggle');
 }
