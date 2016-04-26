@@ -28,7 +28,7 @@ svg.figureDent
 {
 	stroke:black;
 	stroke-width:89.1356;
-	fill:red;
+	fill:rgb(240,240,240);
 }
 
 svg.figureDent .faceDent:hover
@@ -117,12 +117,30 @@ svg.figureDent .faceDent:hover
 }
 .procedureNullRepresentacion
 {
+
+	font-size: 0.7em;
 	position: relative;
-	width: 10%;
+	margin-left: 3%;
+	width: 50%;
+}
+.procedureNullRepresentacion .row
+{
+	border-top-color: #7F7F7F;
+	border-top: solid;
+	border-top-width: 2px;	
+	border-top-style: dotted;
+}
+.procedureNullRepresentacion .row div
+{
+	border-left: solid;
+	border-left-style: dotted;
+	border-left-color: #7F7F7F;
+	border-left-width: 2px;		
+	padding: 0;
 }
 .popover
 {
-	min-width: 30%;
+	min-width: 35%;
 }
 
 .popover-content
@@ -134,14 +152,20 @@ svg.figureDent .faceDent:hover
 	border-top: solid;
 	border-top-style: dotted;
 	border-top-color: #7F7F7F;
-	border-top-width: 2px;	
+	border-top-width: 1px;	
 }
 .popover-content .row div
 {
 	border-left: solid;
 	border-left-style: dotted;
 	border-left-color: #7F7F7F;
-	border-left-width: 2px;		
+	border-left-width: 1px;		
+	padding: 0;
+}
+.popover-content .btn
+{
+	width: 70%;
+	height: auto;
 	padding: 0;
 }
 #diagnosticos .contentOneDent svg g .dent1

@@ -3,6 +3,10 @@
 var PACIENTE = '1104';
 
 
+/*$(".subGroup").on("DOMNodeInserted", function(){//evento q desencadena la vista de los procedimientos agregados en modo de tooltip
+	
+				
+});*/
 
 /**
 		var peticion='./guardar.php';
@@ -35,6 +39,10 @@ var PACIENTE = '1104';
 
 		return resultado;
 **/
+
+//Estas variables  globales deben coincidir con los codigos asignados en la base de atos
+//****************************************
+//****************************************
 //zonas para mostrar en procedimiento
 var ZONE_OCLUSAL = 1;
 var ZONE_VESTIBULAR = 2;
@@ -65,21 +73,27 @@ $(document).ready(function(){
 	GetMenuProcedures( 1 );//traer los procedimientos 
 	GetMenuProcedures( 2 );//traer los procedimientos 
 
-	$(".subGroup").on("DOMNodeInserted", function(){//evento q desencadena la vista de los procedimientos agregados en modo de tooltip
-		
-			
+	
 
-		
-	});
-
-	$(".subGroup").on("mouseenter", ".contentOneDent", function(){
+	$(".subGroup").on("mouseenter", ".contentOneDent", function(){//evento de ocultar y mostrar popover
 		
 		var Dent = $(this).attr('cod');
+		var Tipe = $(this).parents('.tab-pane').attr('id');
+		if( Tipe == "diagnosticos" )
+			Tipe = PROCEDURE_TIPE_DIAGNOSTICO
+		else if( Tipe == "tratamientos" )		
+			Tipe = PROCEDURE_TIPE_TRATAMIENTO
+		else
+			Tipe = null;
 
-		getProcedureDent(this, PACIENTE, Dent );
+		getProcedureDent(this, PACIENTE, Dent, Tipe );
 		
 	});
-	
+
+	$(".procedureNullRepresentacion").on("click", ".delProcedurePaciente", function(){//evento del boton eliminar procedimientos de un paciente
+		var codigoProcedure = $(this).parents('.row').attr('cod');
+		DelProcedurePaciente( codigoProcedure );
+	});	
 	
 });
 
@@ -114,9 +128,6 @@ function GetOdontograma(){//peticion para buscar los dientes a la BD
 	});
 
 }
-
-
-
 
 function ValidateResponseServer( result, HiddenAlert=false ){ //Confirmar si la respuesta del server es o no un mensaje
 	
@@ -233,8 +244,6 @@ function GenerateDentCode( id, cod ){ //codigo del diente para pintar
 
 	return dentOne;
 }
-
-
 
 function GetMenuProcedures( origin1 ){
 //peticion para buscar los menus de diagnosticos o tratamientos a la BD
@@ -439,7 +448,6 @@ function CreateEventClickFaceDent(select_procedure=null, zone_procedure_default=
 		this.select_procedure = select_procedure;
 		this.zone_procedure_default = zone_procedure_default;
 	}
-	console.log(this.select_procedure+"...."+this.zone_procedure_default);
 
 	$(".contentOneDent .faceDent").click(function(){
 
@@ -489,7 +497,7 @@ function GenerateItemProcedureCode(Id, name, codigo, representacion){
 //generar cada procedimiento
 
 	var html = "<div class=' itemPainted '>\
-				<figure class='figureAloneContent'>"+RetornarFigure("K000","alone")+"</figure>\
+				<figure class='figureAloneContent'>"+RetornarFigure(codigo,"alone")+"</figure>\
 				<p id='"+Id+"' class='"+representacion+" itemProcedure btn' title='"+codigo+"'> "+name+" </p>\
 				</div>";
 
@@ -572,15 +580,14 @@ function AddProceduresPaciente( result ){
 	for (var i = valores.length - 1; i >= 0; i--) {
 
 		var location = '';
-
 		if( valores[i][ keys[3] ] == PROCEDURE_TIPE_DIAGNOSTICO ) //establesco si la representacion es un diagnostico, tratamiento
 			location += " #diagnosticos ";
 		else
 			location += " #tratamientos ";
 
-		if( valores[i][ keys[1] ] != ZONE_NULA ){ //establezco si posee una zona
+		if( valores[i][ keys[1] ] != ZONE_NULA && valores[i][ keys[0] ] !== null ){ //establezco si posee una zona
 			
-			location += " figure#"+valores[i][ keys[0] ]; //establezco el diente
+			location += " figure[cod='"+valores[i][ keys[0] ]+"']"; //establezco el diente
 			
 			if( valores[i][ keys[1] ] == ZONE_BOT )
 				location += " figcaption.footDent ";
@@ -588,32 +595,37 @@ function AddProceduresPaciente( result ){
 			else if( valores[i][ keys[1] ] == ZONE_TOP )
 				location += " .headDent ";
 
+			if( valores[i][ keys[5] ] == REPRESENTACION_COLOR )//dependiendo el modo de representar el procedimiento llamo a la funcion respectiva		
+					PaintColorZoneDent( valores[i][ keys[1] ], valores[i][ keys[4] ], location );
+
+			else if( valores[i][ keys[5] ] == REPRESENTACION_GRAFICO )
+				$( location ).append( 
+					GenerateFigureProcedure( valores[i][ keys[6] ]  )
+				);			 		
 		}else{
 
 			location += " .procedureNullRepresentacion ";
-		}		
-		
-		if( valores[i][ keys[5] ] == REPRESENTACION_COLOR )//dependiendo el modo de representar el procedimiento llamo a la funcion respectiva		
-				PaintColorZoneDent( valores[i][ keys[1] ], valores[i][ keys[4] ], location );
 
-		else if( valores[i][ keys[5] ] == REPRESENTACION_GRAFICO )
 			$( location ).append( 
-				GenerateFigureProcedure( valores[i][ keys[4] ]  )
-			);			 		
+				GenerateProcedureDienteNull( valores[i], keys )
+			);
+
+		}		
+
 
 	}
 
 }
 
-function GenerateFigureProcedure( resource ){
+function GenerateFigureProcedure( CodigoProcedure ){
 //funcion para devolver la representacion grafica de los procedimientos
 
 
-	function codeContent( content ){
+	function codeContent( codigo ){
 
 		var codeContent ="\
 			<figure class='figureItemProcedure'>\
-				"+RetornarFigure("K000","alone")+"\
+				"+RetornarFigure(codigo,"alone")+"\
 			</figure>\
 			";
 
@@ -623,9 +635,29 @@ function GenerateFigureProcedure( resource ){
 	}
 
 
-	var content = "<polygon class='figurePaintPoints' points='216,51 42,374 399,376 '/>";
+	//var content = "<polygon class='figurePaintPoints' points='216,51 42,374 399,376 '/>";
 
-	return codeContent( content );
+	return codeContent( CodigoProcedure );
+
+}
+
+function GenerateProcedureDienteNull( valores, keys ){
+	//Aqui genero el html para mostrar procedimientos que no tengan asignados un diente especifico
+
+
+	var htmlProcedures = '\
+							<div cod="'+valores[ keys[8] ]+'" class="row">\
+								<div class="col-md-2 ">'+valores[ keys[6] ]+'</div>\
+								<div class="col-md-9 ">'+valores[ keys[7] ]+'</div>\
+								<div class="col-md-1 ">\
+									<button class="btn btn-primary delProcedurePaciente"> \
+										<i class="fa fa-trash-o" aria-hidden="true"></i>\
+									</button>\
+								</div>\
+							</div>\
+							';
+
+	return htmlProcedures;
 
 }
 
@@ -651,7 +683,7 @@ function PaintColorZoneDent( zone, resource, location ){
 
 }
 
-function getProcedureDent(trigger, Paciente, Dent){
+function getProcedureDent(trigger, Paciente, Dent, Tipe){
 	//Esta funcion busca en la base de datos los procedimientos que tenga un diente en especifico para mostrarlos al pasar el mouse
 
 	$.ajax({
@@ -661,7 +693,7 @@ function getProcedureDent(trigger, Paciente, Dent){
 		type: "POST",
 		url:"./core/getProceduresDent.php",
 		dataType:'json',
-		data:{paciente:Paciente, dent:Dent},
+		data:{paciente:Paciente, dent:Dent, tipe:Tipe},
 		error: function(jqXHR,estado,error){
 			
 			console.log(jqXHR);			
@@ -693,12 +725,17 @@ function AddProceduresDentPopover(trigger, result ){
 	for (var i = valores.length - 1; i >= 0; i--) {
 		
 		htmlAlertProcedures += '\
-									<div cod="'+valores[i][ keys[0] ]+'" class="row">\
-										<div class="col-md-1 ">'+valores[i][ keys[1] ]+'</div>\
-										<div class="col-md-7 ">'+valores[i][ keys[2] ]+'</div>\
-										<div class="col-md-2 ">'+valores[i][ keys[3] ]+'</div>\
-									</div>\
-									';
+							<div cod="'+valores[i][ keys[0] ]+'" class="row">\
+								<div class="col-md-1 ">'+valores[i][ keys[1] ]+'</div>\
+								<div class="col-md-7 ">'+valores[i][ keys[2] ]+'</div>\
+								<div class="col-md-3 ">'+valores[i][ keys[3] ]+'</div>\
+								<div class="col-md-1 ">\
+									<button class="btn btn-primary delProcedurePaciente"> \
+										<i class="fa fa-trash-o" aria-hidden="true"></i>\
+									</button>\
+								</div>\
+							</div>\
+							';
 	}
 
 	var EstructuraPopover = {
@@ -708,11 +745,51 @@ function AddProceduresDentPopover(trigger, result ){
 		placement:"right auto",
 		title:"Procedimientos",
 		content: htmlAlertProcedures,
-		template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+		template:'	<div class="popover" role="tooltip">\
+						<div class="arrow">\
+							</div><h3 class="popover-title"></h3>\
+								<div class="popover-content"></div>\
+							</div>'
 
-	};
+	};//propiedades del popover 
 
 	$(trigger).popover(EstructuraPopover);
 	$(".contentOneDent").popover('hide');
 	$(trigger).popover('toggle');
+
+	$('.delProcedurePaciente').on('click', function(){//evento del boton eliminar procedimientos de un paciente
+		var codigoProcedure = $(this).parents('.row').attr('cod');
+		DelProcedurePaciente( codigoProcedure );
+	});
+}
+
+function DelProcedurePaciente( Codigo ){
+	//Esta funcion manda la peticion para eliminar un procedimiento de un paciente
+
+	$.ajax({
+		beforeSend:function(){
+
+		},
+		type: "POST",
+		url:"./core/DelProcedurePaciente.php",
+		dataType:'json',
+		data:{codigo:Codigo},
+		error: function(jqXHR,estado,error){
+			
+			console.log(jqXHR);			
+			
+		},
+
+		complete: function(jqXHR,estado){
+			
+			var result = JSON.parse( jqXHR.responseText );
+
+			if( ValidateResponseServer( result, true ) )
+				GetOdontograma();
+
+		},
+		setTimeout:10000
+
+	});
+
 }

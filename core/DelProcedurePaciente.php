@@ -1,4 +1,7 @@
 <?php
+	//Eliminar un procedimiento asignado a un paciente 
+	//*************************************************
+	//*************************************************
 
 	if( !isset($PATH) ){//verifico si existe la variable con la ruta absoluta
 		include_once("./PATH.php");				
@@ -7,15 +10,13 @@
 	include_once($PATH."/conexion.php");
 	include_once($PATH."/mesages.php");
 
-	$paciente = isset( $_POST['paciente'] ) ? $_POST['paciente'] : '';
+	$codProcedureSave 			= isset( $_POST['codigo'] ) ? $_POST['codigo'] : '';
 
-	if( $paciente != '' ){
+	if( $codProcedureSave != '' ){
 
-		$sql = "SELECT pp.Diente, pp.Zone, pp.Procedure, pp.Tipe, i.resource, i.Representacion, i.Codigo, i.Nombre, pp.Id
-				FROM pacienteprocedures pp, items i
-				WHERE  pp.Procedure = i.Id AND pp.Paciente = $paciente";
+		$sql = "DELETE FROM pacienteprocedures WHERE Id = '$codProcedureSave' ";
 
-		$result = BuscarDatos( $sql );
+		$result = InsertarDatos( $sql );
 
 		echo json_encode( $result );
 	

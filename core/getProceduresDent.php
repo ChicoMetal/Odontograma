@@ -9,14 +9,16 @@
 
 	$paciente 			= isset( $_POST['paciente'] ) ? $_POST['paciente'] : '1104';
 	$dent 				= isset( $_POST['dent'] ) ? 	$_POST['dent'] : '21';
+	$tipe 				= isset( $_POST['tipe'] ) ? 	$_POST['tipe'] : '21';
 
-	if( $paciente != '' && $dent != '' ){
+	if( $paciente != '' && $dent != '' && $tipe != '' ){
 
 		$sql = "SELECT pp.id, i.Codigo, i.Nombre AS nombreItem, z.Nombre AS nombreZona
 				FROM pacienteprocedures pp, items i, dientes d, zones z
 				WHERE pp.Diente = d.Id  AND pp.Procedure = i.Id AND pp.Zone = z.Id 
 										AND pp.Paciente = '$paciente' 
-										AND pp.Diente = '$dent' ";
+										AND pp.Diente = '$dent' 
+										AND pp.Tipe = '$tipe' ";
 
 		$result = BuscarDatos( $sql );
 
