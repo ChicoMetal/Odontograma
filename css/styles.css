@@ -101,7 +101,7 @@ svg.figureDent .faceDent:hover
 	border-left: solid;
 	border-left-style: dotted;
 	border-left-color: #7F7F7F;
-	border-left-width: 2px;	
+	border-left-width: 1px;	
 	font-size: 0.9em;
 	text-align:left;
 	padding: 0.2em  !important;

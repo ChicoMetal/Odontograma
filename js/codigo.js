@@ -64,8 +64,7 @@ var PROCEDURE_TIPE_TRATAMIENTO = 2;
 var REPRESENTACION_COLOR = 1;
 var REPRESENTACION_GRAFICO = 2;
 
-//diente/cara seleccionado para ingresar procedimiento
-var FACE_SELECT_PROCEDURE = null;
+//Diente simbolico para asignar procedimientos generales, que no se realizan en los dientes
 
 $(document).ready(function(){
 
@@ -88,6 +87,10 @@ $(document).ready(function(){
 
 		getProcedureDent(this, PACIENTE, Dent, Tipe );
 		
+	});
+
+	$(".subGroup").hover(function(e){//ocultar popover habiertos
+		$(".contentOneDent").popover('hide');
 	});
 
 	$(".procedureNullRepresentacion").on("click", ".delProcedurePaciente", function(){//evento del boton eliminar procedimientos de un paciente
@@ -142,9 +145,10 @@ function ValidateResponseServer( result, HiddenAlert=false ){ //Confirmar si la 
 
 		var mensaje = MensajeServer( key );
 		
-		if( HiddenAlert == true )
+		if( HiddenAlert == true ){
+			console.log( mensaje );
 			return ValidateMsmResponse( key );
-		else
+		}else
 			alert(mensaje);
 
 	}else{
@@ -471,10 +475,21 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 
 	});
 
-    $(".subGroup").on("click", ".contentOneDent", function(){
+    $(".subGroup").on("click", ".contentOneDent", function(){//desencadena el evento al dar click a un diente
+    	SendProcedurePacinete( $(this).attr('cod') );
+	});	
 
-    	dent_select_procedure = $(this).attr('cod');       
-			
+	$('.subGroup').on('click',function(e){//desencadena el evento cuando le den click al contenedor de los dientes (para procedimientos generales)		
+		if (e.target !== this)//verifico si el click se ejecuto en uno de los dientes o no
+    		return;
+    	else//si no se dio click en uno de los dientes, se ejecuta la siguiente instruccion
+    		SendProcedurePacinete( );
+	});
+
+	function SendProcedurePacinete( Dent = undefined ){
+
+		dent_select_procedure = Dent;       
+	
 		if ( zone_procedure_default != null && 
 			( 	zone_procedure_default == ZONE_NULA ||
 				zone_procedure_default == ZONE_GENERAL ||
@@ -483,13 +498,16 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 			
 			Zone_save_procedure = zone_procedure_default;//si el procedimiento tiene una zona por default, reescribo la variable para asigar dicha zona 
 
+			if( zone_procedure_default == ZONE_NULA)
+				dent_select_procedure = null;
 			
+			console.log( dent_select_procedure )	;	
 		}
 
 		if( dent_select_procedure !== undefined && Zone_save_procedure !== undefined )
 			SaveProcedurePaciente( PACIENTE, dent_select_procedure, Zone_save_procedure, select_procedure);//TODO: verificar el uso del numero o codigo del diente		
 		
-	});		
+	}
 
 	
 }
