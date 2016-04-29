@@ -501,7 +501,6 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 			if( zone_procedure_default == ZONE_NULA)
 				dent_select_procedure = null;
 			
-			console.log( dent_select_procedure )	;	
 		}
 
 		if( dent_select_procedure !== undefined && Zone_save_procedure !== undefined )
@@ -513,10 +512,16 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 }
 function GenerateItemProcedureCode(Id, name, codigo, representacion){
 //generar cada procedimiento
+	var Representar = RetornarFigure(codigo,"alone");
+	var Code = '';
+	if( typeof(Representar) == 'function' )
+		Code = Representar('000');
+	else 
+		Code = Representar
 
-	var html = "<div class=' itemPainted '>\
-				<figure class='figureAloneContent'>"+RetornarFigure(codigo,"alone")+"</figure>\
-				<p id='"+Id+"' class='"+representacion+" itemProcedure btn' title='"+codigo+"'> "+name+" </p>\
+	var html = "<div id='"+Id+"' class=' itemPainted '>\
+					<figure class='figureAloneContent'>"+Code+"</figure>\
+					<p  class='"+representacion+" itemProcedure btn' title='"+codigo+"'> "+name+" </p>\
 				</div>";
 
 	return html;
