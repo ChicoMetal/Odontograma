@@ -11,7 +11,7 @@
 
 	if( $groupId != '' ){
 
-		$sql = "SELECT i.Id, i.Nombre, i.Codigo, i.Representacion
+		$sql = "SELECT i.Id, i.Nombre, i.Codigo, i.Representacion,i.resource
 				FROM items i
 				WHERE i.GroupParent = $groupId
 				ORDER BY i.Id DESC";

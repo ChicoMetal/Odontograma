@@ -8,8 +8,9 @@ function RetornarFigure( codigo, tipo ){//contiene el codigo de todos los grafic
 			{
 				'alone': function( procedure, recurso ){
 					
-					$('div#'+procedure+'.itemPainted figure').css('background', '#'+recurso);
-					
+					$('div#'+procedure+'.itemPainted figure').height('1.5em');
+					$('div#'+procedure+'.itemPainted figure').css('background','#'+recurso);
+
 					return '';
 				}
 			}

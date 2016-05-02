@@ -68,6 +68,21 @@ var REPRESENTACION_GRAFICO = 2;
 
 $(document).ready(function(){
 
+$('.itemPainted').css('background','red');
+
+	$('.contentProcedures').on("click", "h4.panel-title .btn", function(){
+	//evento para agregar cada procedimiento de cada grupo
+
+    	var idGroup = $(this).parents(".panel").attr('id');
+
+    	if( !$("#collapse"+idGroup).hasClass('in') )
+    		$(".panel-collapse").removeClass('in');
+ 	
+		GetProcedures( idGroup );
+
+	});
+	
+
 	GetOdontograma();//mostrar el odontograma
 	GetMenuProcedures( 1 );//traer los procedimientos 
 	GetMenuProcedures( 2 );//traer los procedimientos 
@@ -97,7 +112,8 @@ $(document).ready(function(){
 		var codigoProcedure = $(this).parents('.row').attr('cod');
 		DelProcedurePaciente( codigoProcedure );
 	});	
-	
+
+
 });
 
 
@@ -294,17 +310,7 @@ function AddGroupProcedures( result, origin ){//parsea json y agrega el html de 
 		
 	}
 
-    $("h4.panel-title .btn").on("click", function(){//evento para agregar cada procedimiento de cada grupo
-
-    	var idGroup = $(this).parents(".panel").attr('id');
-
-    	if( !$("#collapse"+idGroup).hasClass('in') )
-    		$(".panel-collapse").removeClass('in');
- 	
-		GetProcedures( idGroup );
-
-	});
-
+    
 
 }
 
@@ -327,7 +333,7 @@ function GenerateGroupProcedureCode( id, titulo ){//generar el menu de los proce
 			    </div>\
 			    <div id='collapse"+id+"'\
 				    class='panel-collapse\
-				    collapse' role='tabpanel'\
+				    collapse collapse-procedures' role='tabpanel'\
 			    	aria-labelledby='headingTwo'>\
 			      <div class='panel-body'>\
 			      </div>\
@@ -377,22 +383,24 @@ function AddProcedures( result, parent ){
 
 	var keys = result[1];
 	var valores = result[0];
+	var contenedor =  ".panel-group #"+parent+" .panel-collapse";
 
-	$(".panel-group #"+parent+" .panel-collapse").html("");
+	$( contenedor ).html("");
 
 	for (var i = valores.length - 1; i >= 0; i--) {
 		 			
-		$(".panel-group #"+parent+" .panel-collapse").append( 
 			GenerateItemProcedureCode( 
 				valores[i][ keys[0] ], 
 				valores[i][ keys[1] ], 
 				valores[i][ keys[2] ], 
-				valores[i][ keys[3] ] 
+				valores[i][ keys[3] ],
+				valores[i][ keys[4] ],
+				contenedor
 			) 
-		);
+		
 
 	}
-	 
+
 
     $(".panel-collapse p").on("click", function(){
     //evento para agregar cada procedimiento de cada grupo
@@ -502,7 +510,7 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 				dent_select_procedure = null;
 			
 		}
-
+console.log('hola');
 		if( dent_select_procedure !== undefined && Zone_save_procedure !== undefined )
 			SaveProcedurePaciente( PACIENTE, dent_select_procedure, Zone_save_procedure, select_procedure);//TODO: verificar el uso del numero o codigo del diente		
 		
@@ -510,21 +518,21 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 
 	
 }
-function GenerateItemProcedureCode(Id, name, codigo, representacion){
-//generar cada procedimiento
+function GenerateItemProcedureCode(Id, name, codigo, representacion, recurso, contenedor){
+//generar el html de  cada procedimiento para mostrarlo en las listas
 	var Representar = RetornarFigure(codigo,"alone");
-	var Code = '';
-	if( typeof(Representar) == 'function' )
-		Code = Representar('000');
-	else 
-		Code = Representar
 
 	var html = "<div id='"+Id+"' class=' itemPainted '>\
-					<figure class='figureAloneContent'>"+Code+"</figure>\
+					<figure class='figureAloneContent'></figure>\
 					<p  class='"+representacion+" itemProcedure btn' title='"+codigo+"'> "+name+" </p>\
 				</div>";
 
-	return html;
+	$( contenedor ).append(html);//añadir los item de procedimientos cuando se despliegue su contenedor padre
+
+	if( typeof(Representar) == 'function' )//preguntar si se incluye un codigo o se ejecuta una funcion
+		Representar(Id,recurso);
+	else 
+		$(contenedor+' #'+Id+'.itemPainted figure').append( Representar );
 
 }
 
