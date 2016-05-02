@@ -6,13 +6,26 @@ function RetornarFigure( codigo, tipo ){//contiene el codigo de todos los grafic
 		{
 			"figures":
 			{
-				'alone': function( procedure, recurso ){
-					
-					$('div#'+procedure+'.itemPainted figure').height('1.5em');
-					$('div#'+procedure+'.itemPainted figure').css('background','#'+recurso);
-
-					return '';
-				}
+				'alone': '\
+						<svg xmlns="http://www.w3.org/2000/svg" \
+						xml:space="preserve" version="1.1" \
+						style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; \
+						image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 1719 1558" \
+						xmlns:xlink="http://www.w3.org/1999/xlink">\
+						 <defs>\
+						  <style type="text/css">\
+						   <![CDATA[\
+						    .str0 {stroke:red;stroke-width:14.7632}\
+						    .fil0 {fill:red}\
+						   ]]>\
+						  </style>\
+						 </defs>\
+						 <g id="Capa_x0020_1">\
+						  <metadata id="CorelCorpID_0Corel-Layer"/>\
+						  <path class="fil0 str0" d="M842 15l864 1536 -1694 -6 830 -1530zm6 345l582 1035 -1141 -4 559 -1031z"/>\
+						 </g>\
+						</svg>\
+							'
 			}
 		},
 		"K001":
@@ -305,182 +318,91 @@ function RetornarFigure( codigo, tipo ){//contiene el codigo de todos los grafic
 		{
 			"figures":
 			{
-				'alone': '\
-						<svg xmlns="http://www.w3.org/2000/svg" \
-						xml:space="preserve" version="1.1" \
-						style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; \
-						image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 1719 1558" \
-						xmlns:xlink="http://www.w3.org/1999/xlink">\
-						 <defs>\
-						  <style type="text/css">\
-						   <![CDATA[\
-						    .str0 {stroke:red;stroke-width:14.7632}\
-						    .fil0 {fill:red}\
-						   ]]>\
-						  </style>\
-						 </defs>\
-						 <g id="Capa_x0020_1">\
-						  <metadata id="CorelCorpID_0Corel-Layer"/>\
-						  <path class="fil0 str0" d="M842 15l864 1536 -1694 -6 830 -1530zm6 345l582 1035 -1141 -4 559 -1031z"/>\
-						 </g>\
-						</svg>\
-							'
+				'alone': function( procedure, recurso ){
+					
+					$('div#'+procedure+'.itemPainted figure').height('1.5em');
+					$('div#'+procedure+'.itemPainted figure').css('background','#'+recurso);
+
+					return '';
+				}
 			}
 		},
 		"K021":
 		{
 			"figures":
 			{
-				'alone': '\
-						<svg xmlns="http://www.w3.org/2000/svg" \
-						xml:space="preserve" version="1.1" \
-						style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; \
-						image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 1719 1558" \
-						xmlns:xlink="http://www.w3.org/1999/xlink">\
-						 <defs>\
-						  <style type="text/css">\
-						   <![CDATA[\
-						    .str0 {stroke:red;stroke-width:14.7632}\
-						    .fil0 {fill:red}\
-						   ]]>\
-						  </style>\
-						 </defs>\
-						 <g id="Capa_x0020_1">\
-						  <metadata id="CorelCorpID_0Corel-Layer"/>\
-						  <path class="fil0 str0" d="M842 15l864 1536 -1694 -6 830 -1530zm6 345l582 1035 -1141 -4 559 -1031z"/>\
-						 </g>\
-						</svg>\
-							'
+				'alone': function( procedure, recurso ){
+					
+					$('div#'+procedure+'.itemPainted figure').height('1.5em');
+					$('div#'+procedure+'.itemPainted figure').css('background','#'+recurso);
+
+					return '';
+				}
 			}
 		},
 		"K022":
 		{
 			"figures":
 			{
-				'alone': '\
-						<svg xmlns="http://www.w3.org/2000/svg" \
-						xml:space="preserve" version="1.1" \
-						style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; \
-						image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 1719 1558" \
-						xmlns:xlink="http://www.w3.org/1999/xlink">\
-						 <defs>\
-						  <style type="text/css">\
-						   <![CDATA[\
-						    .str0 {stroke:red;stroke-width:14.7632}\
-						    .fil0 {fill:red}\
-						   ]]>\
-						  </style>\
-						 </defs>\
-						 <g id="Capa_x0020_1">\
-						  <metadata id="CorelCorpID_0Corel-Layer"/>\
-						  <path class="fil0 str0" d="M842 15l864 1536 -1694 -6 830 -1530zm6 345l582 1035 -1141 -4 559 -1031z"/>\
-						 </g>\
-						</svg>\
-							'
+				'alone': function( procedure, recurso ){
+					
+					$('div#'+procedure+'.itemPainted figure').height('1.5em');
+					$('div#'+procedure+'.itemPainted figure').css('background','#'+recurso);
+
+					return '';
+				}
 			}
 		},
 		"K023":
 		{
 			"figures":
 			{
-				'alone': '\
-						<svg xmlns="http://www.w3.org/2000/svg" \
-						xml:space="preserve" version="1.1" \
-						style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; \
-						image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 1719 1558" \
-						xmlns:xlink="http://www.w3.org/1999/xlink">\
-						 <defs>\
-						  <style type="text/css">\
-						   <![CDATA[\
-						    .str0 {stroke:red;stroke-width:14.7632}\
-						    .fil0 {fill:red}\
-						   ]]>\
-						  </style>\
-						 </defs>\
-						 <g id="Capa_x0020_1">\
-						  <metadata id="CorelCorpID_0Corel-Layer"/>\
-						  <path class="fil0 str0" d="M842 15l864 1536 -1694 -6 830 -1530zm6 345l582 1035 -1141 -4 559 -1031z"/>\
-						 </g>\
-						</svg>\
-							'
+				'alone': function( procedure, recurso ){
+					
+					$('div#'+procedure+'.itemPainted figure').height('1.5em');
+					$('div#'+procedure+'.itemPainted figure').css('background','#'+recurso);
+
+					return '';
+				}
 			}
 		},
 		"K024":
 		{
 			"figures":
 			{
-				'alone': '\
-						<svg xmlns="http://www.w3.org/2000/svg" \
-						xml:space="preserve" version="1.1" \
-						style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; \
-						image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 1719 1558" \
-						xmlns:xlink="http://www.w3.org/1999/xlink">\
-						 <defs>\
-						  <style type="text/css">\
-						   <![CDATA[\
-						    .str0 {stroke:red;stroke-width:14.7632}\
-						    .fil0 {fill:red}\
-						   ]]>\
-						  </style>\
-						 </defs>\
-						 <g id="Capa_x0020_1">\
-						  <metadata id="CorelCorpID_0Corel-Layer"/>\
-						  <path class="fil0 str0" d="M842 15l864 1536 -1694 -6 830 -1530zm6 345l582 1035 -1141 -4 559 -1031z"/>\
-						 </g>\
-						</svg>\
-							'
+				'alone': function( procedure, recurso ){
+					
+					$('div#'+procedure+'.itemPainted figure').height('1.5em');
+					$('div#'+procedure+'.itemPainted figure').css('background','#'+recurso);
+
+					return '';
+				}
 			}
 		},
 		"K028":
 		{
 			"figures":
 			{
-				'alone': '\
-						<svg xmlns="http://www.w3.org/2000/svg" \
-						xml:space="preserve" version="1.1" \
-						style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; \
-						image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 1719 1558" \
-						xmlns:xlink="http://www.w3.org/1999/xlink">\
-						 <defs>\
-						  <style type="text/css">\
-						   <![CDATA[\
-						    .str0 {stroke:red;stroke-width:14.7632}\
-						    .fil0 {fill:red}\
-						   ]]>\
-						  </style>\
-						 </defs>\
-						 <g id="Capa_x0020_1">\
-						  <metadata id="CorelCorpID_0Corel-Layer"/>\
-						  <path class="fil0 str0" d="M842 15l864 1536 -1694 -6 830 -1530zm6 345l582 1035 -1141 -4 559 -1031z"/>\
-						 </g>\
-						</svg>\
-							'
+				'alone': function( procedure, recurso ){
+					
+					$('div#'+procedure+'.itemPainted figure').height('1.5em');
+					$('div#'+procedure+'.itemPainted figure').css('background','#'+recurso);
+
+					return '';
+				}
 			}
 		},
 		"K029":
 		{
 			"figures":
 			{
-				'alone': '\
-						<svg xmlns="http://www.w3.org/2000/svg" \
-						xml:space="preserve" version="1.1" \
-						style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; \
-						image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 1719 1558" \
-						xmlns:xlink="http://www.w3.org/1999/xlink">\
-						 <defs>\
-						  <style type="text/css">\
-						   <![CDATA[\
-						    .str0 {stroke:red;stroke-width:14.7632}\
-						    .fil0 {fill:red}\
-						   ]]>\
-						  </style>\
-						 </defs>\
-						 <g id="Capa_x0020_1">\
-						  <metadata id="CorelCorpID_0Corel-Layer"/>\
-						  <path class="fil0 str0" d="M842 15l864 1536 -1694 -6 830 -1530zm6 345l582 1035 -1141 -4 559 -1031z"/>\
-						 </g>\
-						</svg>\
-							'
+				'alone': function( procedure, recurso ){
+					
+					$('div#'+procedure+'.itemPainted figure').height('1.5em');
+					$('div#'+procedure+'.itemPainted figure').css('background','#'+recurso);
+
+					return '';
+				}
 			}
 		},
 		"K030":

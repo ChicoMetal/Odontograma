@@ -408,7 +408,7 @@ function AddProcedures( result, parent ){
     	$(".subGroup").unbind("click");//remover evento anterior si existe para las caras de los dientes
 		//$(".contentOneDent").unbind("click");//remover evento anterior si existe para las caras de los dientes
 
-    	var select_procedure = $(this).attr('id');//procedimiento seleccionado   	
+    	var select_procedure = $(this).parent().attr('id');//procedimiento seleccionado   	}
 
     	if( select_procedure != null)
     		GetZoneProcedure( select_procedure );
@@ -420,7 +420,7 @@ function AddProcedures( result, parent ){
 
 function GetZoneProcedure( select_procedure ){
 	//Busca en base de datos la zona en la que debe representarse el procedimiento, o si no la requiere
-
+	
 	$.ajax({
 		beforeSend:function(){
 
@@ -446,27 +446,6 @@ function GetZoneProcedure( select_procedure ){
 		setTimeout:10000
 
 	});
-}
-
-function CreateEventClickFaceDent(select_procedure=null, zone_procedure_default=null){
-
-	this.select_procedure;
-	this.zone_procedure_default;
-
-	$(".contentOneDent .faceDent").unbind("click");//remover evento anterior si existe para las caras de los dientes
-	$(".contentOneDent").unbind("click");
-
-	if(select_procedure!== undefined && zone_procedure_default!== undefined){		
-		this.select_procedure = select_procedure;
-		this.zone_procedure_default = zone_procedure_default;
-	}
-
-	$(".contentOneDent .faceDent").click(function(){
-
-		EventSaveProcedure(this.select_procedure, this.zone_procedure_default);
-
-	});
-
 }
 
 
@@ -510,7 +489,7 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 				dent_select_procedure = null;
 			
 		}
-console.log('hola');
+
 		if( dent_select_procedure !== undefined && Zone_save_procedure !== undefined )
 			SaveProcedurePaciente( PACIENTE, dent_select_procedure, Zone_save_procedure, select_procedure);//TODO: verificar el uso del numero o codigo del diente		
 		
@@ -522,9 +501,9 @@ function GenerateItemProcedureCode(Id, name, codigo, representacion, recurso, co
 //generar el html de  cada procedimiento para mostrarlo en las listas
 	var Representar = RetornarFigure(codigo,"alone");
 
-	var html = "<div id='"+Id+"' class=' itemPainted '>\
+	var html = "<div id='"+Id+"' class=' itemPainted ' title='"+codigo+"'>\
 					<figure class='figureAloneContent'></figure>\
-					<p  class='"+representacion+" itemProcedure btn' title='"+codigo+"'> "+name+" </p>\
+					<p  class='"+representacion+" itemProcedure btn' > "+name+" </p>\
 				</div>";
 
 	$( contenedor ).append(html);//añadir los item de procedimientos cuando se despliegue su contenedor padre
@@ -653,10 +632,13 @@ function GenerateFigureProcedure( CodigoProcedure ){
 
 
 	function codeContent( codigo ){
+		var Representacion = RetornarFigure(codigo,"alone");
+		if( typeof(Representacion) == 'function'  )
+			Representacion = '';
 
 		var codeContent ="\
 			<figure class='figureItemProcedure'>\
-				"+RetornarFigure(codigo,"alone")+"\
+				"+Representacion+"\
 			</figure>\
 			";
 
