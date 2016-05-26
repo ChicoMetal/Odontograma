@@ -44,13 +44,13 @@ var PACIENTE = '1104';
 //****************************************
 //****************************************
 //zonas para mostrar en procedimiento
-var ZONE_OCLUSAL = 1;
-var ZONE_VESTIBULAR = 2;
-var ZONE_PALATINA = 3;
-var ZONE_MESIAL = 4;
-var ZONE_DISTAL = 5;
-var ZONE_C_VESTIBULAR_I = 6;
-var ZONE_C_VESTIBULAR_S = 7;
+var ZONE_OCLUSAL = 1;//centro
+var ZONE_VESTIBULAR = 2;//superior interior
+var ZONE_PALATINA = 3;//inferior interior
+var ZONE_MESIAL = 4;//izquierda
+var ZONE_DISTAL = 5;//derecha
+var ZONE_C_VESTIBULAR_I = 6;//inferior exterior
+var ZONE_C_VESTIBULAR_S = 7;//superior exterior
 var ZONE_TOP = 8;
 var ZONE_BOT = 9;
 var ZONE_GENERAL = 10;
@@ -68,7 +68,18 @@ var REPRESENTACION_GRAFICO = 2;
 
 $(document).ready(function(){
 
-$('.itemPainted').css('background','red');
+	//$('.itemPainted').css('background','red');
+	$('.subGroup').on("click",'.contentAdsolute', function(e){
+		
+    	// Calculamos la posicion X,Y del raton
+	    var pos = $(this).offset();
+	    var posX = (e.pageX - pos.left);
+	    var posY = (e.pageY - pos.top);
+	    
+	    // Mostramos un alert mostrando la posicion
+	    // del raton tras hacer un click en la capa id="contenedor"
+	    console.log("X: " + posX + "  Y: " + posY);
+	});	
 
 	$('.contentProcedures').on("click", "h4.panel-title .btn", function(){
 	//evento para agregar cada procedimiento de cada grupo
@@ -235,11 +246,9 @@ function AddDents( result ){ //agrega los dientes al html
 			$("."+valores[i][ keys[3] ]).prepend( GenerateDentCode( valores[i][ keys[1] ], valores[i][ keys[0] ] ) );
 		
 		}else{
-
-			$("."+valores[i][ keys[3] ]).append( GenerateDentCode( valores[i][ keys[1] ], valores[i][ keys[0] ] ) );
-		
+			$("."+valores[i][ keys[3] ]).append( GenerateDentCode( valores[i][ keys[1] ], valores[i][ keys[0] ] ) );		
 		}
-	};
+	};		
 
 	GetProcedurePaciente();// traer los diagnosticos que existan
 }
@@ -248,6 +257,7 @@ function GenerateDentCode( id, cod ){ //codigo del diente para pintar
 	var dentOne = '\
 	<figure id="'+id+'" cod="'+cod+'" class="contentOneDent">\
 	<div class="textDent headDent">'+id+'</div>\
+		<div class="contentAdsolute">\
 		<svg class="figureDent" viewBox="0 0 6598 10423" >\
 		 <g id="Capa_x0020_1">\
 		  <path 	cod="'+ZONE_C_VESTIBULAR_S+'" class="faceDent dent1 CervicalVestibularS" d="M1113 2675c-314,-318 -631,-637 -958,-958 1118,-2319 5691,-2126 6257,-42l-908 1018c-580,-562 -1354,-906 -2205,-906 -841,0 -1608,336 -2186,888z"/>\
@@ -259,6 +269,7 @@ function GenerateDentCode( id, cod ){ //codigo del diente para pintar
 		  <path 	cod="'+ZONE_VESTIBULAR+'" class="faceDent dent1 Vestibular" d="M3299 1787c851,0 1625,344 2205,906l-1291 1448c-465,-405 -1156,-510 -1726,-89 -471,-463 -920,-920 -1374,-1377 578,-552 1345,-888 2186,-888z"/>\
 		 </g>\
 		</svg>\
+		</div>\
 	<figcaption class="textDent footDent"></figcaption>\
 	</figure>';
 
@@ -414,7 +425,6 @@ function AddProcedures( result, parent ){
     		GetZoneProcedure( select_procedure );
     	
 	});
-
 
 }
 
@@ -584,6 +594,7 @@ function AddProceduresPaciente( result ){
 
 	var keys = result[1];
 	var valores = result[0];
+	var JsonCss = {};
 
 	$('.procedureNullRepresentacion').html('');
 	
@@ -605,13 +616,32 @@ function AddProceduresPaciente( result ){
 			else if( valores[i][ keys[1] ] == ZONE_TOP )
 				location += " .headDent ";
 
+			else{
+				if( valores[i][ keys[5] ] == REPRESENTACION_GRAFICO ){//si tiene una zona y es un grafico
+					location += " .contentAdsolute ";
+					JsonCss = RetornarCssJson( valores[i][ keys[1] ]  );
+					
+				}
+			}
+
 			if( valores[i][ keys[5] ] == REPRESENTACION_COLOR )//dependiendo el modo de representar el procedimiento llamo a la funcion respectiva		
 					PaintColorZoneDent( valores[i][ keys[1] ], valores[i][ keys[4] ], location );
 
-			else if( valores[i][ keys[5] ] == REPRESENTACION_GRAFICO )
+			else if( valores[i][ keys[5] ] == REPRESENTACION_GRAFICO ){
+				
+				
+
+				var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css(JsonCss);
+
+				JsonCss = {};
+
 				$( location ).append( 
-					GenerateFigureProcedure( valores[i][ keys[6] ]  )
-				);			 		
+					figureGenerate
+				);			
+					
+			}
+
 		}else{
 
 			location += " .procedureNullRepresentacion ";
@@ -621,6 +651,7 @@ function AddProceduresPaciente( result ){
 			);
 
 		}		
+
 
 
 	}
@@ -693,7 +724,6 @@ function PaintColorZoneDent( zone, resource, location ){
 		location += " .CervicalVestibularS ";
 
 	$(location).css("fill","#"+resource);
-
 }
 
 function getProcedureDent(trigger, Paciente, Dent, Tipe){

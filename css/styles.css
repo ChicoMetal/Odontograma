@@ -37,6 +37,7 @@ svg.figureDent .faceDent:hover
 }
 .contentOneDent
 {
+	position: relative;
 	width: 9%;
 }
 .textDent

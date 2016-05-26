@@ -8939,3 +8939,161 @@ function RetornarFigure( codigo, tipo ){//contiene el codigo de todos los grafic
 	return ObjectFigure[codigo]["figures"][tipo];
 
 }
+
+function RetornarCssJson(CodigoZone){
+	//retorna un objeto con las propiedades css que requieren las figuras que van en una zona del diente
+	//dependiendo de la zona del procedimiento
+
+
+	var ObjectCss = new Object();
+
+		ObjectCss.ZONE_OCLUSAL = {position: "absolute",
+						top: "33px",
+						left:  "15px",
+						width: "25%",
+						margin:0};//Oclusal (central)
+
+		ObjectCss.ZONE_C_VESTIBULAR_S = {"position": "absolute",
+							top: "8px",
+							left: " 15px",
+							width: "25%",
+							margin:0};//CervicalVestibularS (superior exterior)
+
+		ObjectCss.ZONE_C_VESTIBULAR_I = {"position": "absolute",
+								top: "58px",
+								left: " 14.6px",
+								width: "25%",
+								margin:0};//CervicalVestibularI (inferior exterior)
+		
+		ObjectCss.ZONE_PALATINA = {"position": "absolute",
+						top: "47px",
+						left: " 15px",
+						width: "25%",
+						margin:0};//Palatina (inferior centro/interior)
+
+		ObjectCss.ZONE_VESTIBULAR = {"position": "absolute",
+						top: "19px",
+						left: " 15px",
+						width: "25%",
+						margin:0};//Vestibular (superior centro/interior)
+
+		ObjectCss.ZONE_DISTAL = {"position": "absolute",
+					top: "33px",
+					left: " 28px",
+					width: "25%",
+					margin:0};//Distal (Derecha)
+
+		ObjectCss.ZONE_MESIAL = {"position": "absolute",
+					top: "33px",
+					left: " 2px",
+					width: "25%",
+					margin:0};//Mesial (izquierda)
+
+		ObjectCss.ZONE_GENERAL = {"position": "absolute",
+								top: "30px",
+								left: " 1px",
+								width: "98%",
+								margin:0};//Sobre todo el diente
+
+	
+	if( CodigoZone == ZONE_OCLUSAL)//centro
+		return ObjectCss.ZONE_OCLUSAL;
+	else if( CodigoZone == ZONE_VESTIBULAR)//superior interior
+		return ObjectCss.ZONE_VESTIBULAR;
+	else if( CodigoZone == ZONE_PALATINA)//inferior interior
+		return ObjectCss.ZONE_PALATINA;
+	else if( CodigoZone == ZONE_MESIAL)//izquierda
+		return ObjectCss.ZONE_MESIAL;
+	else if( CodigoZone == ZONE_DISTAL)//derecha
+		return ObjectCss.ZONE_DISTAL;
+	else if( CodigoZone == ZONE_C_VESTIBULAR_I)//inferior exterior
+		return ObjectCss.ZONE_C_VESTIBULAR_I;
+	else if( CodigoZone == ZONE_C_VESTIBULAR_S)//superior exterior
+		return ObjectCss.ZONE_C_VESTIBULAR_S;
+	else if( CodigoZone == ZONE_TOP)
+		return ObjectCss.ZONE_TOP;
+	else if( CodigoZone == ZONE_BOT)
+		return ObjectCss.ZONE_BOT;
+	else if( CodigoZone == ZONE_GENERAL)
+		return ObjectCss.ZONE_GENERAL;
+	else if( CodigoZone == ZONE_NULA)
+		return ObjectCss.ZONE_NULA;
+	else
+		return {};
+}
+/*
+	Centro:
+		var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css({'position': 'absolute',
+										'top': '37px',
+										'left': ' 14.6px',
+										'width': '25%',
+										'margin':'0'});	
+				$( location ).append( 
+					figureGenerate
+				);
+
+	Superior:
+		var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css({'position': 'absolute',
+										'top': '13px',
+										'left': ' 14.6px',
+										'width': '25%',
+										'margin':'0'});	
+				$( location ).append( 
+					figureGenerate
+				);
+	Inferior:
+		var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css({'position': 'absolute',
+										'top': '63px',
+										'left': ' 14.6px',
+										'width': '25%',
+										'margin':'0'});	
+				$( location ).append( 
+					figureGenerate
+				);
+	Inferior centro:
+		var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css({'position': 'absolute',
+										'top': '52px',
+										'left': ' 14.6px',
+										'width': '25%',
+										'margin':'0'});	
+				$( location ).append( 
+					figureGenerate
+				);
+
+	Superior centro:
+		var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css({'position': 'absolute',
+										'top': '24px',
+										'left': ' 14.6px',
+										'width': '25%',
+										'margin':'0'});	
+				$( location ).append( 
+					figureGenerate
+				);
+
+	Derecha:
+		var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css({'position': 'absolute',
+										'top': '37px',
+										'left': ' 28px',
+										'width': '25%',
+										'margin':'0'});	
+				$( location ).append( 
+					figureGenerate
+				);
+	Izquierda:
+		var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css({'position': 'absolute',
+										'top': '37px',
+										'left': ' 1.5px',
+										'width': '25%',
+										'margin':'0'});	
+				$( location ).append( 
+					figureGenerate
+				);
+
+*/
