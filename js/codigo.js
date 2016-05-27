@@ -618,9 +618,7 @@ function AddProceduresPaciente( result ){
 
 			else{
 				if( valores[i][ keys[5] ] == REPRESENTACION_GRAFICO ){//si tiene una zona y es un grafico
-					location += " .contentAdsolute ";
-					JsonCss = RetornarCssJson( valores[i][ keys[1] ]  );
-					
+					location += " .contentAdsolute ";									
 				}
 			}
 
@@ -630,10 +628,19 @@ function AddProceduresPaciente( result ){
 			else if( valores[i][ keys[5] ] == REPRESENTACION_GRAFICO ){
 				
 				
+				JsonCss = RetornarCssJson( valores[i][ keys[1] ], "30", "30" );
 
 				var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
 									.css(JsonCss);
 
+				JsonCss = RetornarCssJson( valores[i][ keys[1] ], 
+											$(figureGenerate).css('width'), 
+											$(figureGenerate).css('width') );
+
+				var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css(JsonCss);
+
+				console.log( $(figureGenerate).css("width") );
 				JsonCss = {};
 
 				$( location ).append( 

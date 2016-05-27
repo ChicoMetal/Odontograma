@@ -8940,60 +8940,88 @@ function RetornarFigure( codigo, tipo ){//contiene el codigo de todos los grafic
 
 }
 
-function RetornarCssJson(CodigoZone){
+function RetornarCssJson(CodigoZone, width, height){
 	//retorna un objeto con las propiedades css que requieren las figuras que van en una zona del diente
 	//dependiendo de la zona del procedimiento
 
+	var centerHorizontal = "18.109375",
+		centerVertical = "30";
+
+	var sizeSmall = "25%",
+		sizeBig = "98%";
+
+
+	function AjustarTop( top, escale ){//calculo la altura en la que se insertara la figura dependiendo su dimension de altura
+		
+		var midFigureH = ( height*ValueAdsolute(escale) )/2;
+
+		var justTop = top - midFigureH;
+		return justTop+"px";
+
+	}
+
+	function AjustarLeft( left, escale ){//calculo la altura en la que se insertara la figura dependiendo su dimension de anchura
+		var midFigureW = ( width*ValueAdsolute(escale) )/2;
+		
+		var justLeft = left - midFigureW;
+		return justLeft+"px";
+	}
+
+	function ValueAdsolute( value ){//quitar % a los tamanos}
+
+		var ansolute = value.slice(0, -1);
+		return "0."+ansolute;
+	}
 
 	var ObjectCss = new Object();
 
 		ObjectCss.ZONE_OCLUSAL = {position: "absolute",
-						top: "33px",
-						left:  "15px",
-						width: "25%",
-						margin:0};//Oclusal (central)
+						top: AjustarTop( centerVertical, sizeSmall ),
+						left:  AjustarLeft( centerHorizontal, sizeSmall ),
+						width: sizeSmall,
+						margin:0};//Oclusal (central) //X: 18.109375  Y: 30
 
 		ObjectCss.ZONE_C_VESTIBULAR_S = {"position": "absolute",
-							top: "8px",
-							left: " 15px",
-							width: "25%",
-							margin:0};//CervicalVestibularS (superior exterior)
+							top: AjustarTop( centerVertical, sizeSmall ),
+							left: AjustarLeft( "4",sizeSmall ),
+							width: sizeSmall,
+							margin:0};//CervicalVestibularS (superior exterior) //X: 18.109375  Y: 4
 
 		ObjectCss.ZONE_C_VESTIBULAR_I = {"position": "absolute",
-								top: "58px",
-								left: " 14.6px",
-								width: "25%",
-								margin:0};//CervicalVestibularI (inferior exterior)
+								top: AjustarTop( centerVertical, sizeSmall ),
+								left: AjustarLeft( "55", sizeSmall ),
+								width: sizeSmall,
+								margin:0};//CervicalVestibularI (inferior exterior) //X: 18.109375  Y: 55
 		
 		ObjectCss.ZONE_PALATINA = {"position": "absolute",
-						top: "47px",
-						left: " 15px",
-						width: "25%",
-						margin:0};//Palatina (inferior centro/interior)
+						top: AjustarTop( centerVertical, sizeSmall ),
+						left: AjustarLeft( "44", sizeSmall ),
+						width: sizeSmall,
+						margin:0};//Palatina (inferior centro/interior) //X: 18.109375  Y: 44
 
 		ObjectCss.ZONE_VESTIBULAR = {"position": "absolute",
-						top: "19px",
-						left: " 15px",
-						width: "25%",
-						margin:0};//Vestibular (superior centro/interior)
+						top: AjustarTop( centerVertical, sizeSmall ),
+						left: AjustarLeft( "16", sizeSmall ),
+						width: sizeSmall,
+						margin:0};//Vestibular (superior centro/interior) //X: 18.109375  Y: 16
 
 		ObjectCss.ZONE_DISTAL = {"position": "absolute",
-					top: "33px",
-					left: " 28px",
-					width: "25%",
-					margin:0};//Distal (Derecha)
+					top: AjustarTop( "31.3125", sizeSmall ),
+					left: AjustarLeft( centerHorizontal, sizeSmall ),
+					width: sizeSmall,
+					margin:0};//Distal (Derecha) //X: 31.3125  Y: 30
 
 		ObjectCss.ZONE_MESIAL = {"position": "absolute",
-					top: "33px",
-					left: " 2px",
-					width: "25%",
-					margin:0};//Mesial (izquierda)
+					top: AjustarTop( "6.109375", sizeSmall ),
+					left: AjustarLeft( centerHorizontal, sizeSmall ),
+					width: sizeSmall,
+					margin:0};//Mesial (izquierda) //X: 6.109375  Y: 30
 
 		ObjectCss.ZONE_GENERAL = {"position": "absolute",
-								top: "30px",
-								left: " 1px",
-								width: "98%",
-								margin:0};//Sobre todo el diente
+								top: AjustarTop( centerVertical, sizeSmall ),
+								left: AjustarLeft( centerHorizontal, sizeSmall ),
+								width: sizeBig,
+								margin:0};//Sobre todo el diente //X: 18.109375  Y: 30
 
 	
 	if( CodigoZone == ZONE_OCLUSAL)//centro
@@ -9010,17 +9038,13 @@ function RetornarCssJson(CodigoZone){
 		return ObjectCss.ZONE_C_VESTIBULAR_I;
 	else if( CodigoZone == ZONE_C_VESTIBULAR_S)//superior exterior
 		return ObjectCss.ZONE_C_VESTIBULAR_S;
-	else if( CodigoZone == ZONE_TOP)
-		return ObjectCss.ZONE_TOP;
-	else if( CodigoZone == ZONE_BOT)
-		return ObjectCss.ZONE_BOT;
 	else if( CodigoZone == ZONE_GENERAL)
 		return ObjectCss.ZONE_GENERAL;
-	else if( CodigoZone == ZONE_NULA)
-		return ObjectCss.ZONE_NULA;
 	else
 		return {};
 }
+
+
 /*
 	Centro:
 		var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
