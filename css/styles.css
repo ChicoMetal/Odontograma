@@ -35,16 +35,18 @@ svg.figureDent .faceDent:hover
 {
 	
 }
+.contentAdsolute .figureItemProcedure svg
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
 .contentOneDent
 {
 	position: relative;
 	width: 9%;
 }
-.textDent
-{
-	text-align: center;
-	font-size: 0.7em;
-}
+
 .ContentOdontograma
 {
 	width: 68%;
@@ -168,6 +170,11 @@ svg.figureDent .faceDent:hover
 	width: 70%;
 	height: auto;
 	padding: 0;
+}
+.textDent
+{
+	text-align: center;
+	font-size: 0.7em;
 }
 #diagnosticos .contentOneDent svg g .dent1
 {

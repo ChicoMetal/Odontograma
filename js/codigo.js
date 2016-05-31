@@ -67,6 +67,21 @@ var REPRESENTACION_GRAFICO = 2;
 //Diente simbolico para asignar procedimientos generales, que no se realizan en los dientes
 
 $(document).ready(function(){
+	
+	$(".subGroup").on("DOMNodeInserted",".contentAdsolute figure.figureItemProcedure", function(){
+		//evento para encajar las alturas de los svg a la altura de su contendor 
+		//en los procedimientos que van en una cara del diente o en todo el dente
+		var altura = $(this).children("svg").css("height");	
+		if( altura != undefined && altura != null && altura != ''){//verifica que sea contenga un svg
+
+			$(this).children("svg").css({top:0, left:0});	
+			var newH = parseInt(altura.slice(0, -2) );
+			newH = newH+3;
+
+			$(this).css("height", newH );
+		}
+	
+	});
 
 	//$('.itemPainted').css('background','red');
 	$('.subGroup').on("click",'.contentAdsolute', function(e){
@@ -628,25 +643,36 @@ function AddProceduresPaciente( result ){
 			else if( valores[i][ keys[5] ] == REPRESENTACION_GRAFICO ){
 				
 				
-				JsonCss = RetornarCssJson( valores[i][ keys[1] ], "30", "30" );
+				//JsonCss = RetornarCssJson( valores[i][ keys[1] ], "30", "30" );
+
+				/*var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css(JsonCss);*/
+
+			
+				JsonCss = CssJson( valores[i][ keys[1] ] );
 
 				var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
 									.css(JsonCss);
 
-				JsonCss = RetornarCssJson( valores[i][ keys[1] ], 
-											$(figureGenerate).css('width'), 
-											$(figureGenerate).css('width') );
-
-				var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
-									.css(JsonCss);
-
-				console.log( $(figureGenerate).css("width") );
 				JsonCss = {};
 
 				$( location ).append( 
 					figureGenerate
 				);			
-					
+
+				
+				var pocitionJson = FinalPocition(valores[i][ keys[1] ], 
+													$(figureGenerate).css("top"),
+													$(figureGenerate).css("height"),
+													$(figureGenerate).css("left"),
+													$(figureGenerate).css("width")
+															);
+				
+
+							
+				//$(location+" #"+$(figureGenerate).attr('id') ).css( pocitionJson );
+				$(figureGenerate ).css( pocitionJson );
+
 			}
 
 		}else{
@@ -675,7 +701,7 @@ function GenerateFigureProcedure( CodigoProcedure ){
 			Representacion = '';
 
 		var codeContent ="\
-			<figure class='figureItemProcedure'>\
+			<figure id="+codigo+" class='figureItemProcedure'>\
 				"+Representacion+"\
 			</figure>\
 			";

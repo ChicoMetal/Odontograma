@@ -26,11 +26,13 @@
 
 			$tipe = $tipeProcedure[0][0]->$tipeProcedure[1][0];//diagnostico/tratamiento
 			
-			if( $dent != ''){
+			if( $dent != ''){//verifico si es procedimiento que requiere especificar un diente
 				
 				$sql = "INSERT INTO pacienteprocedures(Paciente, Diente, Zone, `Procedure`, Tipe) 
-						VALUES('$paciente', '$dent', '$zone', '$procedure', '$tipe')";				
-			}else{
+						VALUES('$paciente', '$dent', '$zone', '$procedure', '$tipe')";
+										
+			}else{//si el procedimiento requiere un diente, verifico que no este guardado un registro 
+				//con los mismos valores 
 
 				$sql = "SELECT Id, count(*) AS existe FROM pacienteprocedures WHERE 
 											Paciente='$paciente' AND 
