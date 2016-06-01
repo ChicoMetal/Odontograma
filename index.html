@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="./css/styles.css">
 	<link rel="stylesheet" type="text/css" href="./css/stylesMenu.css">
 	<link rel="stylesheet" type="text/css" href="./css/stylesFigurePaint.css">
+	<link rel="stylesheet" type="text/css" href="./css/stylesHistory.css">
 
 
 	<script type="text/javascript" src="./js/jquery-1.12.3.min.js"></script>
@@ -507,14 +508,14 @@
 
 	<h1 >ODONTOGRAMA</h1>
 	<ul class="nav nav-tabs" data-tabs="tabs">
-	  	<li class="active"><a href="#diagnosticos" data-toggle="tab">Diagnostico</a></li>
-	    <li><a href="#tratamientos" data-toggle="tab">Tratamiento</a></li>
-	    <li><a href="#evolucion" data-toggle="tab">Evolucion</a></li>
+	  	<li id="tabDiagnosticos" class="active"><a href="#diagnosticos" data-toggle="tab">Diagnostico</a></li>
+	    <li id="tabTratamientos"><a href="#tratamientos" data-toggle="tab">Tratamiento</a></li>
+	    <li id="tabEvolutions"><a href="#evolucion" data-toggle="tab">Evolucion</a></li>
 	</ul>
 	
 	<div id="my-tab-content" class="tab-content">
  
-		<div class="tab-pane active" id="diagnosticos">
+		<div class="repetProcedures tab-pane active" id="diagnosticos" >
 
 			<section class="ContentOdontograma">
 			
@@ -660,7 +661,7 @@
 			
 		</div><!-- fin tratamientos-->
 
-		<div class="tab-pane"  id="evolucion">
+		<div class="repetProcedures tab-pane"  id="evolucion">
 			
 			<section class="ContentOdontograma">
 				
@@ -725,29 +726,11 @@
 		</div><!-- fin evolucion-->
 
 	</div>
-<!-- 
-	<div id="ssss">
-		<figure class="contentOneDent">
-		<div class="textDent headDent">65</div>
-			<svg viewBox="0 0 6598 10423">
-			 <g id="Capa_x0020_1">
-			  <path class="fil0 str0 dent1 faceTop" d="M1113 2675c-314,-318 -631,-637 -958,-958 1118,-2319 5691,-2126 6257,-42l-908 1018c-580,-562 -1354,-906 -2205,-906 -841,0 -1608,336 -2186,888z"/>
-			  <ellipse class="fil0 str0 dent1 center" cx="3299" cy="5214" rx="1370" ry="1443"/>
-			  <path class="fil0 str0 dent1 faceBott" d="M1111 7751c-314,317 -630,634 -956,955 1118,2319 5691,2126 6257,42l-906 -1016c-580,564 -1355,909 -2207,909 -843,0 -1610,-337 -2188,-890z"/>
-			  <path class="fil0 str0 dent1 faceInBot" d="M2487 6371c-472,463 -922,921 -1376,1380 578,553 1345,890 2188,890 852,0 1627,-345 2207,-909l-1293 -1450c-465,404 -1156,510 -1726,89z"/>
-			  <path class="fil0 str0 dent1 faceL" d="M2484 6374c-471,462 -920,919 -1373,1377 -655,-627 -1066,-1532 -1066,-2537 0,-1008 413,-1914 1071,-2541l-3 2c454,457 903,914 1374,1377l2 -2c-339,263 -560,686 -560,1164 0,475 218,897 555,1160z"/>
-			  <path class="fil0 str0 dent1 faceR" d="M5504 2693c645,626 1049,1524 1049,2521 0,995 -403,1892 -1047,2518l-1290 -1447c278,-264 453,-646 453,-1071 0,-427 -176,-810 -455,-1074l1290 -1447z"/>
-			  <path class="fil0 str0 dent1 faceInTop" d="M3299 1787c851,0 1625,344 2205,906l-1291 1448c-465,-405 -1156,-510 -1726,-89 -471,-463 -920,-920 -1374,-1377 578,-552 1345,-888 2186,-888z"/>
-			 </g>
-			</svg>
-		<figcaption class="textDent footDent"> 
 
-			
-			
+	<div id="ContentDescripcionEvol">
+		
 
-		</figcaption>
-		</figure>
-	</div> -->
+	</div>
 
 <div>
 	

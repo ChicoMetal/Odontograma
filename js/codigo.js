@@ -1,6 +1,7 @@
 
 //temporales variables
 var PACIENTE = '1104';
+var HISTORIA = '2';
 
 
 /*$(".subGroup").on("DOMNodeInserted", function(){//evento q desencadena la vista de los procedimientos agregados en modo de tooltip
@@ -60,6 +61,7 @@ var ZONE_NULA = 11;
 var PROCEDURE_TIPE_DIAGNOSTICO = 1;
 var PROCEDURE_TIPE_TRATAMIENTO = 2;
 
+
 //representacion de un procedimiento
 var REPRESENTACION_COLOR = 1;
 var REPRESENTACION_GRAFICO = 2;
@@ -68,6 +70,13 @@ var REPRESENTACION_GRAFICO = 2;
 
 $(document).ready(function(){
 	
+	$(".nav.nav-tabs li").on('click', function(){
+		GetOdontograma();//mostrar el odontograma
+		GetMenuProcedures( PROCEDURE_TIPE_DIAGNOSTICO );//traer los diagnosticos 
+		GetMenuProcedures( PROCEDURE_TIPE_TRATAMIENTO );//traer los tratamientos 
+		
+	});
+
 	$(".subGroup").on("DOMNodeInserted",".contentAdsolute figure.figureItemProcedure", function(){
 		//evento para encajar las alturas de los svg a la altura de su contendor 
 		//en los procedimientos que van en una cara del diente o en todo el dente
@@ -110,10 +119,10 @@ $(document).ready(function(){
 	
 
 	GetOdontograma();//mostrar el odontograma
-	GetMenuProcedures( 1 );//traer los procedimientos 
-	GetMenuProcedures( 2 );//traer los procedimientos 
+	GetMenuProcedures( PROCEDURE_TIPE_DIAGNOSTICO );//traer los diagnosticos 
+	GetMenuProcedures( REPRESENTACION_GRAFICO );//traer los tratamientos 
 
-	
+	getEvolutionHistory(HISTORIA);//obtiene las evoluciones ya almacenadas de la historia
 
 	$(".subGroup").on("mouseenter", ".contentOneDent", function(){//evento de ocultar y mostrar popover
 		
@@ -126,7 +135,10 @@ $(document).ready(function(){
 		else
 			Tipe = null;
 
-		getProcedureDent(this, PACIENTE, Dent, Tipe );
+		if( Tipe != null )
+			getProcedureDent(this, HISTORIA, Dent, Tipe );
+		else
+			getEvolutionDent(this, HISTORIA, Dent);
 		
 	});
 
@@ -134,10 +146,25 @@ $(document).ready(function(){
 		$(".contentOneDent").popover('hide');
 	});
 
-	$(".procedureNullRepresentacion").on("click", ".delProcedurePaciente", function(){//evento del boton eliminar procedimientos de un paciente
+	$(".procedureNullRepresentacion").on("click", ".delProcedurePaciente", function(){//evento del boton eliminar procedimientos de un paciente en una historia
 		var codigoProcedure = $(this).parents('.row').attr('cod');
 		DelProcedurePaciente( codigoProcedure );
 	});	
+
+	$('.subGroup').on('click', '.delProcedurePaciente',function(){//evento del boton eliminar procedimientos de un paciente  en una historia
+		var codigoProcedure = $(this).parents('.row').attr('cod');
+		DelProcedurePaciente( codigoProcedure );
+	});
+
+	$('.subGroup').on('click', '.EvolProcedurePaciente',function(){//evento del boton evolucionar procedimientos de un paciente en una historia
+		
+		var nota = prompt('Digite la descripcion');
+		var codigoProcedureD = $(this).parents('.row').attr('codD');
+		var codigoProcedureT = $(this).parents('.row').attr('codT');
+		
+		if( nota != '' && nota != null )
+			EvolProcedurePaciente( codigoProcedureD, codigoProcedureT, nota );
+	});
 
 
 });
@@ -334,9 +361,7 @@ function AddGroupProcedures( result, origin ){//parsea json y agrega el html de 
 		else
 			$("#tratamientosMenu").append( GenerateGroupProcedureCode( valores[i][ keys[0] ], valores[i][ keys[1] ] ) );		
 		
-	}
-
-    
+	} 
 
 }
 
@@ -516,7 +541,7 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 		}
 
 		if( dent_select_procedure !== undefined && Zone_save_procedure !== undefined )
-			SaveProcedurePaciente( PACIENTE, dent_select_procedure, Zone_save_procedure, select_procedure);//TODO: verificar el uso del numero o codigo del diente		
+			SaveProcedurePaciente( HISTORIA, dent_select_procedure, Zone_save_procedure, select_procedure);//TODO: verificar el uso del numero o codigo del diente		
 		
 	}
 
@@ -540,7 +565,7 @@ function GenerateItemProcedureCode(Id, name, codigo, representacion, recurso, co
 
 }
 
-function SaveProcedurePaciente(Paciente, Dent, Zone, Procedure ){
+function SaveProcedurePaciente(Historia, Dent, Zone, Procedure ){
 //traer procedimientos asignados a un paciente
 
 	$.ajax({
@@ -550,7 +575,7 @@ function SaveProcedurePaciente(Paciente, Dent, Zone, Procedure ){
 		type: "POST",
 		url:"./core/saveProcedurePaciente.php",
 		dataType:'json',
-		data:{paciente:Paciente, dent:Dent, zone: Zone, procedure:Procedure},
+		data:{historia:Historia, dent:Dent, zone: Zone, procedure:Procedure},
 		error: function(jqXHR,estado,error){
 			
 			console.log( jqXHR );			
@@ -583,7 +608,7 @@ function GetProcedurePaciente(){
 		type: "POST",
 		url:"./core/getProceduresPaciente.php",
 		dataType:'json',
-		data:{paciente:PACIENTE},
+		data:{historia:HISTORIA},
 		error: function(jqXHR,estado,error){
 			
 			console.log(jqXHR);			
@@ -617,7 +642,7 @@ function AddProceduresPaciente( result ){
 
 		var location = '';
 		if( valores[i][ keys[3] ] == PROCEDURE_TIPE_DIAGNOSTICO ) //establesco si la representacion es un diagnostico, tratamiento
-			location += " #diagnosticos ";
+			location += " .repetProcedures ";//location += " #diagnosticos ";
 		else
 			location += " #tratamientos ";
 
@@ -649,16 +674,16 @@ function AddProceduresPaciente( result ){
 									.css(JsonCss);*/
 
 			
-				JsonCss = CssJson( valores[i][ keys[1] ] );
+				JsonCss = CssJson( valores[i][ keys[1] ] );//obtengo css basico dependiendo de la ubicacion que tenga
 
 				var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
-									.css(JsonCss);
+									.css(JsonCss);//genero la figura del procedimiento y agrego un css inicial
 
 				JsonCss = {};
 
 				$( location ).append( 
 					figureGenerate
-				);			
+				);	//agrego la figura al DOM		
 
 				
 				var pocitionJson = FinalPocition(valores[i][ keys[1] ], 
@@ -666,12 +691,12 @@ function AddProceduresPaciente( result ){
 													$(figureGenerate).css("height"),
 													$(figureGenerate).css("left"),
 													$(figureGenerate).css("width")
-															);
+															);//obtengo el css final de la figura (primero se agrega para obtener el tamaño real)
 				
 
 							
 				//$(location+" #"+$(figureGenerate).attr('id') ).css( pocitionJson );
-				$(figureGenerate ).css( pocitionJson );
+				$(figureGenerate ).css( pocitionJson );//agrego el nuevo css con el posicionamiento correcto
 
 			}
 
@@ -690,6 +715,37 @@ function AddProceduresPaciente( result ){
 	}
 
 }
+
+function RefreshCssProceduresDent(){
+	//ajustar nuevamente el css (dimensiones y ubicaciones ) de los procedimientos para resolver problema de paneles ocultos en tratamientos y evolucion
+
+	JsonCss = CssJson( valores[i][ keys[1] ] );//obtengo css basico dependiendo de la ubicacion que tenga
+
+				var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css(JsonCss);//genero la figura del procedimiento y agrego un css inicial
+
+				JsonCss = {};
+
+				$( location ).append( 
+					figureGenerate
+				);	//agrego la figura al DOM		
+
+				
+				var pocitionJson = FinalPocition(valores[i][ keys[1] ], 
+													$(figureGenerate).css("top"),
+													$(figureGenerate).css("height"),
+													$(figureGenerate).css("left"),
+													$(figureGenerate).css("width")
+															);//obtengo el css final de la figura (primero se agrega para obtener el tamaño real)
+				
+
+							
+				//$(location+" #"+$(figureGenerate).attr('id') ).css( pocitionJson );
+				$(figureGenerate ).css( pocitionJson );//agrego el nuevo css con el posicionamiento correcto
+}
+/**************************/
+/**************************/
+/**************************/
 
 function GenerateFigureProcedure( CodigoProcedure ){
 //funcion para devolver la representacion grafica de los procedimientos
@@ -759,7 +815,7 @@ function PaintColorZoneDent( zone, resource, location ){
 	$(location).css("fill","#"+resource);
 }
 
-function getProcedureDent(trigger, Paciente, Dent, Tipe){
+function getProcedureDent(trigger, Historia, Dent, Tipe){
 	//Esta funcion busca en la base de datos los procedimientos que tenga un diente en especifico para mostrarlos al pasar el mouse
 
 	$.ajax({
@@ -769,7 +825,7 @@ function getProcedureDent(trigger, Paciente, Dent, Tipe){
 		type: "POST",
 		url:"./core/getProceduresDent.php",
 		dataType:'json',
-		data:{paciente:Paciente, dent:Dent, tipe:Tipe},
+		data:{historia:Historia, dent:Dent, tipe:Tipe},
 		error: function(jqXHR,estado,error){
 			
 			console.log(jqXHR);			
@@ -781,7 +837,37 @@ function getProcedureDent(trigger, Paciente, Dent, Tipe){
 			var result = JSON.parse( jqXHR.responseText );
 
 			if( ValidateResponseServer( result, true ) )
-				AddProceduresDentPopover(trigger, result );
+				AddProceduresDentPopover(trigger, result, 'Procedure' );
+
+		},
+		setTimeout:10000
+
+	});
+
+}
+function getEvolutionDent(trigger, Historia, Dent){
+	//Esta funcion busca en la base de datos los procedimientos que tenga un diente en especifico para mostrarlos al pasar el mouse
+
+	$.ajax({
+		beforeSend:function(){
+
+		},
+		type: "POST",
+		url:"./core/getEvolutionDent.php",
+		dataType:'json',
+		data:{historia:Historia, dent:Dent},
+		error: function(jqXHR,estado,error){
+			
+			console.log(jqXHR);			
+			
+		},
+
+		complete: function(jqXHR,estado){
+			
+			var result = JSON.parse( jqXHR.responseText );
+
+			if( ValidateResponseServer( result, true ) )
+				AddProceduresDentPopover(trigger, result, 'Evolution' );
 
 		},
 		setTimeout:10000
@@ -790,29 +876,53 @@ function getProcedureDent(trigger, Paciente, Dent, Tipe){
 
 }
 
-function AddProceduresDentPopover(trigger, result ){
+function AddProceduresDentPopover(trigger, result, Tipe ){
 	//Esta funcion agrega la ventana de alerta que muestra los procedimientos que tenga un diente
 
 	var valores = result[0];
 	var keys = result[1];
+	
+	
 
 	var htmlAlertProcedures = '';
 
-	for (var i = valores.length - 1; i >= 0; i--) {
-		
-		htmlAlertProcedures += '\
-							<div cod="'+valores[i][ keys[0] ]+'" class="row">\
-								<div class="col-md-1 ">'+valores[i][ keys[1] ]+'</div>\
-								<div class="col-md-7 ">'+valores[i][ keys[2] ]+'</div>\
-								<div class="col-md-3 ">'+valores[i][ keys[3] ]+'</div>\
-								<div class="col-md-1 ">\
-									<button class="btn btn-primary delProcedurePaciente"> \
-										<i class="fa fa-trash-o" aria-hidden="true"></i>\
-									</button>\
+	if( Tipe == 'Evolution'){//valido si es en la seccion evolucion, para construir diferente el html
+		for (var i =  valores.length -1; i >= 0; i--) {
+
+			htmlAlertProcedures += '\
+					<div codD="'+valores[i-1][ keys[0] ]+'" codT="'+valores[i][ keys[0] ]+'" class="row">\
+						<div class="col-md-4 " title="'+valores[i-1][ keys[1] ]+'">'+valores[i-1][ keys[2] ]+'</div>\
+						<div class="col-md-4 " title="'+valores[i][ keys[1] ]+'">'+valores[i][ keys[2] ]+'</div>\
+						<div class="col-md-3 ">'+valores[i][ keys[4] ]+'</div>\
+						<div class="col-md-1 ">\
+							<button class="btn btn-primary EvolProcedurePaciente"> \
+								<i class="fa fa-refresh" aria-hidden="true"></i>\
+							</button>\
+						</div>\
+					</div>\
+					';
+			i--;
+		}
+	}else{
+
+		for (var i = valores.length - 1; i >= 0; i--) {
+			
+			htmlAlertProcedures += '\
+								<div cod="'+valores[i][ keys[0] ]+'" class="row">\
+									<div class="col-md-1 ">'+valores[i][ keys[1] ]+'</div>\
+									<div class="col-md-7 ">'+valores[i][ keys[2] ]+'</div>\
+									<div class="col-md-3 ">'+valores[i][ keys[3] ]+'</div>\
+									<div class="col-md-1 ">\
+										<button class="btn btn-primary delProcedurePaciente"> \
+											<i class="fa fa-trash-o" aria-hidden="true"></i>\
+										</button>\
+									</div>\
 								</div>\
-							</div>\
-							';
+								';
+		}
 	}
+
+	
 
 	var EstructuraPopover = {
 		popover:true,		
@@ -833,10 +943,7 @@ function AddProceduresDentPopover(trigger, result ){
 	$(".contentOneDent").popover('hide');
 	$(trigger).popover('toggle');
 
-	$('.delProcedurePaciente').on('click', function(){//evento del boton eliminar procedimientos de un paciente
-		var codigoProcedure = $(this).parents('.row').attr('cod');
-		DelProcedurePaciente( codigoProcedure );
-	});
+
 }
 
 function DelProcedurePaciente( Codigo ){
@@ -867,5 +974,104 @@ function DelProcedurePaciente( Codigo ){
 		setTimeout:10000
 
 	});
+
+}
+
+function EvolProcedurePaciente( Diagnostico, Tratamiento, Nota  ){
+	//Guarda la evolucion de un diagnostico y su tratamiento
+
+	$.ajax({
+		beforeSend:function(){
+
+		},
+		type: "POST",
+		url:"./core/SaveEvolProcedureHistory.php",
+		dataType:'json',
+		data:{diagnostico:Diagnostico, tratamiento:Tratamiento, descripcion:Nota},
+		error: function(jqXHR,estado,error){
+			
+			console.log(jqXHR);			
+			
+		},
+
+		complete: function(jqXHR,estado){
+			
+			var result = JSON.parse( jqXHR.responseText );
+
+			if( ValidateResponseServer( result, true ) )
+				GetOdontograma();
+
+		},
+		setTimeout:10000
+
+	});
+}
+
+function getEvolutionHistory(Historia){
+	//Obtiene las evoluciones almacenadas de la historia
+
+	$.ajax({
+		beforeSend:function(){
+
+		},
+		type: "POST",
+		url:"./core/getEvolutionsHistory.php",
+		dataType:'json',
+		data:{historia:Historia},
+		error: function(jqXHR,estado,error){
+			
+			console.log(jqXHR);			
+			
+		},
+
+		complete: function(jqXHR,estado){
+			
+			var result = JSON.parse( jqXHR.responseText );
+
+			if( ValidateResponseServer( result, true ) )
+				AddEvolutionHistory(result);
+
+		},
+		setTimeout:10000
+
+	});
+
+}
+
+function AddEvolutionHistory( result ){
+	//genera el html y lo agrega al DOM para q se muestre el historial de las evoluciones almacenadas
+	var valores = result[0];
+	var keys = result[1];
+	var htmlEvolutions = '';
+
+	$('#ContentDescripcionEvol').html('');
+
+	var htmlTitle = "\
+					<div class='row titles text-center'>\
+						<div class='col-md-1'>Fecha</div>\
+						<div class='col-md-1'>Código CUPS</div>\
+						<div class='col-md-2'>Nombre del procedimiento</div>\
+						<div class='col-md-1'>Diente</div>\
+						<div class='col-md-1'>Superficie</div>\
+						<div class='col-md-6'>Descripción de la atención</div>\
+					</div>\
+					";
+
+	for (var i = valores.length - 1; i >= 0; i--) {
+
+		htmlEvolutions += "\
+				<div class='row evolutionsHistory'>\
+					<div class='col-md-1'>"+valores[i][ keys[5] ]+"</div>\
+					<div class='col-md-1'>"+valores[i][ keys[4] ]+"</div>\
+					<div class='col-md-2'>"+valores[i][ keys[3] ]+"</div>\
+					<div class='col-md-1'>"+valores[i][ keys[2] ]+"</div>\
+					<div class='col-md-1'>"+valores[i][ keys[1] ]+"</div>\
+					<div class='col-md-6'>"+valores[i][ keys[0] ]+"</div>\
+				</div>\
+				";
+	}
+
+	$('#ContentDescripcionEvol').append(htmlTitle);
+	$('#ContentDescripcionEvol').append(htmlEvolutions);
 
 }

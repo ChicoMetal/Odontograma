@@ -7,16 +7,16 @@
 	include_once($PATH."/conexion.php");
 	include_once($PATH."/mesages.php");
 
-	$paciente 			= isset( $_POST['paciente'] ) ? $_POST['paciente'] : '1104';
-	$dent 				= isset( $_POST['dent'] ) ? 	$_POST['dent'] : '21';
-	$tipe 				= isset( $_POST['tipe'] ) ? 	$_POST['tipe'] : '21';
+	$historia 			= isset( $_POST['historia'] ) ? $_POST['historia'] : '';
+	$dent 				= isset( $_POST['dent'] ) ? 	$_POST['dent'] : '';
+	$tipe 				= isset( $_POST['tipe'] ) ? 	$_POST['tipe'] : '';
 
-	if( $paciente != '' && $dent != '' && $tipe != '' ){
+	if( $historia != '' && $dent != '' && $tipe != '' ){
 
 		$sql = "SELECT pp.id, i.Codigo, i.Nombre AS nombreItem, z.Nombre AS nombreZona
 				FROM pacienteprocedures pp, items i, dientes d, zones z
 				WHERE pp.Diente = d.Id  AND pp.Procedure = i.Id AND pp.Zone = z.Id 
-										AND pp.Paciente = '$paciente' 
+										AND pp.Historia = '$historia' 
 										AND pp.Diente = '$dent' 
 										AND pp.Tipe = '$tipe' ";
 

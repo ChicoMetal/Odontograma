@@ -11,9 +11,9 @@
 
 	if( $historia!= '' ){
 
-		$sql = "SELECT pp.Diente, pp.Zone, pp.Procedure, pp.Tipe, i.resource, i.Representacion, i.Codigo, i.Nombre, pp.Id
-				FROM pacienteprocedures pp, items i
-				WHERE  pp.Procedure = i.Id AND pp.Historia = '$historia'";
+		$sql = "SELECT e.Descripcion, z.Nombre AS Zona, d.Numero AS Diente, i.Nombre AS Procedimiento, i.Codigo AS CUPS, DATE(e.Fecha) AS Fecha
+				FROM evoluciones e, pacienteprocedures pp, dientes d, items i, zones z
+				WHERE pp.Id = e.Tratamiento AND d.Id = pp.Diente AND pp.`Procedure` = i.Id AND pp.Zone = z.Id";
 
 		$result = BuscarDatos( $sql );
 
@@ -24,5 +24,6 @@
 		echo json_encode( $GLOBALS['resB4'] );
 
 	}
+
 
 ?>
