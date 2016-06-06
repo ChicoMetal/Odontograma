@@ -1,3 +1,4 @@
+/*validar el asignamiento de tratamientos, solo permitir cuando exista un diagnostico*/
 
 //temporales variables
 var PACIENTE = '1104';
@@ -164,6 +165,8 @@ $(document).ready(function(){
 		
 		if( nota != '' && nota != null )
 			EvolProcedurePaciente( codigoProcedureD, codigoProcedureT, nota );
+
+		getEvolutionHistory( HISTORIA );
 	});
 
 
@@ -353,6 +356,11 @@ function AddGroupProcedures( result, origin ){//parsea json y agrega el html de 
 
 	var keys = result[1];
 	var valores = result[0];
+
+	if( origin == PROCEDURE_TIPE_DIAGNOSTICO )
+		$("#diagnosticosMenu").html('');
+	else
+		$("#tratamientosMenu").html('');
 
 	for (var i = valores.length - 1; i >= 0; i--) {
 		 
@@ -635,15 +643,17 @@ function AddProceduresPaciente( result ){
 	var keys = result[1];
 	var valores = result[0];
 	var JsonCss = {};
+	var targetShowEvolutions = false;//saber si hay diagnosticos para mostrarlos en las evoluciones
 
 	$('.procedureNullRepresentacion').html('');
 	
 	for (var i = valores.length - 1; i >= 0; i--) {
 
 		var location = '';
-		if( valores[i][ keys[3] ] == PROCEDURE_TIPE_DIAGNOSTICO ) //establesco si la representacion es un diagnostico, tratamiento
-			location += " .repetProcedures ";//location += " #diagnosticos ";
-		else
+		if( valores[i][ keys[3] ] == PROCEDURE_TIPE_DIAGNOSTICO ){ //establesco si la representacion es un diagnostico, tratamiento
+			location += " #diagnosticos ";
+			targetShowEvolutions = true;
+		}else
 			location += " #tratamientos ";
 
 		if( valores[i][ keys[1] ] != ZONE_NULA && valores[i][ keys[0] ] !== null ){ //establezco si posee una zona
@@ -714,8 +724,92 @@ function AddProceduresPaciente( result ){
 
 	}
 
+	if( targetShowEvolutions ){//si hay diagnosticos, ejecuto la funcion para mostrarlos en evolucion
+		AddProceduresPacienteEvolution( result );
+	}
+
 }
 
+function AddProceduresPacienteEvolution( result ){
+//mostrar en el html los procedimientos del paciente
+
+	var keys = result[1];
+	var valores = result[0];
+	var JsonCss = {};
+
+	$('#evolucion .procedureNullRepresentacion').html('');
+	
+	for (var i = valores.length - 1; i >= 0; i--) {
+
+		var location = '';
+		if( valores[i][ keys[3] ] == PROCEDURE_TIPE_DIAGNOSTICO ) //establesco si la representacion es un diagnostico, tratamiento
+			location += " #evolucion ";
+		else
+			continue;
+
+
+		if( valores[i][ keys[1] ] != ZONE_NULA && valores[i][ keys[0] ] !== null ){ //establezco si posee una zona
+			
+			location += " figure[cod='"+valores[i][ keys[0] ]+"']"; //establezco el diente
+			
+			if( valores[i][ keys[1] ] == ZONE_BOT )
+				location += " figcaption.footDent ";
+
+			else if( valores[i][ keys[1] ] == ZONE_TOP )
+				location += " .headDent ";
+
+			else{
+				if( valores[i][ keys[5] ] == REPRESENTACION_GRAFICO ){//si tiene una zona y es un grafico
+					location += " .contentAdsolute ";									
+				}
+			}
+
+			if( valores[i][ keys[5] ] == REPRESENTACION_COLOR )//dependiendo el modo de representar el procedimiento llamo a la funcion respectiva		
+					PaintColorZoneDent( valores[i][ keys[1] ], valores[i][ keys[4] ], location );
+
+			else if( valores[i][ keys[5] ] == REPRESENTACION_GRAFICO ){
+				
+
+			
+				JsonCss = CssJson( valores[i][ keys[1] ] );//obtengo css basico dependiendo de la ubicacion que tenga
+
+				var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
+									.css(JsonCss);//genero la figura del procedimiento y agrego un css inicial
+
+				JsonCss = {};
+
+				$( location ).append( 
+					figureGenerate
+				);	//agrego la figura al DOM		
+
+				
+				var pocitionJson = FinalPocition(valores[i][ keys[1] ], 
+													$(figureGenerate).css("top"),
+													$(figureGenerate).css("height"),
+													$(figureGenerate).css("left"),
+													$(figureGenerate).css("width")
+															);//obtengo el css final de la figura (primero se agrega para obtener el tamaño real)
+				
+
+				$(figureGenerate ).css( pocitionJson );//agrego el nuevo css con el posicionamiento correcto
+
+			}
+
+		}else{
+
+			location += " .procedureNullRepresentacion ";
+
+			$( location ).append( 
+				GenerateProcedureDienteNull( valores[i], keys )
+			);
+
+		}		
+
+
+
+	}
+
+}
 function RefreshCssProceduresDent(){
 	//ajustar nuevamente el css (dimensiones y ubicaciones ) de los procedimientos para resolver problema de paneles ocultos en tratamientos y evolucion
 

@@ -61,7 +61,7 @@
 							VALUES('$historia', '$dent', '$zone', '$procedure', '$tipe')";
 				}
 										
-			}else{//si el procedimiento requiere un diente, verifico que no este guardado un registro 
+			}else{//si el procedimiento no requiere un diente, verifico que no este guardado un registro 
 				//con los mismos valores 
 
 				$sql = "SELECT Id, count(*) AS existe FROM pacienteprocedures WHERE 

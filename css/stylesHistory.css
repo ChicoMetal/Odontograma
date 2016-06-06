@@ -1,5 +1,8 @@
 #ContentDescripcionEvol
 {
+	width: 100%;
+	padding: 0 0.5em;
+	overflow: hidden;
 	margin-top: 3em;
 	font-size: 0.6em;
 }
@@ -14,6 +17,13 @@
 	border-color: #7F7F7F;
 	border-width: 1px;	
 
+}
+#ContentDescripcionEvol .evolutionsHistory
+{
+	border-top: solid;
+	border-top-style: dotted;
+	border-top-color: #7F7F7F;
+	border-top-width: 1px;
 }
 #ContentDescripcionEvol .evolutionsHistory div
 {
