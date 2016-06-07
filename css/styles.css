@@ -51,6 +51,7 @@ svg.figureDent .faceDent:hover
 {
 	width: 68%;
 }
+
 .ContentOdontograma .contentTop
 {
 	margin-bottom: 1em;
@@ -67,7 +68,7 @@ svg.figureDent .faceDent:hover
 }
 .ContentOdontograma .group .subGroup
 {
-	margin-bottom: 1em;
+	margin-bottom: 0.3em;
 	width: 100%;
 }
 .ContentOdontograma .group .subGroup .contentOneDent
@@ -98,6 +99,10 @@ svg.figureDent .faceDent:hover
 {
 	margin-left: 0.1%;
 	width: 29%;
+}
+.footDent
+{
+	height: 1.5em;
 }
 .itemProcedure
 {
@@ -180,7 +185,7 @@ svg.figureDent .faceDent:hover
 {
 	/*fill: rgb(108,189,202);*/
 }
-
+/*
 #tratamientos .contentOneDent svg g .dent1
 {
 	fill: #8DBCFC;
@@ -189,3 +194,4 @@ svg.figureDent .faceDent:hover
 {
 	fill: rgb(108,189,202);
 }
+*/

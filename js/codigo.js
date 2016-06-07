@@ -40,6 +40,19 @@ var HISTORIA = '2';
 		});
 
 		return resultado;
+
+
+		$('.subGroup').on("click",'.contentAdsolute', function(e){
+		
+    	// Calculamos la posicion X,Y del raton
+	    var pos = $(this).offset();
+	    var posX = (e.pageX - pos.left);
+	    var posY = (e.pageY - pos.top);
+	    
+	    // Mostramos un alert mostrando la posicion
+	    // del raton tras hacer un click en la capa id="contenedor"
+	    console.log("X: " + posX + "  Y: " + posY);
+	});	
 **/
 
 //Estas variables  globales deben coincidir con los codigos asignados en la base de atos
@@ -71,6 +84,11 @@ var REPRESENTACION_GRAFICO = 2;
 
 $(document).ready(function(){
 	
+	GetOdontograma();//mostrar el odontograma
+	GetMenuProcedures( PROCEDURE_TIPE_DIAGNOSTICO );//traer los diagnosticos 
+	GetMenuProcedures( REPRESENTACION_GRAFICO );//traer los tratamientos 
+	getEvolutionHistory(HISTORIA);//obtiene las evoluciones ya almacenadas de la historia
+
 	$(".nav.nav-tabs li").on('click', function(){
 		GetOdontograma();//mostrar el odontograma
 		GetMenuProcedures( PROCEDURE_TIPE_DIAGNOSTICO );//traer los diagnosticos 
@@ -93,21 +111,9 @@ $(document).ready(function(){
 	
 	});
 
-	//$('.itemPainted').css('background','red');
-	$('.subGroup').on("click",'.contentAdsolute', function(e){
-		
-    	// Calculamos la posicion X,Y del raton
-	    var pos = $(this).offset();
-	    var posX = (e.pageX - pos.left);
-	    var posY = (e.pageY - pos.top);
-	    
-	    // Mostramos un alert mostrando la posicion
-	    // del raton tras hacer un click en la capa id="contenedor"
-	    console.log("X: " + posX + "  Y: " + posY);
-	});	
 
 	$('.contentProcedures').on("click", "h4.panel-title .btn", function(){
-	//evento para agregar cada procedimiento de cada grupo
+		//evento para agregar cada procedimiento de cada grupo en el menu
 
     	var idGroup = $(this).parents(".panel").attr('id');
 
@@ -119,13 +125,8 @@ $(document).ready(function(){
 	});
 	
 
-	GetOdontograma();//mostrar el odontograma
-	GetMenuProcedures( PROCEDURE_TIPE_DIAGNOSTICO );//traer los diagnosticos 
-	GetMenuProcedures( REPRESENTACION_GRAFICO );//traer los tratamientos 
-
-	getEvolutionHistory(HISTORIA);//obtiene las evoluciones ya almacenadas de la historia
-
-	$(".subGroup").on("mouseenter", ".contentOneDent", function(){//evento de ocultar y mostrar popover
+	$(".subGroup").on("mouseenter", ".contentOneDent", function(){
+		//evento de ocultar y mostrar popover
 		
 		var Dent = $(this).attr('cod');
 		var Tipe = $(this).parents('.tab-pane').attr('id');
@@ -147,26 +148,35 @@ $(document).ready(function(){
 		$(".contentOneDent").popover('hide');
 	});
 
-	$(".procedureNullRepresentacion").on("click", ".delProcedurePaciente", function(){//evento del boton eliminar procedimientos de un paciente en una historia
+	$(".procedureNullRepresentacion").on("click", ".delProcedurePaciente", function(){
+		//evento del boton eliminar procedimientos de un paciente en una historia
+
 		var codigoProcedure = $(this).parents('.row').attr('cod');
 		DelProcedurePaciente( codigoProcedure );
 	});	
 
-	$('.subGroup').on('click', '.delProcedurePaciente',function(){//evento del boton eliminar procedimientos de un paciente  en una historia
+	$('.subGroup').on('click', '.delProcedurePaciente',function(){
+		//evento del boton eliminar procedimientos de un paciente  en una historia
+
 		var codigoProcedure = $(this).parents('.row').attr('cod');
 		DelProcedurePaciente( codigoProcedure );
 	});
 
-	$('.subGroup').on('click', '.EvolProcedurePaciente',function(){//evento del boton evolucionar procedimientos de un paciente en una historia
+	$('.subGroup').on('click', '.EvolProcedurePaciente',function(){
+		//evento del boton evolucionar procedimientos de un paciente en una historia
 		
-		var nota = prompt('Digite la descripcion');
 		var codigoProcedureD = $(this).parents('.row').attr('codD');
 		var codigoProcedureT = $(this).parents('.row').attr('codT');
 		
-		if( nota != '' && nota != null )
-			EvolProcedurePaciente( codigoProcedureD, codigoProcedureT, nota );
+		bootbox.prompt('Digite la descripcion', function(result){
+		//prompt obtener la observacion de la evolucion
+			 if (result != null) {                                             
+			    EvolProcedurePaciente( codigoProcedureD, codigoProcedureT, result );   
+			    getEvolutionHistory( HISTORIA );                          
+			  } 
+		});
 
-		getEvolutionHistory( HISTORIA );
+		
 	});
 
 
@@ -322,7 +332,7 @@ function GenerateDentCode( id, cod ){ //codigo del diente para pintar
 }
 
 function GetMenuProcedures( origin1 ){
-//peticion para buscar los menus de diagnosticos o tratamientos a la BD
+	//peticion para buscar los menus de diagnosticos o tratamientos a la BD
 
 	$.ajax({
 		beforeSend:function(){
@@ -349,7 +359,6 @@ function GetMenuProcedures( origin1 ){
 		setTimeout:10000
 
 	});
-
 }
 
 function AddGroupProcedures( result, origin ){//parsea json y agrega el html de los menus procedimientos
@@ -467,17 +476,18 @@ function AddProcedures( result, parent ){
     	$(".subGroup").unbind("click");//remover evento anterior si existe para las caras de los dientes
 		//$(".contentOneDent").unbind("click");//remover evento anterior si existe para las caras de los dientes
 
-    	var select_procedure = $(this).parent().attr('id');//procedimiento seleccionado   	}
-
+    	var select_procedure = $(this).parent().attr('id');//procedimiento seleccionado
+    	var tipe_procedure = $(this).parents('section').attr('id');//procedimiento seleccionado
+    	
     	if( select_procedure != null)
-    		GetZoneProcedure( select_procedure );
+    		GetZoneProcedure( select_procedure, tipe_procedure );
     	
 	});
 
 }
 
-function GetZoneProcedure( select_procedure ){
-	//Busca en base de datos la zona en la que debe representarse el procedimiento, o si no la requiere
+function GetZoneProcedure( select_procedure, tipe_procedure ){
+//Busca en base de datos la zona en la que debe representarse el procedimiento, o si no la requiere
 	
 	$.ajax({
 		beforeSend:function(){
@@ -498,7 +508,7 @@ function GetZoneProcedure( select_procedure ){
 			var result = JSON.parse( jqXHR.responseText );
 
 			if( ValidateResponseServer( result ) )
-				EventSaveProcedure( select_procedure, result[0][0][ result[1][1] ] );
+				EventSaveProcedure( select_procedure, tipe_procedure, result[0][0][ result[1][1] ] );
 
 		},
 		setTimeout:10000
@@ -507,8 +517,8 @@ function GetZoneProcedure( select_procedure ){
 }
 
 
-function EventSaveProcedure( select_procedure, zone_procedure_default ){
-	//evento que se llama cuando se ha seleccionado un procedimiento
+function EventSaveProcedure( select_procedure, tipe_procedure, zone_procedure_default ){
+//evento que se llama cuando se ha seleccionado un procedimiento
 
 	var Zone_save_procedure; //lugar en el cual se ubicara el procedimiento
 	var dent_select_procedure;
@@ -541,20 +551,109 @@ function EventSaveProcedure( select_procedure, zone_procedure_default ){
 				zone_procedure_default == ZONE_TOP ||
 				zone_procedure_default == ZONE_BOT )){//Reconocer si el procedimiento requiere un cara del diente en especifico
 			
-			Zone_save_procedure = zone_procedure_default;//si el procedimiento tiene una zona por default, reescribo la variable para asigar dicha zona 
+			Zone_save_procedure = zone_procedure_default;//si el procedimiento tiene una zona por default, reescribo la variable para asigar dicha zona (obtenida al clickear la cara del diente)
 
-			if( zone_procedure_default == ZONE_NULA)
+			if( zone_procedure_default == ZONE_NULA){//en caso de ser un procedimiento general, reescribo la variable, para dejar el diente en null
+				
+				if( tipe_procedure === 'tratamientosMenu' )
+					GetDiagnosticosGeneralesHistory();
+
 				dent_select_procedure = null;
+			}
 			
 		}
+		/*
+		*******************************
+		*******************************TODO
+		*******************************
+		*******************************
+		*/
 
-		if( dent_select_procedure !== undefined && Zone_save_procedure !== undefined )
+		/*if( dent_select_procedure !== undefined && Zone_save_procedure !== undefined )
 			SaveProcedurePaciente( HISTORIA, dent_select_procedure, Zone_save_procedure, select_procedure);//TODO: verificar el uso del numero o codigo del diente		
-		
+		*/
+	}	
+}
+
+function GetDiagnosticosGeneralesHistory(){
+//traer diagnosticos generales asignados a una historia que aun no tengan un tratamiento
+
+	$.ajax({
+		beforeSend:function(){
+
+		},
+		type: "POST",
+		url:"./core/getDiagnosticosGeneralesHistory.php",
+		dataType:'json',
+		data:{historia:HISTORIA},
+		error: function(jqXHR,estado,error){
+			
+			console.log(jqXHR);			
+			
+		},
+
+		complete: function(jqXHR,estado){
+			
+			var result = JSON.parse( jqXHR.responseText );
+
+			if( ValidateResponseServer( result ) )
+				ShowPopoverDiagnosticosSelect( result );
+
+		},
+		setTimeout:10000
+
+	});
+
+}
+
+function ShowPopoverDiagnosticosSelect( result ){
+//popover para mostrar los diagnosticos que no se les ha asignado un tratamiento
+	var valores = result[0];
+	var keys = result[1];
+	var htmlDiagnosticos = '';
+
+	for (var i = valores.length - 1; i >= 0; i--) {
+		htmlDiagnosticos += '<div class="radio">\
+	                			<label for="awesomeness-'+i+'" title="'+valores[i][ keys[1] ]+'">\
+	            					<input type="radio" name="awesomeness" id="awesomeness-'+i+'" value="'+valores[i][ keys[0] ]+'"/>\
+	                				'+valores[i][ keys[2] ]+'\
+	                			</label>\
+	                		</div>';
 	}
 
-	
+	bootbox.dialog({
+        title: "Diagnostico a tratar",
+
+        message: '\
+        	<div class="row">\
+            	<div class="col-md-12"> \
+                	<form class="form-horizontal">\
+                	<div class="form-group">\
+	                	<label class="col-md-4 control-label" for="awesomeness">Seleccione el diagnostico.</label>\
+	                	<div class="col-md-7">'+htmlDiagnosticos+'</div> \
+                	</div>\
+                	</form>\
+            	</div>\
+            </div>',
+
+        buttons: {
+            success: {
+                label: "Seleccionar",
+                className: "btn-success",
+                callback: function () {
+                    var id = $("input[name='awesomeness']:checked").val();
+                    if( id != undefined )
+                    	return id;
+                }
+            }
+        }
+    });
+
+	return false;
+
 }
+
+
 function GenerateItemProcedureCode(Id, name, codigo, representacion, recurso, contenedor){
 //generar el html de  cada procedimiento para mostrarlo en las listas
 	var Representar = RetornarFigure(codigo,"alone");
@@ -810,36 +909,6 @@ function AddProceduresPacienteEvolution( result ){
 	}
 
 }
-function RefreshCssProceduresDent(){
-	//ajustar nuevamente el css (dimensiones y ubicaciones ) de los procedimientos para resolver problema de paneles ocultos en tratamientos y evolucion
-
-	JsonCss = CssJson( valores[i][ keys[1] ] );//obtengo css basico dependiendo de la ubicacion que tenga
-
-				var figureGenerate = $(GenerateFigureProcedure( valores[i][ keys[6] ]  ) )
-									.css(JsonCss);//genero la figura del procedimiento y agrego un css inicial
-
-				JsonCss = {};
-
-				$( location ).append( 
-					figureGenerate
-				);	//agrego la figura al DOM		
-
-				
-				var pocitionJson = FinalPocition(valores[i][ keys[1] ], 
-													$(figureGenerate).css("top"),
-													$(figureGenerate).css("height"),
-													$(figureGenerate).css("left"),
-													$(figureGenerate).css("width")
-															);//obtengo el css final de la figura (primero se agrega para obtener el tamaño real)
-				
-
-							
-				//$(location+" #"+$(figureGenerate).attr('id') ).css( pocitionJson );
-				$(figureGenerate ).css( pocitionJson );//agrego el nuevo css con el posicionamiento correcto
-}
-/**************************/
-/**************************/
-/**************************/
 
 function GenerateFigureProcedure( CodigoProcedure ){
 //funcion para devolver la representacion grafica de los procedimientos
