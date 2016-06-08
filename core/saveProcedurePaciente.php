@@ -12,6 +12,7 @@
 	$dent 		= isset( $_POST['dent'] ) ? $_POST['dent'] : '';
 	$zone 		= isset( $_POST['zone'] ) ? $_POST['zone'] : '';
 	$procedure 	= isset( $_POST['procedure'] ) ? $_POST['procedure'] : '';
+	$cause 	= isset( $_POST['cause'] ) ? $_POST['cause'] : '';
 
 	$TIP_PROCEDURE_DIAGNOSTICOS = 1;
 	$TIP_PROCEDURE_TRATAMIENTOS = 2;
@@ -64,23 +65,47 @@
 			}else{//si el procedimiento no requiere un diente, verifico que no este guardado un registro 
 				//con los mismos valores 
 
-				$sql = "SELECT Id, count(*) AS existe FROM pacienteprocedures WHERE 
-											Historia='$historia' AND 
-											Diente IS NULL AND
-											Zone = '$zone' AND 
-											`Procedure` = '$procedure' ";
+				if( $cause != '' ){//si la cause no esta vacia entonces es un tratamiento (cambia la busqueda)
 
-				$temResult = BuscarDatos( $sql );
+					$sql = "SELECT Id, count(*) AS existe FROM pacienteprocedures WHERE 
+												Historia='$historia' AND 
+												Diente IS NULL AND
+												Zone = '$zone' AND 
+												Cause = '$cause' ";
 
-				if( $temResult[0] != 'msm' && $temResult[0][0]->$temResult[1]['1'] > 0 ){//verifico si no se ha insertado un registro igual anteriormente
-					echo json_encode( $GLOBALS['resB2'] );
-					exit(0);
+					$temResult = BuscarDatos( $sql );
 
-				}else{	
+					if( $temResult[0] != 'msm' && $temResult[0][0]->$temResult[1]['1'] > 0 ){//verifico si no se ha insertado un registro igual anteriormente
+						echo json_encode( $GLOBALS['resB2'] );
+						exit(0);
 
-					$sql = "INSERT INTO pacienteprocedures(Historia, Zone, `Procedure`, Tipe) 
-							VALUES('$historia', '$zone', '$procedure', '$tipe')";				
+					}else{	
+
+						$sql = "INSERT INTO pacienteprocedures(Historia, Zone, `Procedure`, Tipe, Cause) 
+								VALUES('$historia', '$zone', '$procedure', '$tipe', '$cause')";				
+					}
+
+				}else{
+
+					$sql = "SELECT Id, count(*) AS existe FROM pacienteprocedures WHERE 
+												Historia='$historia' AND 
+												Diente IS NULL AND
+												Zone = '$zone' AND 
+												`Procedure` = '$procedure' ";
+
+					$temResult = BuscarDatos( $sql );
+
+					if( $temResult[0] != 'msm' && $temResult[0][0]->$temResult[1]['1'] > 0 ){//verifico si no se ha insertado un registro igual anteriormente
+						echo json_encode( $GLOBALS['resB2'] );
+						exit(0);
+
+					}else{	
+
+						$sql = "INSERT INTO pacienteprocedures(Historia, Zone, `Procedure`, Tipe) 
+								VALUES('$historia', '$zone', '$procedure', '$tipe')";				
+					}
 				}
+
 
 			}
 
