@@ -24,12 +24,7 @@
 }
 .itemPainted figure
 {
-	position: relative;
 	width: 5%;
-}
-.itemPainted figure svg
-{
-	width: 100%;
 }
 .itemPainted figure, .itemPainted p
 {
