@@ -1,0 +1,17 @@
+#ShowCitas
+{
+	width: 95%;
+}
+
+.ItemCita
+{
+	text-align: left;
+	background: rgba(122,182,252,0.7);
+	border-radius: 10px;
+	box-shadow: 5px 5px 15px black;
+	display: inline-block;
+	margin: 0.5em 2%;
+	padding: 0.5em;
+	vertical-align: top;
+	width: 40%;
+}

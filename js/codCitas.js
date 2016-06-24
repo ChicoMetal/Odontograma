@@ -72,6 +72,10 @@ $(document).ready(function(){
     	ResetSelects(this);
     });
 
+    $("#index").on( "click", function(){ 
+		window.location="./index.html";
+	});
+
     Pacientes();//traer los pacientes para agregarlos al select
     Medicos();//traer los pacientes para agregarlos al select
 

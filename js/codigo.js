@@ -1,8 +1,8 @@
 /*validar el asignamiento de tratamientos, solo permitir cuando exista un diagnostico*/
 
 //temporales variables
-var PACIENTE = '1104';
-var HISTORIA = '2';
+
+var HISTORIA;
 
 
 /*$(".subGroup").on("DOMNodeInserted", function(){//evento q desencadena la vista de los procedimientos agregados en modo de tooltip
@@ -83,11 +83,8 @@ var REPRESENTACION_GRAFICO = 2;
 //Diente simbolico para asignar procedimientos generales, que no se realizan en los dientes
 
 $(document).ready(function(){
-	
-	GetOdontograma();//mostrar el odontograma
-	GetMenuProcedures( PROCEDURE_TIPE_DIAGNOSTICO );//traer los diagnosticos 
-	GetMenuProcedures( REPRESENTACION_GRAFICO );//traer los tratamientos 
-	getEvolutionHistory(HISTORIA);//obtiene las evoluciones ya almacenadas de la historia
+
+	getHistory(PACIENTE);//obtengo el codigo de la historia abierta
 
 	$(".nav.nav-tabs li").on('click', function(){
 		GetOdontograma();//mostrar el odontograma
@@ -175,8 +172,51 @@ $(document).ready(function(){
 		EventEvolucionarProcedimientos(this);		
 	});
 
+	$("#closeHistory").on("click", function(){
+		CloseHistory(HISTORIA);
+	});
 
 });
+
+function getHistory( Paciente ){
+//Guarda la admision de la cita
+
+	$.ajax({
+		beforeSend:function(){
+
+		},
+		url:"./core/getHistory.php",
+		method:"POST",
+		data: {paciente:Paciente},
+		success: function( res){
+								
+		},
+		error: function(jqXHR,estado,error){
+			console.log(jqXHR);
+		},
+		complete: function(jqXHR,estado){		
+			
+			var result = JSON.parse( jqXHR.responseText );
+
+			if( ValidateResponseServer( result ) ){				
+				HISTORIA = result[0][0][result[1][0]];//obtener el codigo de la ultima historia
+				console.log( HISTORIA );
+				ShowOdontograma();
+			}
+
+		},
+		setTimeout:10000
+	});
+
+
+}
+
+function ShowOdontograma(){
+	GetOdontograma();//mostrar el odontograma
+	GetMenuProcedures( PROCEDURE_TIPE_DIAGNOSTICO );//traer los diagnosticos 
+	GetMenuProcedures( REPRESENTACION_GRAFICO );//traer los tratamientos 
+	getEvolutionHistory(HISTORIA);//obtiene las evoluciones ya almacenadas de la historia
+}
 
 function EventEvolucionarProcedimientos( element ){
 //al dispararse el evento de realizar una evolucion se realiza lo siguiente
@@ -1294,5 +1334,37 @@ function AddEvolutionHistory( result ){
 
 	$('#ContentDescripcionEvol').append(htmlTitle);
 	$('#ContentDescripcionEvol').append(htmlEvolutions);
+
+}
+
+
+function CloseHistory(Historia){
+//Obtiene las evoluciones almacenadas de la historia
+
+	$.ajax({
+		beforeSend:function(){
+
+		},
+		type: "POST",
+		url:"./core/closeHistory.php",
+		dataType:'json',
+		data:{historia:Historia},
+		error: function(jqXHR,estado,error){
+			
+			console.log(jqXHR);			
+			
+		},
+
+		complete: function(jqXHR,estado){
+			
+			var result = JSON.parse( jqXHR.responseText );
+
+			if( ValidateResponseServer( result, true ) )
+				window.location="./index.html";
+
+		},
+		setTimeout:10000
+
+	});
 
 }
