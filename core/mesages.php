@@ -13,6 +13,7 @@
 	$resB2 = ["msm","0011"]; /* Error en la instruccion*/
 	$resB3 = ["msm","1100"]; /* Instruccion ejecutada correctamente*/
 	$resB4 = ["msm","1101"]; /* Peticion indeterminada */
+	$resC4 = ["msm","1001"]; /* Ya hay una cita pendiente */
 
 	
 ?>

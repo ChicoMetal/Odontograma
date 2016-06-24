@@ -176,11 +176,7 @@ svg.figureDent .faceDent:hover
 	height: auto;
 	padding: 0;
 }
-.textDent
-{
-	text-align: center;
-	font-size: 0.7em;
-}
+
 #diagnosticos .contentOneDent svg g .dent1
 {
 	/*fill: rgb(108,189,202);*/

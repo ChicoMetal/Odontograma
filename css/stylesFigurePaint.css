@@ -31,3 +31,21 @@
 	display: inline-block;
 	vertical-align: middle;
 }
+.textDent
+{
+	text-align: center;
+	font-size: 0.7em;
+}
+.textDent.headDent
+{
+	padding-top: 0.2em;
+}
+.textDent.headDent p
+{
+	margin: 0;
+}
+.textDent.headDent *
+{
+	display: inline-block;
+	vertical-align: middle;
+}

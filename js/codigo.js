@@ -127,9 +127,10 @@ $(document).ready(function(){
 
 	$(".subGroup").on("mouseenter", ".contentOneDent", function(){
 	//evento de ocultar y mostrar popover
-		
+	
 		var Dent = $(this).attr('cod');
 		var Tipe = $(this).parents('.tab-pane').attr('id');
+		console.log( Tipe );
 		if( Tipe == "diagnosticos" )
 			Tipe = PROCEDURE_TIPE_DIAGNOSTICO
 		else if( Tipe == "tratamientos" )		
@@ -149,7 +150,7 @@ $(document).ready(function(){
 	});
 
 	$(".procedureNullRepresentacion").on("click", ".delProcedurePaciente", function(){
-	//evento del boton eliminar procedimientos de un paciente en una historia
+	//evento del boton eliminar procedimientos generales de un paciente en una historia
 
 		var codigoProcedure = $(this).parents('.row').attr('cod');
 		DelProcedurePaciente( codigoProcedure );
@@ -157,7 +158,6 @@ $(document).ready(function(){
 
 	$('.subGroup').on('click', '.delProcedurePaciente',function(){
 	//evento del boton eliminar procedimientos de un paciente  en una historia
-
 		var codigoProcedure = $(this).parents('.row').attr('cod');
 		DelProcedurePaciente( codigoProcedure );
 	});
@@ -187,7 +187,7 @@ function EventEvolucionarProcedimientos( element ){
 	//prompt obtener la observacion de la evolucion
 		 if (result != null) {                                             
 		    EvolProcedurePaciente( codigoProcedureD, codigoProcedureT, result );   
-		    getEvolutionHistory( HISTORIA );                          
+		                            
 		  } 
 	});	
 }
@@ -223,80 +223,6 @@ function GetOdontograma(){//peticion para buscar los dientes a la BD
 
 }
 
-function ValidateResponseServer( result, HiddenAlert=false ){ //Confirmar si la respuesta del server es o no un mensaje
-	
-	
-	if( ! $.isArray( result ) ){
-		
-		alert("Error");
-
-	}else if( result[0] === "msm" ){
-		
-		var key = result[1];
-
-		var mensaje = MensajeServer( key );
-		
-		if( HiddenAlert == true ){
-			console.log( mensaje );
-			return ValidateMsmResponse( key );
-		}else
-			alert(mensaje);
-
-	}else{
-
-		return true;
-
-	}
-
-}
-
-function MensajeServer( codigo ){ //Retornar un mensaje deacuerdo al codigo enviado del server
-	 
-	var mss = new Array(
-		["0000","Error al comuncarse con la base de datos"],
-		["0001","Error en la instruccion query"],
-		["0010","No se encontraron datos"],
-		["1000","Instruccion ejecutada correctamente"],
-		["0100","Error en la seleccion de la tabla"],
-		["0011","Error en la instruccion"],
-		["1100","Instruccion ejecutada correctamente"],
-		["1101","Peticion indeterminada"]
-	);
-
-	for (var i = mss.length - 1; i >= 0; i--) {
-		
-		if ( mss[i][0] == codigo )
-			return mss[i][1];
-
-	};
-
-	return "Salida inesperada";
-}
-
-function ValidateMsmResponse( msm ){ 
-//Verifico si el mensaje enviado desde el server es de exito o de error, en caso de no necesitar un mensaje
-
-	var mss = new Array(
-		["0000",false],
-		["0001",false],
-		["0010",false],
-		["1000",true],
-		["0100",false],
-		["0011",false],
-		["1100",true],
-		["1101",false]
-	);
-
-	for (var i = mss.length - 1; i >= 0; i--) {
-		
-		if ( mss[i][0] == msm )
-			return mss[i][1];
-
-	};
-
-	return false;
-}
-
 function AddDents( result ){ //agrega los dientes al html
 
 	var keys = result[1];
@@ -320,7 +246,7 @@ function AddDents( result ){ //agrega los dientes al html
 function GenerateDentCode( id, cod ){ //codigo del diente para pintar
 	var dentOne = '\
 	<figure id="'+id+'" cod="'+cod+'" class="contentOneDent">\
-	<div class="textDent headDent">'+id+'</div>\
+	<div class="textDent headDent"><p>'+id+'</p></div>\
 		<div class="contentAdsolute">\
 		<svg class="figureDent" viewBox="0 0 6598 10423" >\
 		 <g id="Capa_x0020_1">\
@@ -843,8 +769,49 @@ function AddProceduresPaciente( result ){
 	}
 
 	if( targetShowEvolutions ){//si hay diagnosticos, ejecuto la funcion para mostrarlos en evolucion
-		AddProceduresPacienteEvolution( result );
+		GetEvolutionTratamiento( result );
 	}
+
+}
+
+function GetEvolutionTratamiento( result ){
+//busco los tratamientos de los diagnosticos evolucionados para reemplazarlos en ej JSON por el diagnostico correspondiente
+	var valores = result[0];
+	var keys = result[1];
+
+	for (var i = valores.length - 1; i >= 0; i--) {
+		if( valores[i][ result[1][3] ] == PROCEDURE_TIPE_TRATAMIENTO )
+			valores.splice(i,1);
+	}
+
+	result[0] = valores;
+
+	$.ajax({
+		beforeSend:function(){
+
+		},
+		type: "POST",
+		url:"./core/GetEvolutionTratamiento.php",
+		dataType:'json',
+		data:{diagnosticos:result},
+		error: function(jqXHR,estado,error){
+			
+			console.log(jqXHR);			
+			
+		},
+
+		complete: function(jqXHR,estado){
+			
+			var result2 = JSON.parse( jqXHR.responseText );
+
+			if( ValidateResponseServer( result2 ) )
+				AddProceduresPacienteEvolution( result2 );
+
+		},
+		setTimeout:10000
+
+	});
+
 
 }
 
@@ -860,10 +827,9 @@ function AddProceduresPacienteEvolution( result ){
 	for (var i = valores.length - 1; i >= 0; i--) {
 
 		var location = '';
-		if( valores[i][ keys[3] ] == PROCEDURE_TIPE_DIAGNOSTICO ) //establesco si la representacion es un diagnostico, tratamiento
-			location += " #evolucion ";
-		else
-			continue;
+		
+		location += " #evolucion ";
+
 
 
 		if( valores[i][ keys[1] ] != ZONE_NULA && valores[i][ keys[0] ] !== null ){ //establezco si posee una zona
@@ -923,6 +889,8 @@ function AddProceduresPacienteEvolution( result ){
 	GenerateEvolutionDienteNull( '#evolucion .procedureNullRepresentacion' );//inicio la opcion de evolucion para pocedimiento generales
 
 }
+
+
 
 function GenerateFigureProcedure( CodigoProcedure ){
 //funcion para devolver la representacion grafica de los procedimientos
@@ -1249,8 +1217,10 @@ function EvolProcedurePaciente( Diagnostico, Tratamiento, Nota  ){
 			
 			var result = JSON.parse( jqXHR.responseText );
 
-			if( ValidateResponseServer( result, true ) )
+			if( ValidateResponseServer( result, true ) ){
 				GetOdontograma();
+				getEvolutionHistory( HISTORIA );  
+			}
 
 		},
 		setTimeout:10000
