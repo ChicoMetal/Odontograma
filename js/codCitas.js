@@ -113,7 +113,8 @@ function Limpiar(selector){ //limpia los formularios
 	});
 }
 
-function Pacientes(){ //busca los pacientes existentes en la BD para agregarlas al SELECT del DOM
+function Pacientes(){ 
+//busca los pacientes existentes en la BD para agregarlas al SELECT del DOM
 
   $.ajax({
 	beforeSend:function(){

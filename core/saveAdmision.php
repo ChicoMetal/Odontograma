@@ -22,6 +22,13 @@
 
 		$result = InsertarDatos( $sql );
 
+		if( $result == $GLOBALS['resA4'] ){
+
+			$sql = "UPDATE citas SET Estado = 2 WHERE Id = '$cita'";
+
+			$result = InsertarDatos( $sql );
+		}
+
 		echo json_encode( $result );
 		
 	}else{

@@ -18,11 +18,11 @@
 
 	if( $paciente != '' && $medico != '' && $fecha != '' && $hora != '' ){
 
-		$sql = "SELECT Id, Paciente FROM citas WHERE Medico='$medico' AND Fecha='$fecha' AND Hora = '$hora'";
+		$sql = "SELECT Id, Paciente FROM citas WHERE Medico='$medico' AND Fecha='$fecha' AND Hora = '$hora'";//busco si hay una cita con los mismos datos
 
 		$free =  BuscarDatos( $sql );
 
-		if( $free[0] == 'msm' && $free == $GLOBALS['resA3']  ){
+		if( $free[0] == 'msm' && $free == $GLOBALS['resA3']  ){//verifico que no exista una cita igual
 
 			$sql = "INSERT INTO citas(Paciente,Medico, Fecha, Hora, Usuario)
 					VALUES('$paciente', '$medico', '$fecha', '$hora', '$usuario')";

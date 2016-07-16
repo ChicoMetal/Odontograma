@@ -5,7 +5,7 @@ $(document).ready(function(){
 	$('#ShowCitas').on("click", ".btn.ItemCita", function(){
 	//evento para agregar cada procedimiento de cada grupo en el menu
 
-    	OpenHistoria( $(this).attr('id') );
+    	OpenHistoria( $(this).attr('id'), $(this).attr('cita') );
 
 	});
 
@@ -58,7 +58,7 @@ function AddCitasAdmitidas( result ){
 	function GenerateCodeCita( datos, keys ){
 	//genera el html de cada cita
 		var html = '\
-					<div class="ItemCita btn" id="'+datos[ keys[1] ]+'">\
+					<div class="ItemCita btn" id="'+datos[ keys[1] ]+'" cita="'+datos[ keys[0] ]+'">\
 						<div class="row">	\
 							<div class="col-md-6">\
 								<label >'+keys[1]+':</label>\
@@ -93,7 +93,7 @@ function AddCitasAdmitidas( result ){
 
 }
 
-function OpenHistoria( Paciente ){
+function OpenHistoria( Paciente, Cita ){
 //Guarda la admision de la cita
 
 	$.ajax({
@@ -102,7 +102,7 @@ function OpenHistoria( Paciente ){
 		},
 		url:"./core/OpenHistoria.php",
 		method:"POST",
-		data: {paciente:Paciente, medico:MEDICO},
+		data: {cita:Cita, paciente:Paciente, medico:MEDICO},
 		success: function( res){
 								
 		},

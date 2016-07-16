@@ -116,6 +116,12 @@
 			"bd_password" 	:  "",
 			"bd_base" 		:  "odontograma1"
 		}';
+		/*$datosConexion = '{
+			"bd_host" 		: "localhost", 
+			"bd_usuario" 	:  "techsof_odontogr", 
+			"bd_password" 	:  "19915991",
+			"bd_base" 		:  "techsof_odontograma"
+		}';*/
 
 		$datosConexion = json_decode( $datosConexion );
 

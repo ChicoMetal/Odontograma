@@ -7,10 +7,11 @@
 	include_once($PATH."/conexion.php");
 	include_once($PATH."/mesages.php");
 
-	$paciente 	= isset( $_POST['paciente'] ) ? $_POST['paciente'] : '';
-	$medico 	= isset( $_POST['medico'] ) ? 	$_POST['medico'] : '';
+	$cita 		= isset( $_POST['cita'] ) 		? $_POST['cita'] : '';
+	$paciente 	= isset( $_POST['paciente'] ) 	? $_POST['paciente'] : '';
+	$medico 	= isset( $_POST['medico'] ) 	? 	$_POST['medico'] : '';
 
-	if( $paciente != ''  && $medico != '' ){
+	if( $paciente != ''  && $medico != '' && $cita != '' ){
 		
 		$TIP_PROCEDURE_DIAGNOSTICOS = 1;
 
@@ -22,11 +23,14 @@
 			
 			$sql = " INSERT INTO historias(Paciente, Medico) VALUES('$paciente', '$medico')";
 
-			$result = InsertarDatos( $sql );//guardo ina historia
+			$result = InsertarDatos( $sql );//guardo una historia
 
 			if( $result[0] == 'msm' && $result == $GLOBALS['resA4'] ){
-				
+				//Se guardo exitosamente
 				echo json_encode( $GLOBALS['resB3'] ); 
+
+				ChangeStatusCita( $cita );//cambio el estado de la cita
+
 			}else{
 				echo json_encode( $GLOBALS['resB2'] );
 			}
@@ -47,7 +51,6 @@
 				
 				if( $newHistory[0] != 'msm' ){
 				
-
 					$padre = $newHistory[0][0]->$newHistory[1][0];//id de la ultima historia
 
 					$sql = "SELECT Fecha, Diente, Zone, `Procedure`, Tipe, Cause FROM pacienteprocedures WHERE Historia = '$padreOld' 
@@ -56,7 +59,7 @@
 
 					$oldProcedures = BuscarDatos( $sql );//busco los procedimientos de la historia
 
-					if( $oldProcedures[0] != 'msm' ){
+					if( $oldProcedures[0] != 'msm' ){//si trae resultados
 						
 
 						$valores = $oldProcedures[0];
@@ -163,11 +166,14 @@
 								
 							}
 							
-							$result = InsertarDatos( $sqlPP );
+							$result = InsertarDatos( $sqlPP );//inserto cada procedimiento que exista (correspondiente a la iteracion)
 
 							if ( $result != $GLOBALS['resA4'] ) {
 								$sql = "DELETE * FROM pacienteprocedures WHERE Historia =='$padre'";
 								InsertarDatos( $sql );
+
+								DelNewHistoriPaciente( $padre );//elimino la historia creada
+
 								exit(0);
 								echo json_encode( $GLOBALS['resB2'] );
 							}				
@@ -175,6 +181,8 @@
 						}
 
 						echo json_encode( $GLOBALS['resB3'] );//si todo sale bn
+
+						ChangeStatusCita( $cita );//cambio el estado de la cita
 
 					}else{
 						echo json_encode( $oldProcedures ); 
@@ -192,11 +200,26 @@
 
 		}
 
-
+		
 	}else{
 
 		echo json_encode( $GLOBALS['resB4'] );
 
+	}
+
+
+	function ChangeStatusCita( $IdCita ){
+	//cambia el estado de la cita a atendida
+		$sql = " UPDATE citas SET Estado = 3 WHERE Id = '$IdCita'";
+
+		InsertarDatos( $sql );
+	}
+
+	function DelNewHistoriPaciente( $IdHistory ){
+	//cambia el estado de la cita a atendida
+		$sql = " DELETE FROM historias WHERE Codigo = '$IdHistory' ";
+
+		InsertarDatos( $sql );
 	}
 
 ?>
