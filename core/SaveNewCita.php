@@ -24,12 +24,26 @@
 
 		if( $free[0] == 'msm' && $free == $GLOBALS['resA3']  ){//verifico que no exista una cita igual
 
-			$sql = "INSERT INTO citas(Paciente,Medico, Fecha, Hora, Usuario)
-					VALUES('$paciente', '$medico', '$fecha', '$hora', '$usuario')";
+			$sqlOld = " SELECT '$fecha' < NOW() AS Pasado,  NOW() AS Presente ";
 
-			$result = InsertarDatos( $sql );
+			$resultOld = BuscarDatos( $sqlOld );//Comparo si la fecha enviada ya ha pasado
 
-			echo json_encode( $result );
+			$valOld = $resultOld[0];
+			$keyOld = $resultOld[1];
+
+			if( $valOld[0]->$keyOld['0'] != '1' ){//Si no ha pasado, guardo los datos
+
+				$sql = "INSERT INTO citas(Paciente,Medico, Fecha, Hora, Usuario)
+						VALUES('$paciente', '$medico', '$fecha', '$hora', '$usuario')";
+
+				$result = InsertarDatos( $sql );
+
+				echo json_encode( $result );
+
+			}else{
+				echo json_encode( $GLOBALS['resC5'] );
+			}
+
 
 		}else{
 			echo json_encode( $GLOBALS['resC4'] );

@@ -14,6 +14,7 @@
 	$resB3 = ["msm","1100"]; /* Instruccion ejecutada correctamente*/
 	$resB4 = ["msm","1101"]; /* Peticion indeterminada */
 	$resC4 = ["msm","1001"]; /* Ya hay una cita pendiente */
+	$resC5 = ["msm","1011"]; /* La fecha ya ha pasado */
 
 	
 ?>

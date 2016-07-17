@@ -1,17 +1,15 @@
 var USUARIO = 92654;
 
+var JsonConfigTime = {
+	'minTime': '6:00am',
+	'maxTime': '10:00pm',
+    'timeFormat': 'H:i:s',
+    'step': 15,
+    'forceRoundTime': true
+};
+
 $(document).ready(function(){
 	
-	var JsonConfigTime = {
-		'minTime': '6:00am',
-    	'maxTime': '10:00pm',
-    	'disableTimeRanges': [
-	        ['10pm', '7:30am']
-	    ],
-	    'timeFormat': 'H:i:s',
-	    'step': 15,
-	    'forceRoundTime': true
-	};
 
 	$.datepicker.setDefaults({
     	dayNamesShort:$.datepicker.regional[ "es" ],
@@ -21,7 +19,7 @@ $(document).ready(function(){
     }); //campos date
 
 	$( ".typeDate" ).datepicker();//campos date
-	$('#HoraCita').timepicker(JsonConfigTime);
+	//$('#HoraCita').timepicker(JsonConfigTime);
 
 	$('#NewCita').validate({//validacion del formulario		
 	    rules :{
@@ -76,10 +74,118 @@ $(document).ready(function(){
 		window.location="./index.html";
 	});
 
+    $('#dateCita').on('change', function(){
+    //traer horas ocupadas en la fecha
+    	ChangeTimePicker();
+    });
+
+    $('#DrCita').on('change', function(){
+    //traer horas ocupadas en la fecha
+    	ChangeTimePicker();
+    });
+
     Pacientes();//traer los pacientes para agregarlos al select
     Medicos();//traer los pacientes para agregarlos al select
 
 });
+
+function ChangeTimePicker(){
+//refrescar la lista de tiempo
+	var Medico = $('#DrCita').val();
+	var Fecha = $('#dateCita').val();
+
+	$('#HoraCita').timepicker('remove');
+	$('#HoraCita').val('');
+
+	if( Medico != 'Vacio' && Fecha != '' ){
+		GetTimeOff( Medico, Fecha );
+	}
+
+}
+
+function GetTimeOff( Medico, Fecha ){ //busca los medicos existentes en la BD para agregarlas al SELECT del DOM
+
+  $.ajax({
+	beforeSend:function(){
+
+	},
+	url:"./core/GetTimeOff.php",
+	method:"POST",
+	data: { DrCita:Medico, dateCita:Fecha},
+	success: function( res){
+							
+	},
+	error: function(jqXHR,estado,error){
+		console.log(jqXHR);
+	},
+	complete: function(jqXHR,estado){		
+		
+		var result = JSON.parse( jqXHR.responseText );
+
+		if( ValidateResponseServer( result, true ) ){
+			RefresTimeList( result );						
+		}else{//Si no hay citas pendientes agrego la lista de tiempo completa
+			$('#HoraCita').timepicker(JsonConfigTime);
+		}
+			
+	},
+	setTimeout:10000
+  });
+		
+}
+
+function RefresTimeList( Result ){
+//Segun la fecha seleccionada inhabilito las horas ya ocupadas
+	
+	var Valores = Result[0];
+	var Keys = Result[1];
+
+	var RangosTime = new Array;
+
+	for (var i = Valores.length - 1; i >= 0; i--) {
+		
+		var itemtango = new Array(  Valores[i][ Keys['1'] ],  AddOneMinuteHour( Valores[i][ Keys['1'] ] )  );
+		RangosTime.push( itemtango );
+
+	}
+
+	var JsonConfigTimeItemOff = {
+		'minTime': '6:00am',
+    	'maxTime': '10:00pm',
+	    'timeFormat': 'H:i:s',
+	    'disableTimeRanges': RangosTime,
+	    'step': 15,
+	    'forceRoundTime': true
+	};
+
+
+
+	$('#HoraCita').timepicker( JsonConfigTimeItemOff );
+}
+
+function AddOneMinuteHour( Time ){
+//Agrego un minuto a las horas para agregar el rango en el timepicker y desactivar la hora
+
+	var timeArray = Time.split(":");
+	var timeRango = Complete( parseInt( timeArray[1] )+1 );
+
+	timeArray[1] = timeRango;
+
+	return timeArray[0]+':'+timeArray[1]+':'+timeArray[2];
+}
+
+function Complete(num){
+//Completar con ceros a la izquierda para dos digitos 
+	numtmp='"'+num+'"';
+	largo=numtmp.length-2;
+	numtmp=numtmp.split('"').join('');
+	if(largo==2)return numtmp;
+	ceros='';
+	pendientes=2-largo;
+	for(i=0;i<pendientes;i++)ceros+='0';
+	return ceros+numtmp;
+
+}
 
 function ResetSelects(form){ //funcion clean para los select
 
@@ -107,10 +213,14 @@ function ValidateSelect(form){ //valida los select
 	return target	 
 }
 
-function Limpiar(selector){ //limpia los formularios
+function Limpiar(selector){ 
+//limpia los formularios
+
 	$(selector).each(function(){
 	  this.reset();						  
 	});
+
+	
 }
 
 function Pacientes(){ 
@@ -217,8 +327,12 @@ function GuardarCita(form){
 			
 			var result = JSON.parse( jqXHR.responseText );
 
-			if( ValidateResponseServer( result, false ) )
+			ChangeTimePicker();
+
+			if( ValidateResponseServer( result, false ) ){
 				console.log( result );
+				
+			}
 
 		},
 		setTimeout:10000

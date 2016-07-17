@@ -37,7 +37,8 @@ function MensajeServer( codigo ){ //Retornar un mensaje deacuerdo al codigo envi
 		["0011","Error en la instruccion"],
 		["1100","Instruccion ejecutada correctamente"],
 		["1101","Peticion indeterminada"],
-		["1001","Ya hay una cita pendiente"]
+		["1001","Ya existe una cita pendiente"],
+		["1011","La fecha ya ha pasado"]
 	);
 
 	for (var i = mss.length - 1; i >= 0; i--) {
@@ -62,7 +63,8 @@ function ValidateMsmResponse( msm ){
 		["0011",false],
 		["1100",true],
 		["1101",false],
-		["1001",false]
+		["1001",false],
+		["1011",false]
 	);
 
 	for (var i = mss.length - 1; i >= 0; i--) {
