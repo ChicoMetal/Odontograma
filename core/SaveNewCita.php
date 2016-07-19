@@ -21,10 +21,12 @@
 		$sql = "SELECT Id, Paciente FROM citas WHERE Medico='$medico' AND Fecha='$fecha' AND Hora = '$hora'";//busco si hay una cita con los mismos datos
 
 		$free =  BuscarDatos( $sql );
-
+		
 		if( $free[0] == 'msm' && $free == $GLOBALS['resA3']  ){//verifico que no exista una cita igual
 
-			$sqlOld = " SELECT '$fecha' < NOW() AS Pasado,  NOW() AS Presente ";
+			$timestampCita = $fecha." ".$hora;
+
+			$sqlOld = " SELECT '$timestampCita' < NOW() AS Pasado,  NOW() AS Presente ";
 
 			$resultOld = BuscarDatos( $sqlOld );//Comparo si la fecha enviada ya ha pasado
 

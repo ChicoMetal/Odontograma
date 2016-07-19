@@ -20,7 +20,7 @@
 		$sql = "SELECT pp.Id, i.Codigo, i.Nombre
 				FROM pacienteprocedures pp, items i
 				WHERE pp.`Procedure` = i.Id 
-						AND pp.Historia = '$TIP_PROCEDURE_TRATAMIENTOS'
+						AND pp.Historia = '$historia'
 						AND pp.Tipe = '$TIP_PROCEDURE_DIAGNOSTICOS'
 						AND pp.Zone = '$ZONE_NULLL'
 						AND pp.Id NOT IN ( SELECT pp.Cause FROM pacienteprocedures pp WHERE pp.Tipe = '$TIP_PROCEDURE_TRATAMIENTOS' )";

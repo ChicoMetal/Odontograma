@@ -1,4 +1,5 @@
 <?php
+	//Buscar si existen citas que se crucen con la que envian 
 
 	if( !isset($PATH) ){//verifico si existe la variable con la ruta absoluta
 		include_once("./PATH.php");				

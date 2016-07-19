@@ -17,8 +17,8 @@
 		$sql = "SELECT pp.id, i.Codigo, i.Nombre AS nombreItem, z.Id AS zoneId, z.Nombre AS nombreZona, pp.Tipe
 				FROM pacienteprocedures pp, items i, dientes d, zones z
 				WHERE  pp.Diente = d.Id  AND pp.`Procedure` = i.Id AND pp.Zone = z.Id 
-										AND pp.Id NOT IN (SELECT Diagnostico FROM evoluciones)
-										AND pp.Id NOT IN (SELECT Tratamiento FROM evoluciones)
+										AND pp.Id NOT IN (SELECT Diagnostico FROM evoluciones WHERE Finish = TRUE )
+										AND pp.Id NOT IN (SELECT Tratamiento FROM evoluciones WHERE Finish = TRUE )
 										AND pp.Id IN ( SELECT Id FROM pacienteprocedures WHERE Historia = '$historia' AND Diente = '$dent') 
 										AND (
 											pp.Id IN ( SELECT Id FROM pacienteprocedures WHERE Tipe = '$TIP_PROCEDURE_TRATAMIENTOS' AND Cause IS NOT NULL )  
