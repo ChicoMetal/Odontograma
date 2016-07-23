@@ -11,17 +11,11 @@
 	$tratamiento 				= isset( $_POST['tratamiento'] ) ? 	$_POST['tratamiento'] : '';
 	$descripcion 				= isset( $_POST['descripcion'] ) ? 	$_POST['descripcion'] : '';
 	$finish 					= isset( $_POST['finish'] ) 	 ? 	$_POST['finish'] : '';
+	if( $diagnostico != '' && $tratamiento != '' && $descripcion != '' && $finish != '' ){
 
-	if( $diagnostico != '' && $tratamiento != '' && $descripcion != '' ){
-
-		if( $finish != '0' ){
-			$sql = "INSERT INTO evoluciones(Diagnostico,Tratamiento, Descripcion)
-					VALUES('$diagnostico', '$tratamiento', '$descripcion')";
-		}else{
-			$sql = "INSERT INTO evoluciones(Diagnostico,Tratamiento, Descripcion, Finish)
-			VALUES('$diagnostico', '$tratamiento', '$descripcion', '$finish')";
-		}
-
+		$sql = "INSERT INTO evoluciones(Diagnostico,Tratamiento, Descripcion, Finish)
+			   VALUES('$diagnostico', '$tratamiento', '$descripcion', $finish)";
+	
 		$result = InsertarDatos( $sql );
 
 		echo json_encode( $result );

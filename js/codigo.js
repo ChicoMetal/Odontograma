@@ -3,7 +3,7 @@
 //temporales variables
 
 var HISTORIA;
-
+var eventoa;
 
 /*$(".subGroup").on("DOMNodeInserted", function(){//evento q desencadena la vista de los procedimientos agregados en modo de tooltip
 	
@@ -147,14 +147,13 @@ $(document).ready(function() {
 	});
 
 	$(".procedureNullRepresentacion").on("click", ".delProcedurePaciente", function() {
-		//evento del boton eliminar procedimientos generales de un paciente en una historia
-
+	//evento del boton eliminar procedimientos generales de un paciente en una historia
 		var codigoProcedure = $(this).parents('.row').attr('cod');
 		DelProcedurePaciente(codigoProcedure);
 	});
 
 	$('.subGroup').on('click', '.delProcedurePaciente', function() {
-		//evento del boton eliminar procedimientos de un paciente  en una historia
+	//evento del boton eliminar procedimientos de un paciente  en una historia
 		var codigoProcedure = $(this).parents('.row').attr('cod');
 		DelProcedurePaciente(codigoProcedure);
 	});
@@ -222,7 +221,8 @@ function ShowOdontograma() {
 }
 
 function EventEvolucionarProcedimientos(element) {
-	//al dispararse el evento de realizar una evolucion se realiza lo siguiente
+//al dispararse el evento de realizar una evolucion se realiza lo siguiente
+	
 	var codigoProcedureD = $(element).parents('.row').attr('codD');
 	var codigoProcedureT = $(element).parents('.row').attr('codT');
 
@@ -461,7 +461,7 @@ function GetProcedures(GroupId) {
 
 			var result = JSON.parse(jqXHR.responseText);
 
-			if (ValidateResponseServer(result))
+			if (ValidateResponseServer(result, true))
 				AddProcedures(result, GroupId)
 
 		},
@@ -472,7 +472,7 @@ function GetProcedures(GroupId) {
 }
 
 function AddProcedures(result, parent) {
-	//parsea json y agrega el html de los menus procedimientos
+//parsea json y agrega el html de los menus procedimientos
 
 	var keys = result[1];
 	var valores = result[0];
@@ -498,21 +498,20 @@ function AddProcedures(result, parent) {
 	$(".panel-collapse p").on("click", function() {
 		//evento para agregar cada procedimiento de cada grupo
 
-		$(".subGroup").unbind("click"); //remover evento anterior si existe para las caras de los dientes
-		//$(".contentOneDent").unbind("click");//remover evento anterior si existe para las caras de los dientes
-
 		var select_procedure = $(this).parent().attr('id'); //procedimiento seleccionado
 		var tipe_procedure = $(this).parents('section').attr('id'); //procedimiento seleccionado
 
 		if (select_procedure != null)
 			GetZoneProcedure(select_procedure, tipe_procedure);
 
+		$('.subGroup ').off(".EventAddProcedure"); //remover evento anterior (si ya se ha generado dicho evento)
+
 	});
 
 }
 
 function GetZoneProcedure(select_procedure, tipe_procedure) {
-	//Busca en base de datos la zona en la que debe representarse el procedimiento, o si no la requiere
+//Busca en base de datos la zona en la que debe representarse el procedimiento, o si no la requiere
 
 	$.ajax({
 		beforeSend: function() {
@@ -551,23 +550,26 @@ function EventSaveProcedure(select_procedure, tipe_procedure, zone_procedure_def
 	var dent_select_procedure;
 	var chooseDiagnostico; //debe estar null para validar mas adelante
 
-	$(".subGroup").on("click", ".contentOneDent .faceDent", function() {
+	$(".subGroup").on("click.EventAddProcedure", ".contentOneDent .faceDent", function() {
 
 		dent_select_procedure = $(this).parents('.contentOneDent').attr('cod');
 		Zone_save_procedure = $(this).attr('cod'); //en caso de no tener una zona por default, obtengo la cara clickeada
 
 	});
 
-	$(".subGroup").on("click", ".contentOneDent", function() { //desencadena el evento al dar click a un diente
+	$(".subGroup").on("click.EventAddProcedure", ".contentOneDent", function() { //desencadena el evento al dar click a un diente
 		SendProcedurePacinete($(this).attr('cod'));
+
 	});
 
-	$('.subGroup').on('click', function(e) { //desencadena el evento cuando le den click al contenedor de los dientes (para procedimientos generales)		
+	$(".subGroup").on('click.EventAddProcedure', function(e) { //desencadena el evento cuando le den click al contenedor de los dientes (para procedimientos generales)		
 		if (e.target !== this) //verifico si el click se ejecuto en uno de los dientes o no
 			return;
 		else //si no se dio click en uno de los dientes, se ejecuta la siguiente instruccion
 			SendProcedurePacinete();
+
 	});
+
 
 	function SendProcedurePacinete(Dent = undefined) {
 
@@ -607,6 +609,9 @@ function EventSaveProcedure(select_procedure, tipe_procedure, zone_procedure_def
 
 		}
 	}
+
+	
+		
 }
 
 function GetDiagnosticosGeneralesHistory() {
@@ -626,15 +631,6 @@ function GetDiagnosticosGeneralesHistory() {
 
 			console.log(jqXHR);
 
-		},
-
-		complete: function(jqXHR, estado) {
-
-/*			var result = JSON.parse( jqXHR.responseText );
-
-			if( ValidateResponseServer( result ) )
-				return ShowPopoverDiagnosticosSelect( result );*/
-			
 		},
 		setTimeout: 10000
 
@@ -778,7 +774,7 @@ function GetProcedurePaciente() {
 
 			var result = JSON.parse(jqXHR.responseText);
 
-			if (ValidateResponseServer(result))
+			if (ValidateResponseServer(result, true))
 				AddProceduresPaciente(result);
 
 		},
@@ -789,7 +785,7 @@ function GetProcedurePaciente() {
 }
 
 function AddProceduresPaciente(result) {
-	//mostrar en el html los procedimientos del paciente
+//mostrar en el html los procedimientos del paciente
 
 	var keys = result[1];
 	var valores = result[0];
@@ -882,7 +878,7 @@ function AddProceduresPaciente(result) {
 }
 
 function GetEvolutionTratamiento(result) {
-	//busco los tratamientos de los diagnosticos evolucionados para reemplazarlos en ej JSON por el diagnostico correspondiente
+//busco los tratamientos de los diagnosticos evolucionados para reemplazarlos en ej JSON por el diagnostico correspondiente
 	var valores = result[0];
 	var keys = result[1];
 
@@ -925,7 +921,7 @@ function GetEvolutionTratamiento(result) {
 }
 
 function AddProceduresPacienteEvolution(result) {
-	//mostrar en el html los procedimientos del paciente
+//mostrar en el html los procedimientos del paciente
 
 	var keys = result[1];
 	var valores = result[0];

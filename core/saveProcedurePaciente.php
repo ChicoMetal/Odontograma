@@ -12,7 +12,7 @@
 	$dent 		= isset( $_POST['dent'] ) ? $_POST['dent'] : '';
 	$zone 		= isset( $_POST['zone'] ) ? $_POST['zone'] : '';
 	$procedure 	= isset( $_POST['procedure'] ) ? $_POST['procedure'] : '';
-	$cause 	= isset( $_POST['cause'] ) ? $_POST['cause'] : '';
+	$cause 		= isset( $_POST['cause'] ) ? $_POST['cause'] : '';
 
 	$TIP_PROCEDURE_DIAGNOSTICOS = 1;
 	$TIP_PROCEDURE_TRATAMIENTOS = 2;

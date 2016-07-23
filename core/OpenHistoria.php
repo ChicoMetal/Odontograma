@@ -15,7 +15,7 @@
 		
 		$TIP_PROCEDURE_DIAGNOSTICOS = 1;
 
-		$sql = " SELECT Codigo, Paciente FROM historias WHERE Paciente = '$paciente' ORDER BY Codigo LIMIT 1";
+		$sql = " SELECT Codigo, Paciente FROM historias WHERE Paciente = '$paciente' ORDER BY Codigo DESC LIMIT 1";
 
 		$oldHistory = BuscarDatos( $sql );//consulto si hay historias de este paciente
 
@@ -54,48 +54,47 @@
 					$padre = $newHistory[0][0]->$newHistory[1][0];//id de la ultima historia
 
 					$sql = "SELECT Fecha, Diente, Zone, `Procedure`, Tipe, Cause FROM pacienteprocedures WHERE Historia = '$padreOld' 
-						AND Id NOT IN (SELECT Diagnostico FROM evoluciones) 
-						AND Id NOT IN (SELECT Tratamiento FROM evoluciones) ORDER BY Tipe";
+						AND Id NOT IN (SELECT Diagnostico FROM evoluciones WHERE Finish = TRUE) 
+						AND Id NOT IN (SELECT Tratamiento FROM evoluciones WHERE Finish = TRUE) ORDER BY Tipe";
 
-					$oldProcedures = BuscarDatos( $sql );//busco los procedimientos de la historia
+					$oldProcedures = BuscarDatos( $sql );//busco todos los procedimientos de la historia
 
 					if( $oldProcedures[0] != 'msm' ){//si trae resultados
 						
-
 						$valores = $oldProcedures[0];
 						$keys = $oldProcedures[1];
 
-						foreach ($valores as $key => $value) {//itero por cada procedimiento que tenga la historia
-							
+						foreach ($valores as $key => $value) {
+						//itero por cada procedimiento que tenga la historia
 							$fecha 		= $value->$keys[0];
 							$zone 		= $value->$keys[2];
 							$procedure 	= $value->$keys[3];
 							$tipe 		= $value->$keys[4];
 
-							if( $value->$keys[1] == null && $value->$keys[5] == null){//en caso de q el diente sea nulo y la causa
+							if( $value->$keys[1] == null && $value->$keys[5] == null){//en caso de q el diente sea nulo y la causa (diagnosticos generales) **********************************************
 
 								$sqlPP = "INSERT INTO pacienteprocedures(Fecha, Historia, Zone, `Procedure`, Tipe)
 										VALUES('$fecha', '$padre','$zone','$procedure','$tipe')";
 
-							}else if( $value->$keys[1] == null ){//si solo el diente es nulo
+							}else if( $value->$keys[1] == null ){//si solo el diente es nulo (procedimientos generales) ***************************************************************************
+								
+								$causeOld 		= $value->$keys[5];
 
-								$sqlCause = "SELECT * FROM pacienteprocedures WHERE Id = '$cause' LIMIT 1";
+								$sqlCause = "SELECT * FROM pacienteprocedures WHERE Id = '$causeOld' LIMIT 1";
 
 								$resultCause = BuscarDatos( $sqlCause );
-
 								if( $resultCause[0] != 'msm' ){
 
 									$fechaCause 	= $resultCause[0][0] -> $resultCause[1][1];
-									$dienteCause 	= $resultCause[0][0] -> $resultCause[1][3];
 									$zoneCause 		= $resultCause[0][0] -> $resultCause[1][4];
 									$procedureCause = $resultCause[0][0] -> $resultCause[1][5];
 
 									$sqlCauseNew = "SELECT Id, Fecha FROM  pacienteprocedures WHERE 
-											Fecha='$fechaCause' AND Historia='$padre' AND Diente='$dienteCause' 
+											Fecha='$fechaCause' AND Historia='$padre' AND Diente IS NULL 
 											AND Zone='$zoneCause' AND `Procedure`= '$procedureCause' AND Tipe='$TIP_PROCEDURE_DIAGNOSTICOS'
 											AND Cause IS NULL";
 
-									$resultTratamientoNew = BuscarDatos( $sqlCauseNew );
+									$resultTratamientoNew = BuscarDatos( $sqlCauseNew );//busco el id de la causa (el diagnostico) pero el nuevo registro insertado correspondiente a la nueva historia 
 
 									if( $resultTratamientoNew[0] != 'msm' ){
 
@@ -104,7 +103,7 @@
 										$sqlPP = "INSERT INTO pacienteprocedures(Fecha, Historia, Zone, `Procedure`, Tipe, Cause)
 										VALUES('$fecha', '$padre','$zone','$procedure','$tipe', '$newCause')";
 
-									
+										
 									}else{
 										echo json_encode( $resultCause );
 									}
@@ -112,18 +111,15 @@
 								}else{
 									echo json_encode( $resultCause );
 								}
-
-								
-
-
-							}else if( $value->$keys[5] == null ){//si solo la causa es nula
+							
+							}else if( $value->$keys[5] == null ){//si solo la causa es nula (diagnosticos)
 								
 								$diente 	= $value -> $keys[1];
 
 								$sqlPP = "INSERT INTO pacienteprocedures(Fecha, Historia,Diente, Zone, `Procedure`, Tipe)
 										VALUES('$fecha', '$padre','$diente','$zone','$procedure','$tipe')";
 
-							}else{//en caso de q ninguno sea nulo
+							}else{//en caso de q ninguno sea nulo *********************************************
 
 								$diente 	= $value -> $keys[1];
 								$cause 		= $value -> $keys[5];
@@ -135,15 +131,14 @@
 								if( $resultCause[0] != 'msm' ){
 
 									$fechaCause 	= $resultCause[0][0] -> $resultCause[1][1];
-									$dienteCause 	= $resultCause[0][0] -> $resultCause[1][3];
 									$zoneCause 		= $resultCause[0][0] -> $resultCause[1][4];
 									$procedureCause = $resultCause[0][0] -> $resultCause[1][5];
 
 									$sqlCauseNew = "SELECT Id, Fecha FROM  pacienteprocedures WHERE 
-											Fecha='$fechaCause' AND Historia='$padre' AND Diente='$dienteCause' 
+											Fecha='$fechaCause' AND Historia='$padre' AND Diente IS NOT NULL 
 											AND Zone='$zoneCause' AND `Procedure`= '$procedureCause' AND Tipe='$TIP_PROCEDURE_DIAGNOSTICOS'
 											AND Cause IS NULL";
-
+											
 									$resultTratamientoNew = BuscarDatos( $sqlCauseNew );
 
 									if( $resultTratamientoNew[0] != 'msm' ){
@@ -152,7 +147,7 @@
 
 										$sqlPP = "INSERT INTO pacienteprocedures(Fecha, Historia,Diente, Zone, `Procedure`, Tipe, Cause)
 										VALUES('$fecha', '$padre','$diente','$zone','$procedure','$tipe', '$newCause')";
-								
+										
 									}else{
 										echo json_encode( $resultCause );
 									}
@@ -160,9 +155,6 @@
 								}else{
 									echo json_encode( $resultCause );
 								}
-
-								
-
 								
 							}
 							
@@ -176,16 +168,16 @@
 
 								exit(0);
 								echo json_encode( $GLOBALS['resB2'] );
-							}				
-
-						}
+							}			
+							
+						}//fin bucle
 
 						echo json_encode( $GLOBALS['resB3'] );//si todo sale bn
 
 						ChangeStatusCita( $cita );//cambio el estado de la cita
 
 					}else{
-						echo json_encode( $oldProcedures ); 
+						echo json_encode( $GLOBALS['resA4'] ); 
 					}
 
 				}else{

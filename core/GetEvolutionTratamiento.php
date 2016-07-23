@@ -27,7 +27,7 @@
 			
 			
 			$codigo = $value[ $keys[8] ];
-			$sql = "SELECT Codigo, Tratamiento FROM evoluciones WHERE Diagnostico = '$codigo' LIMIT 1";
+			$sql = "SELECT Codigo, Tratamiento FROM evoluciones WHERE Diagnostico = '$codigo' AND Finish = TRUE LIMIT 1";
 
 			$resultOne = BuscarDatos( $sql );
 
@@ -43,7 +43,7 @@
 
 				if( $result[0] != 'msm' ){
 
-					$diagnosticos[0][$key] = $result[0][0];//reemplazo el nuevo objeto con el tratamiento en la posicion donde se encontraba el tratamiento
+					$diagnosticos[0][$key] = $result[0][0];//reemplazo el nuevo objeto con el tratamiento en la posicion donde se encontraba el diagnostico
 
 				}
 
