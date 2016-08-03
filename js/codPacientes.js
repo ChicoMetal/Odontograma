@@ -100,7 +100,7 @@ $(document).ready(function(){
     $('.optionNot').change( function(){ //desactivar campo descripcion
     	
     	var elemento = $(this).parent().siblings('.contentDes').find('input');
-
+    	$(elemento).val('');
     	$(elemento).prop('disabled', true);
 
     });
