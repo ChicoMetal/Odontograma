@@ -1,0 +1,66 @@
+form
+{
+	margin: 1em 1%;
+}
+
+form>div
+{
+	margin-top: 2em;
+}
+
+h1
+{
+	text-align: center;
+}
+
+h2
+{
+	text-align: left;
+}
+
+input[type=radio] {
+    border: 0px;
+    width: 50%;
+    height: 1.5em;
+}
+
+#antecedentesOption, #estomatologico, #Hallazgos
+{
+	margin-left: 1%;
+	width: 60%;
+}
+
+#antecedentesOption .yesAntecedentes, #antecedentesOption .notAntecedentes
+{
+	margin-top: 0.7em;
+}
+
+.btn
+{
+	width: 15%;
+}
+.contentButtons
+{
+	margin-top: 1em;
+}
+
+.datosGenerales>div>div
+{
+	margin-top: 1em;
+}
+
+.fila
+{
+	border-bottom: solid;
+	border-bottom-style: dotted;
+	border-bottom-color: #7F7F7F;
+	border-bottom-width: 1px;	
+	margin-bottom: 0.3em;
+}
+
+
+.row.title
+{
+	font-weight: bold;
+}
+

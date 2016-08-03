@@ -23,10 +23,10 @@ function ValidateResponseServer( result, HiddenAlert=false ){
 		return true;
 
 	}
-
 }
 
-function MensajeServer( codigo ){ //Retornar un mensaje deacuerdo al codigo enviado del server
+function MensajeServer( codigo ){ 
+//Retornar un mensaje deacuerdo al codigo enviado del server
 	 
 	var mss = new Array(
 		["0000","Error al comuncarse con la base de datos"],
@@ -75,4 +75,71 @@ function ValidateMsmResponse( msm ){
 	};
 
 	return false;
+}
+
+function ResetSelects(form){ 
+//funcion clean para los select
+
+	var form = $(form).parents('form').attr('id'); //obtener id formulario
+
+    $.each($("#"+form+" select"),function(index, value){
+
+		$(value).val('0').trigger("chosen:updated");
+
+	});
+} 
+
+function ValidateSelect(form){ 
+//valida los select
+	
+	var target = 0;
+
+	$.each($("#"+form+" select.validate"),function(index, value){
+		if ( $(value).val() == "0"){
+						
+			target = $(value).attr('data-mensaje');
+		}
+	});
+
+	return target	 
+}
+
+function AddOptions(result,element){ 
+//crea la semantica HTML para agregar a los SELECT del DOM 
+
+	try{
+
+
+		var valores = result[0];	
+		var indices = result[1];	
+
+		var html = "<option value='0'></option>";
+
+		for( i = 0; i < valores.length; i++ ){
+			
+			html = html+ "<option value= '"+valores[i][indices[0]]+"' >"+ valores[i][indices[1]]+"</option>";
+		}
+		$(element).html( html );
+		
+		//hago los selects fitrables
+		$(element).trigger("chosen:updated");	
+		$(element).trigger("chosen:updated");	
+		$(element).chosen({
+			enable_split_word_search:true,
+			no_results_text: "Ningun Resultado",
+	    	width: "100%",
+	    	allow_single_deselect: true
+		});
+
+	}catch(e){
+		console.log("Error al procesar los datos "+e);
+	}
+}
+
+function Limpiar(selector){ 
+//limpia los formularios
+
+	$(selector).each(function(){
+	  this.reset();						  
+	});
 }

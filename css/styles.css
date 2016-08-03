@@ -19,6 +19,15 @@ h2
 {
 	text-align: center;
 }
+i.fa
+{
+	color: red;
+}
+label.error
+{
+	color: red;
+	font-size: 0.7em;
+}
 figure
 {
 	margin: 0 1%;
@@ -177,6 +186,10 @@ svg.figureDent .faceDent:hover
 	padding: 0;
 }
 
+.row
+{
+	width: 99.9%;
+}
 #diagnosticos .contentOneDent svg g .dent1
 {
 	/*fill: rgb(108,189,202);*/

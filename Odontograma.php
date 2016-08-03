@@ -8,19 +8,19 @@
 		<link rel="stylesheet" type="text/css" href="./bootstrap-3.3.6-dist/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="./font-awesome-4.5.0/css/font-awesome.min.css"/>
 		<link rel="stylesheet" type="text/css" href="./css/styles.css"/>
-		<link rel="stylesheet" type="text/css" href="./css/stylesMenu.css"/>
-		<link rel="stylesheet" type="text/css" href="./css/stylesFigurePaint.css"/>
-		<link rel="stylesheet" type="text/css" href="./css/stylesHistory.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/stylesPacientes.css"/>
+
+		
 		<script>
-			var PACIENTE = <?php echo $_GET["paciente"]; ?>;
+		var PACIENTE = <?php echo $_GET["paciente"]; ?>;
 		</script>
 		<script type="text/javascript" src="./js/jquery-1.12.3.min.js"></script>
 		<script type="text/javascript" src="./js/prefixfree.min.js"></script>
 		<script type="text/javascript" src="./bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="./js/bootbox.min.js"></script>
 		<script type="text/javascript" src="./js/Methods.js"></script>
-		<script type="text/javascript" src="./js/codigo.js"></script>
-		<script type="text/javascript" src="./js/ObjectFigures.js"></script>
+		<script type="text/javascript" src="./js/codPacientes.js"></script>
+		
 	</head>
 	<body>
 		
@@ -42,7 +42,8 @@
 							<tr>
 								<td>
 									<table border="1" cellspacing="0" cellpadding="2">
-										<tbody><tr>
+										<tbody>
+										<tr>
 											<td>
 												Regional<br>
 												<input type="text" name="txtRegional" value="Noroccidente" size="20" maxlength="100" readonly="">
@@ -156,7 +157,8 @@
 												<input type="text" name="respuesta[38715][valor]" value="7864396" size="20" maxlength="100" readonly="">
 											</td>
 										</tr>
-									</tbody></table>
+										</tbody>
+									</table>
 								</td>
 							</tr>
 							<tr>
@@ -514,193 +516,193 @@
 						</tr>
 					</tbody></table>
 				</div>
-				</section><!-- fin contenido del formulario -->
+			</section><!-- fin contenido del formulario -->
 				
-				<section class="tab-pane" id="ContentOdontograma">
+			<section class="tab-pane" id="ContentOdontograma">
+				
+				<h2 class="text-center">ODONTOGRAMA</h2>
+				<ul class="nav nav-tabs" data-tabs="tabs">
+					<li id="tabDiagnosticos"><a href="#diagnosticos" data-toggle="tab">Diagnostico</a></li>
+					<li id="tabTratamientos"><a href="#tratamientos" data-toggle="tab">Tratamiento</a></li>
+					<li id="tabEvolutions"><a href="#evolucion" data-toggle="tab">Evolucion</a></li>
+				</ul>
+				
+				<div id="my-tab-content" class="tab-content">
 					
-					<h2 class="text-center">ODONTOGRAMA</h2>
-					<ul class="nav nav-tabs" data-tabs="tabs">
-						<li id="tabDiagnosticos"><a href="#diagnosticos" data-toggle="tab">Diagnostico</a></li>
-						<li id="tabTratamientos"><a href="#tratamientos" data-toggle="tab">Tratamiento</a></li>
-						<li id="tabEvolutions"><a href="#evolucion" data-toggle="tab">Evolucion</a></li>
-					</ul>
-					
-					<div id="my-tab-content" class="tab-content">
-						
-						<div class="tab-pane" id="diagnosticos" >
-							<section class="ContentOdontograma">
+					<div class="tab-pane" id="diagnosticos" >
+						<section class="ContentOdontograma">
+							
+							<div class="fileGroup contentTop">
 								
-								<div class="fileGroup contentTop">
+								<div class="group groupleft topLeft text-right">
 									
-									<div class="group groupleft topLeft text-right">
+									<div class="subGroup groupBig Subgroupuprightadult">
 										
-										<div class="subGroup groupBig Subgroupuprightadult">
+									</div><!-- fin grupo superior derecho adultos -->
+										
+									<div class="subGroup groupLittle Subgroupuprightchild">
+										
+									</div><!-- fin grupo superior derecho ninos-->
+								</div>
+								<div class="group groupRigth topRigth">
+									
+									<div class="subGroup groupBig Subgroupupleftadult">
+										
+									</div><!-- fin grupo superior izquierdo adultos-->
+									<div class="subGroup groupLittle Subgroupupleftchild">
 											
-											</div><!-- fin grupo superior derecho adultos -->
+									</div><!-- fin grupo superior izquierdo ninos -->
+								</div>
+							</div>
+							<div class="fileGroup contentBot">
+								
+								<div class="group groupleft botLeft text-right">
+									
+									<div class="subGroup groupBig Subgroupdownrightadult">
+										
+									</div><!-- fin grupo inferior derecho-->
+									<div class="subGroup groupLittle Subgroupdownrightchild">
 											
-											<div class="subGroup groupLittle Subgroupuprightchild">
+									</div><!-- fin grupo inferior derecho ninos-->
+								</div>
+								<div class="group groupRigth botRigth">
+											
+									<div class="subGroup groupBig Subgroupdownleftadult">
 												
-												</div><!-- fin grupo superior derecho ninos-->
-											</div>
-											<div class="group groupRigth topRigth">
+									</div><!-- fin grupo inferior izquierdo adultos-->
+									<div class="subGroup groupLittle Subgroupdownleftchild">
+													
+									</div><!-- fin grupo inferior izquierdo ninos-->
+								</div>
+							</div>
+															<!-- <div id="ContentDiagnosticos"></div> -->
+							<section class="procedureNullRepresentacion">
+								
+							</section>
+						</section>
+						<section  class="panel-group contentProcedures" id="diagnosticosMenu" role="tablist" aria-multiselectable="true">
+							
+						</section>
+														
+					</div><!-- fin diagnosticos-->
+					<div class="tab-pane"  id="tratamientos">
+						
+						<section class="ContentOdontograma">
+							<div class="fileGroup contentTop">
+								
+								<div class="group groupleft topLeft text-right">
+									
+									<div class="subGroup groupBig Subgroupuprightadult">
+										
+									</div><!-- fin grupo superior derecho adultos -->
+										
+									<div class="subGroup groupLittle Subgroupuprightchild">
+										
+									</div><!-- fin grupo superior derecho ninos-->
+								</div>
+								<div class="group groupRigth topRigth">
+											
+									<div class="subGroup groupBig Subgroupupleftadult">
 												
-												<div class="subGroup groupBig Subgroupupleftadult">
+									</div><!-- fin grupo superior izquierdo adultos-->
+									<div class="subGroup groupLittle Subgroupupleftchild">
 													
-													</div><!-- fin grupo superior izquierdo adultos-->
-													<div class="subGroup groupLittle Subgroupupleftchild">
+									</div><!-- fin grupo superior izquierdo ninos -->
+								</div>
+							</div>
+							<div class="fileGroup contentBot">
+								
+								<div class="group groupleft botLeft text-right">
+									
+									<div class="subGroup groupBig Subgroupdownrightadult">
+										
+									</div><!-- fin grupo inferior derecho-->
+									<div class="subGroup groupLittle Subgroupdownrightchild">
+										
+									</div><!-- fin grupo inferior derecho ninos-->
+								</div>
+								<div class="group groupRigth botRigth">
+									
+									<div class="subGroup groupBig Subgroupdownleftadult">
+									
+									</div><!-- fin grupo inferior izquierdo adultos-->
+									<div class="subGroup groupLittle Subgroupdownleftchild">
+											
+									</div><!-- fin grupo inferior izquierdo ninos-->
+								</div>
+							</div>
+							<section class="procedureNullRepresentacion">
+								
+							</section>
+						</section>
+						<section  class="panel-group contentProcedures" id="tratamientosMenu" role="tablist" aria-multiselectable="true">
+							
+						</section>
 														
-														</div><!-- fin grupo superior izquierdo ninos -->
-													</div>
-												</div>
-												<div class="fileGroup contentBot">
-													
-													<div class="group groupleft botLeft text-right">
+					</div><!-- fin tratamientos-->
+					<div class="tab-pane"  id="evolucion">
+						
+						<section class="ContentOdontograma">
+							
+							<div class="fileGroup contentTop">
+								
+								<div class="group groupleft topLeft text-right">
+									
+									<div class="subGroup groupBig Subgroupuprightadult">
+										
+									</div><!-- fin grupo superior derecho adultos -->
+									
+									<div class="subGroup groupLittle Subgroupuprightchild">
+										
+									</div><!-- fin grupo superior derecho ninos-->
+								</div>
+								<div class="group groupRigth topRigth">
+									
+									<div class="subGroup groupBig Subgroupupleftadult">
+										
+									</div><!-- fin grupo superior izquierdo adultos-->
+									<div class="subGroup groupLittle Subgroupupleftchild">
+										
+									</div><!-- fin grupo superior izquierdo ninos -->
+								</div>
+							</div>
+							<div class="fileGroup contentBot">
+												
+								<div class="group groupleft botLeft text-right">
+									
+									<div class="subGroup groupBig Subgroupdownrightadult">
+										
+									</div><!-- fin grupo inferior derecho-->
+									<div class="subGroup groupLittle Subgroupdownrightchild">
+										
+									</div><!-- fin grupo inferior derecho ninos-->
+								</div>
+								<div class="group groupRigth botRigth">
+									
+									<div class="subGroup groupBig Subgroupdownleftadult">
+										
+									</div><!-- fin grupo inferior izquierdo adultos-->
+									<div class="subGroup groupLittle Subgroupdownleftchild">
+										
+									</div><!-- fin grupo inferior izquierdo ninos-->
+								</div>
+							</div>
+						</section>
+						<section class="procedureNullRepresentacion">
+							
+						</section>
 														
-														<div class="subGroup groupBig Subgroupdownrightadult">
-															
-															</div><!-- fin grupo inferior derecho-->
-															<div class="subGroup groupLittle Subgroupdownrightchild">
-																
-																</div><!-- fin grupo inferior derecho ninos-->
-															</div>
-															<div class="group groupRigth botRigth">
-																
-																<div class="subGroup groupBig Subgroupdownleftadult">
-																	
-																	</div><!-- fin grupo inferior izquierdo adultos-->
-																	<div class="subGroup groupLittle Subgroupdownleftchild">
-																		
-																		</div><!-- fin grupo inferior izquierdo ninos-->
-																	</div>
-																</div>
-																<!-- <div id="ContentDiagnosticos"></div> -->
-																<section class="procedureNullRepresentacion">
-																	
-																</section>
-															</section>
-															<section  class="panel-group contentProcedures" id="diagnosticosMenu" role="tablist" aria-multiselectable="true">
-																
-															</section>
-															
-															</div><!-- fin diagnosticos-->
-															<div class="tab-pane"  id="tratamientos">
-																
-																<section class="ContentOdontograma">
-																	<div class="fileGroup contentTop">
-																		
-																		<div class="group groupleft topLeft text-right">
-																			
-																			<div class="subGroup groupBig Subgroupuprightadult">
-																				
-																				</div><!-- fin grupo superior derecho adultos -->
-																				
-																				<div class="subGroup groupLittle Subgroupuprightchild">
-																					
-																					</div><!-- fin grupo superior derecho ninos-->
-																				</div>
-																				<div class="group groupRigth topRigth">
-																					
-																					<div class="subGroup groupBig Subgroupupleftadult">
-																						
-																						</div><!-- fin grupo superior izquierdo adultos-->
-																						<div class="subGroup groupLittle Subgroupupleftchild">
-																							
-																							</div><!-- fin grupo superior izquierdo ninos -->
-																						</div>
-																					</div>
-																					<div class="fileGroup contentBot">
-																						
-																						<div class="group groupleft botLeft text-right">
-																							
-																							<div class="subGroup groupBig Subgroupdownrightadult">
-																								
-																								</div><!-- fin grupo inferior derecho-->
-																								<div class="subGroup groupLittle Subgroupdownrightchild">
-																									
-																									</div><!-- fin grupo inferior derecho ninos-->
-																								</div>
-																								<div class="group groupRigth botRigth">
-																									
-																									<div class="subGroup groupBig Subgroupdownleftadult">
-																										
-																										</div><!-- fin grupo inferior izquierdo adultos-->
-																										<div class="subGroup groupLittle Subgroupdownleftchild">
-																											
-																											</div><!-- fin grupo inferior izquierdo ninos-->
-																										</div>
-																									</div>
-																									<section class="procedureNullRepresentacion">
-																										
-																									</section>
-																								</section>
-																								<section  class="panel-group contentProcedures" id="tratamientosMenu" role="tablist" aria-multiselectable="true">
-																									
-																								</section>
-																								
-																								</div><!-- fin tratamientos-->
-																								<div class="tab-pane"  id="evolucion">
-																									
-																									<section class="ContentOdontograma">
-																										
-																										<div class="fileGroup contentTop">
-																											
-																											<div class="group groupleft topLeft text-right">
-																												
-																												<div class="subGroup groupBig Subgroupuprightadult">
-																													
-																													</div><!-- fin grupo superior derecho adultos -->
-																													
-																													<div class="subGroup groupLittle Subgroupuprightchild">
-																														
-																														</div><!-- fin grupo superior derecho ninos-->
-																													</div>
-																													<div class="group groupRigth topRigth">
-																														
-																														<div class="subGroup groupBig Subgroupupleftadult">
-																															
-																															</div><!-- fin grupo superior izquierdo adultos-->
-																															<div class="subGroup groupLittle Subgroupupleftchild">
-																																
-																																</div><!-- fin grupo superior izquierdo ninos -->
-																															</div>
-																														</div>
-																														<div class="fileGroup contentBot">
-																															
-																															<div class="group groupleft botLeft text-right">
-																																
-																																<div class="subGroup groupBig Subgroupdownrightadult">
-																																	
-																																	</div><!-- fin grupo inferior derecho-->
-																																	<div class="subGroup groupLittle Subgroupdownrightchild">
-																																		
-																																		</div><!-- fin grupo inferior derecho ninos-->
-																																	</div>
-																																	<div class="group groupRigth botRigth">
-																																		
-																																		<div class="subGroup groupBig Subgroupdownleftadult">
-																																			
-																																			</div><!-- fin grupo inferior izquierdo adultos-->
-																																			<div class="subGroup groupLittle Subgroupdownleftchild">
-																																				
-																																				</div><!-- fin grupo inferior izquierdo ninos-->
-																																			</div>
-																																		</div>
-																																	</section>
-																																	<section class="procedureNullRepresentacion">
-																																		
-																																	</section>
-																																	
-																																	</div><!-- fin evolucion-->
-																																</div>
-																																<div class="container-fluid" id="ContentDescripcionEvol">
-																																	
-																																</div>
-																																<button id="closeHistory" class="btn btn-default">Guardar</button>
-																																</section> <!-- Fin seccion del odontograma -->
-																																<section class="tab-pane" id="ContentSeguimiento">
-																																	<h3>Contenido extra</h3>
-																																	</section> <!-- Fin contenido seguimiento -->
-																																</div>
-																																
-																															</body>
-																														</html>
+					</div><!-- fin evolucion-->
+				</div>
+				<div class="container-fluid" id="ContentDescripcionEvol">
+					
+				</div>
+				<button id="closeHistory" class="btn btn-default">Guardar</button>
+			</section> <!-- Fin seccion del odontograma -->
+			<section class="tab-pane" id="ContentSeguimiento">
+				<h3>Contenido extra</h3>
+			</section> <!-- Fin contenido seguimiento -->
+		</div>
+														
+	</body>
+</html>
