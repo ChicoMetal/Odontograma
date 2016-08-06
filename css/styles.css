@@ -6,7 +6,7 @@ body
 {
 	font-size: 17px;
 	font-family: 'Open Sans', sans-serif;
-	background-color: rgb(245, 245, 245); 
+	background-color: rgb(248, 248, 248); 
 	overflow: scroll;
 }
 
@@ -19,7 +19,7 @@ h2
 {
 	text-align: center;
 }
-i.fa
+i.fa.fa-asterisk
 {
 	color: red;
 }

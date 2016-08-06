@@ -4,8 +4,45 @@ $(document).ready(function(){
 
 	$('#ShowCitas').on("click", ".btn.ItemCita", function(){
 	//evento para agregar cada procedimiento de cada grupo en el menu
+			var Paciente = $(this).attr('id');
+			var Cita  =  $(this).attr('cita');
 
-    	OpenHistoria( $(this).attr('id'), $(this).attr('cita') );
+    	bootbox.dialog({
+			title: "Motivo de la consulta",
+			message: '<div class="row">\
+						<div class="col-md-12">\
+							<form role="form" class="center-block" id="motivoCita" name="motivoCita">\
+							  <div class="form-group">\
+							    <label class="col-md-8 control-label" for="motivoSimple">Motivo de consulta<i class="fa fa-asterisk fa-1x"></i></label>\
+							    <input type="text" name="motivoSimple" class="form-control col-md-8" id="motivoSimple" placeholder="Motivo de consulta">\
+							  </div>\
+							  <div class="form-group">\
+							    <label class="col-md-8 control-label" for="motivoExtend">Evolución y estado actual <i class="fa fa-asterisk fa-1x"></i></label>\
+							    <textarea  name="motivoExtend" class="form-control col-md-8" id="motivoExtend" placeholder="Evolución y estado actual (Ampliación motivo de consulta - reporte de síntomas)"></textarea>\
+							  </div>\
+						</form>\
+						</div>\
+					</div>',
+			buttons: {
+				success: {
+					label: "Guardar",
+					className: "btn-success",
+					callback: function() {
+						
+						var motivoSimple = $('#motivoCita #motivoSimple').val();
+						var motivoExtend = $('#motivoCita #motivoExtend').val();
+						
+
+						if( motivoSimple != '' && motivoExtend != '' ){
+							OpenHistoria( Paciente, Cita, motivoSimple, motivoExtend );					
+						}else{
+							bootbox.alert("Debe ingresar la informacion");						
+
+						}
+					}
+				}
+			}
+		});
 
 	});
 
@@ -93,7 +130,7 @@ function AddCitasAdmitidas( result ){
 
 }
 
-function OpenHistoria( Paciente, Cita ){
+function OpenHistoria( Paciente, Cita, MotivoSimple, MotivoExtend ){
 //Guarda la admision de la cita
 
 	$.ajax({
@@ -102,7 +139,7 @@ function OpenHistoria( Paciente, Cita ){
 		},
 		url:"./core/OpenHistoria.php",
 		method:"POST",
-		data: {cita:Cita, paciente:Paciente, medico:MEDICO},
+		data: {cita:Cita, paciente:Paciente, motivoSimple:MotivoSimple, motivoExtend:MotivoExtend, medico:MEDICO},
 		success: function( res){
 								
 		},

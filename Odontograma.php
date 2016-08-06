@@ -8,18 +8,22 @@
 		<link rel="stylesheet" type="text/css" href="./bootstrap-3.3.6-dist/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="./font-awesome-4.5.0/css/font-awesome.min.css"/>
 		<link rel="stylesheet" type="text/css" href="./css/styles.css"/>
-		<link rel="stylesheet" type="text/css" href="./css/stylesPacientes.css"/>
+		<link rel="stylesheet" type="text/css" href="./css/stylesMenu.css"/>
+ 		<link rel="stylesheet" type="text/css" href="./css/stylesFigurePaint.css"/>
+ 		<link rel="stylesheet" type="text/css" href="./css/stylesHistory.css"/>
 
 		
 		<script>
-		var PACIENTE = <?php echo $_GET["paciente"]; ?>;
+			var PACIENTE = <?php echo $_GET["paciente"]; ?>;
 		</script>
+
 		<script type="text/javascript" src="./js/jquery-1.12.3.min.js"></script>
 		<script type="text/javascript" src="./js/prefixfree.min.js"></script>
 		<script type="text/javascript" src="./bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="./js/bootbox.min.js"></script>
 		<script type="text/javascript" src="./js/Methods.js"></script>
-		<script type="text/javascript" src="./js/codPacientes.js"></script>
+		<script type="text/javascript" src="./js/codigo.js"></script>
+ 		<script type="text/javascript" src="./js/ObjectFigures.js"></script>
 		
 	</head>
 	<body>

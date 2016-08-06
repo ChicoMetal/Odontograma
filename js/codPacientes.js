@@ -105,6 +105,16 @@ $(document).ready(function(){
 
     });
 
+    $('form .clean').click( function(){//boton limpiar
+ 		Limpiar('form')
+    	ResetSelects(this);
+    	$('.option .contentDes input').prop('disabled', true);
+    });
+
+    $("#index").on( "click", function(){ 
+		window.location="./index.html";
+	});
+	
 });
 
 function getIps(){ 

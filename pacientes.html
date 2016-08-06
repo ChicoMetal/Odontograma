@@ -25,14 +25,14 @@
 		
 		<h1> Registrar pacientes </h1>
 		<section id="ContentFormPaciente">
-			<form id="formPaciente">
+			<form role="form" class="center-block"  name="formPaciente" id="formPaciente">
 				
 				<div class="row datosGenerales groupForm" data-mensaje="Informacion general">
 					
 					<div class="col-md-4">
 						<div class="from-group">
 							<label for="IdPacienteForm">Identificacion</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
-							<input type="text" value="789456" class="form-control" id="IdPacienteForm" name="IdPacienteForm" placeholder="Identificacion" required>
+							<input type="text" class="form-control" id="IdPacienteForm" name="IdPacienteForm" placeholder="Identificacion" required/>
 						</div>				
 						<div class="from-group"> 
 							<label for="TipeIdForm">Tipo identificacion</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
@@ -46,15 +46,15 @@
 						</div>
 						<div class="from-group">
 							<label for="NamePacienteForm">Nombres</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
-							<input type="text" value="una manzana" class="form-control" id="NamePacienteForm" name="NamePacienteForm" placeholder="Nombres" required>
+							<input type="text"  class="form-control" id="NamePacienteForm" name="NamePacienteForm" placeholder="Nombres" required/>
 						</div>				
 						<div class="from-group">
 							<label for="LastNamePacienteForm">Apellidos</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
-							<input type="text" value="una manzana" class="form-control" id="LastNamePacienteForm" name="LastNamePacienteForm" placeholder="Apellidos" required>
+							<input type="text"  class="form-control" id="LastNamePacienteForm" name="LastNamePacienteForm" placeholder="Apellidos" required/>
 						</div>
 						<div class="from-group">
 							<label for="EdadForm">Edad</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
-							<input type="text" value="789456" class="form-control" id="EdadForm" name="EdadForm" placeholder="Edad" required>
+							<input type="text" class="form-control" id="EdadForm" name="EdadForm" placeholder="Edad" required/>
 						</div>
 						<div class="from-group">
 							<label for="SexoPacienteForm">Sexo</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
@@ -69,15 +69,15 @@
 					<div class="col-md-4">
 						<div class="from-group">
 							<label for="TelpacienteForm">Telefono</label> 
-							<input type="text" value="789456" class="form-control" id="TelpacienteForm" name="TelpacienteForm" placeholder="Telefono">
+							<input type="text" class="form-control" id="TelpacienteForm" name="TelpacienteForm" placeholder="Telefono"/>
 						</div>
 						<div class="from-group">
 							<label for="CelPacienteForm">Celular</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
-							<input type="text" value="789456" class="form-control" id="CelPacienteForm" name="CelPacienteForm" placeholder="Celular">
+							<input type="text" class="form-control" id="CelPacienteForm" name="CelPacienteForm" placeholder="Celular"/>
 						</div>
 						<div class="from-group">
 							<label for="OcupacionPacienteForm">Ocupacion</label> 
-							<input type="text" class="form-control" id="OcupacionPacienteForm" name="OcupacionPacienteForm" placeholder="Ocupacion" value="una manzana">
+							<input type="text" class="form-control" id="OcupacionPacienteForm" name="OcupacionPacienteForm" placeholder="Ocupacion" />
 						</div>
 						<div class="from-group">
 							<label for="CivilPacienteForm">Estado civil</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
@@ -92,11 +92,11 @@
 						</div>
 						<div class="from-group">
 							<label for="MunicipioPacienteForm">Municipio</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
-							<input type="text" value="una manzana" class="form-control" id="MunicipioPacienteForm" name="MunicipioPacienteForm" placeholder="Municipio" required>
+							<input type="text"  class="form-control" id="MunicipioPacienteForm" name="MunicipioPacienteForm" placeholder="Municipio" required/>
 						</div>					
 						<div class="from-group">
 							<label for="AdressPacienteForm">Direccion</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
-							<textarea class="form-control" id="AdressPacienteForm" name="AdressPacienteForm" placeholder="Direccion" required>una manzana</textarea>
+							<textarea class="form-control" id="AdressPacienteForm" name="AdressPacienteForm" placeholder="Direccion" required></textarea>
 						</div>
 
 					</div>
@@ -105,15 +105,15 @@
 						
 						<div class="from-group">
 							<label for="NacimientoPacienteForm">Fecha de nacimiento</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
-							<input type="date" value="1991-09-05" class="form-control" id="NacimientoPacienteForm" name="NacimientoPacienteForm" required>
+							<input type="date" class="form-control" id="NacimientoPacienteForm" name="NacimientoPacienteForm" required>
 						</div>						
 						<div class="from-group">
 							<label for="ResponsablePacienteForm">Responsable</label>
-							<input type="text" class="form-control" id="ResponsablePacienteForm" name="ResponsablePacienteForm" placeholder="Responsable" value="una manzana">
+							<input type="text" class="form-control" id="ResponsablePacienteForm" name="ResponsablePacienteForm" placeholder="Responsable" />
 						</div>			
 						<div class="from-group">
 							<label for="TelResponsablePteForm">Contacto responsable</label>
-							<input type="text"  class="form-control" id="TelResponsablePteForm" name="TelResponsablePteForm" placeholder="Contacto responsable" value="789456">
+							<input type="text"  class="form-control" id="TelResponsablePteForm" name="TelResponsablePteForm" placeholder="Contacto responsable"/>
 						</div>		
 						<div class="from-group selectSearch">
 							<label for="TipPacienteForm">Tipo de paciente</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
@@ -135,7 +135,7 @@
 					<div class="col-md-8">
 						<div class="from-group">
 							<label for="AntecedenteFamiliar">Antecedentes familiares</label>
-							<textarea type="text" class="form-control" id="AntecedenteFamiliar" name="AntecedenteFamiliar" placeholder="Descripcion">una manzana</textarea>
+							<textarea type="text" class="form-control" id="AntecedenteFamiliar" name="AntecedenteFamiliar" placeholder="Descripcion"></textarea>
 						</div>
 					</div>
 				</div> <!-- texto antecedentes familiares -->
@@ -152,135 +152,135 @@
 					<!-- ******************************************* -->
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Alergias</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="alergias" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="alergias" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="alergias" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtAlergias" id="txtAlergias" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtAlergias" id="txtAlergias" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Discrasias sanguíneas</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="discrasias" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="discrasias" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="discrasias" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtDiscrasias" id="txtDiscrasias" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtDiscrasias" id="txtDiscrasias" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Cardiopatías</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="cardiopatias" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="cardiopatias" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="cardiopatias" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtCardiopatias" id="txtCardiopatias" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtCardiopatias" id="txtCardiopatias" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Embarazo</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="embarazo" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="embarazo" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="embarazo" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtEmbarazo" id="txtEmbarazo" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtEmbarazo" id="txtEmbarazo" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Alteraciones presión arterial</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="presionArterial" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="presionArterial" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="presionArterial" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtPresionarterial" id="txtPresionarterial" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtPresionarterial" id="txtPresionarterial" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Toma de medicamentos</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="tomaMedicamentos" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="tomaMedicamentos" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="tomaMedicamentos" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtTomamedicamentos" id="txtTomamedicamentos" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtTomamedicamentos" id="txtTomamedicamentos" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Tratamiento médico actual</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="tratamientoActual" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="tratamientoActual" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="tratamientoActual" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtTratamientoactual" id="txtTratamientoactual" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtTratamientoactual" id="txtTratamientoactual" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Hepatitis</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="hepatitis" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="hepatitis" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="hepatitis" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtHepatitis" id="txtHepatitis" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtHepatitis" id="txtHepatitis" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Diabetes</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="diabetes" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="diabetes" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="diabetes" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtDiabetes" id="txtDiabetes" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtDiabetes" id="txtDiabetes" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Fiebre reumática</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="fiebreReumatica" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="fiebreReumatica" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="fiebreReumatica" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtFiebrereumatica" id="txtFiebrereumatica" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtFiebrereumatica" id="txtFiebrereumatica" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">HIV - SIDA</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="sida" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="sida" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="sida" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtSida" id="txtSida" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtSida" id="txtSida" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Inmunosupresión</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="inmunosupresion" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="inmunosupresion" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="inmunosupresion" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtInmunosupresion" id="txtInmunosupresion" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtInmunosupresion" id="txtInmunosupresion" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Patologías renales</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="patologiasRenales" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="patologiasRenales" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="patologiasRenales" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtPatologiasrenales" id="txtPatologiasrenales" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtPatologiasrenales" id="txtPatologiasrenales" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Patologías respiratorias</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="patologiasRespiratorias" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="patologiasRespiratorias" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="patologiasRespiratorias" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtPatologiasrespiratorias" id="txtPatologiasrespiratorias" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtPatologiasrespiratorias" id="txtPatologiasrespiratorias" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Trastornos gástricos</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="trastornosGastricos" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="trastornosGastricos" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="trastornosGastricos" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtTrastornosgastricos" id="txtTrastornosgastricos" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtTrastornosgastricos" id="txtTrastornosgastricos" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Trastornos emocionales</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="trastornosEmocionales" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="trastornosEmocionales" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="trastornosEmocionales" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtTrastornosemocionales" id="txtTrastornosemocionales" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtTrastornosemocionales" id="txtTrastornosemocionales" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Sinusitis</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="sinusitis" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="sinusitis" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="sinusitis" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtSinusitis" id="txtSinusitis" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtSinusitis" id="txtSinusitis" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Cirugías (incluso orales)</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="cirujias" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="cirujias" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="cirujias" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtCirujias" id="txtCirujias" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtCirujias" id="txtCirujias" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Exodoncias</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="exodoncias" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="exodoncias" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="exodoncias" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtExodoncias" id="txtExodoncias" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtExodoncias" id="txtExodoncias" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Enfermedades orales</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="enfermedadesOrales" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="enfermedadesOrales" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="enfermedadesOrales" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtEnfermedadesorales" id="txtEnfermedadesorales" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtEnfermedadesorales" id="txtEnfermedadesorales" disabled /></div>
 					</div>
 					<div class="row fila option optionAntecedente">
 						<div class="col-md-5 nameAntecedente nameGeneral">Uso de protesis o aparatologia oral</div>
-						<div class="col-md-1"><input  class="optionYes"  checked="checked" type="radio" name="aparatologiaOral" value="1"/></div>
+						<div class="col-md-1"><input  class="optionYes" type="radio" name="aparatologiaOral" value="1"/></div>
 						<div class="col-md-1"><input  class="optionNot" type="radio" name="aparatologiaOral" value="0"/></div>
-						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtAparatologiaoral" id="txtAparatologiaoral" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input  class="desAntecedentes form-control" type="text" placeholder="Descripcion" name="txtAparatologiaoral" id="txtAparatologiaoral" disabled /></div>
 					</div>
 					<div class="row fila">
 						<div class="col-md-12">
 							<div class="from-group">
 								<label for="habitos">Hábitos y otras patologías o antecedentes odontológicos o médicos</label>
-								<textarea type="text" class="form-control" id="habitos" name="habitos" placeholder="Descripcion">una manzana</textarea>
+								<textarea type="text" class="form-control" id="habitos" name="habitos" placeholder="Descripcion"></textarea>
 							</div>
 						</div>
 						</div>
@@ -309,75 +309,75 @@
 					<!-- *********************************************************** -->
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Labio inferior</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="labioInferior" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="labioInferior" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="labioInferior" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtLabioinferior" id="txtLabioinferior" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtLabioinferior" id="txtLabioinferior" disabled /></div>
 					</div>
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Labio superior</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="labioSuperior" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="labioSuperior" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="labioSuperior" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtLabiosuperior" id="txtLabiosuperior" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtLabiosuperior" id="txtLabiosuperior" disabled /></div>
 					</div>
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Comisuras</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="comisuras" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="comisuras" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="comisuras" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtComisuras" id="txtComisuras" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtComisuras" id="txtComisuras" disabled /></div>
 					</div>
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Mucosa oral</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="mucosaOral" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="mucosaOral" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="mucosaOral" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtMucosaoral" id="txtMucosaoral" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtMucosaoral" id="txtMucosaoral" disabled /></div>
 					</div>
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Surcos yugales</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="surcosYugales" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="surcosYugales" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="surcosYugales" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtSurcosyugales" id="txtSurcosyugales" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtSurcosyugales" id="txtSurcosyugales" disabled /></div>
 					</div>
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Frenillos</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="frenillos" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="frenillos" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="frenillos" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtFrenillos" id="txtFrenillos" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtFrenillos" id="txtFrenillos" disabled /></div>
 					</div>
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Orofaringe</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="orofaringe" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="orofaringe" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="orofaringe" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtOrofaringe" id="txtOrofaringe" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtOrofaringe" id="txtOrofaringe" disabled /></div>
 					</div>
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Paladar</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="paladar" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="paladar" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="paladar" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtPaladar" id="txtPaladar" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtPaladar" id="txtPaladar" disabled /></div>
 					</div>
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Glándulas salivales</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="glandulasSalivales" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="glandulasSalivales" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="glandulasSalivales" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtGlandulassalibales" id="txtGlandulassalibales" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtGlandulassalibales" id="txtGlandulassalibales" disabled /></div>
 					</div>
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Piso de boca</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="pisoBoca" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="pisoBoca" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="pisoBoca" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtPisoboca" id="txtPisoboca" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtPisoboca" id="txtPisoboca" disabled /></div>
 					</div>
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Dorso de lengua</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="dorsoLengua" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="dorsoLengua" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="dorsoLengua" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtDorsolengua" id="txtDorsolengua" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtDorsolengua" id="txtDorsolengua" disabled /></div>
 					</div>
 					<div class="row fila option optionEstomatologico">
 						<div class="col-md-5 nameAntecedente nameEstomatologico">Vientre de lengua</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="vientreLengua" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="vientreLengua" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot"  type="radio" name="vientreLengua" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtVientrelengua" id="txtVientrelengua" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desEstomatologico" placeholder="Descripcion" name="txtVientrelengua" id="txtVientrelengua" disabled /></div>
 					</div>
 				</div> <!-- fin tercera parte cuestionario -->
  
@@ -404,51 +404,52 @@
 					<!-- ****************************************** -->
 					<div class="row fila option optionHallazgo">
 						<div class="col-md-5 nameAntecedente nameHallazgo">Ruidos</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="ruidos" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="ruidos" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot" type="radio" name="ruidos" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtRuidos" id="txtRuidos" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtRuidos" id="txtRuidos" disabled /></div>
 					</div>
 					<div class="row fila option optionHallazgo">
 						<div class="col-md-5 nameAntecedente nameHallazgo">Desviación</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="desviacion" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="desviacion" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot" type="radio" name="desviacion" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtDesviacion" id="txtDesviacion" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtDesviacion" id="txtDesviacion" disabled /></div>
 					</div>
 					<div class="row fila option optionHallazgo">
 						<div class="col-md-5 nameAntecedente nameHallazgo">Cambio de volumen</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="cambioVolumen" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="cambioVolumen" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot" type="radio" name="cambioVolumen" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtCambiovolumen" id="txtCambiovolumen" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtCambiovolumen" id="txtCambiovolumen" disabled /></div>
 					</div>
 					<div class="row fila option optionHallazgo">
 						<div class="col-md-5 nameAntecedente nameHallazgo">Bloqueo mandibular</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="bloqueoMandibula" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="bloqueoMandibula" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot" type="radio" name="bloqueoMandibula" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" id="txtBloqueomandibula" name="txtBloqueomandibula" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" id="txtBloqueomandibula" name="txtBloqueomandibula" disabled /></div>
 					</div>
 					<div class="row fila option optionHallazgo">
 						<div class="col-md-5 nameAntecedente nameHallazgo">Limitación de apertura</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="limitacionApertura" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="limitacionApertura" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot" type="radio" name="limitacionApertura" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtLimitacionapertura" id="txtLimitacionapertura" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtLimitacionapertura" id="txtLimitacionapertura" disabled /></div>
 					</div>
 					<div class="row fila option optionHallazgo">
 						<div class="col-md-5 nameAntecedente nameHallazgo">Dolor articular</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="dolorArticular" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="dolorArticular" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot" type="radio" name="dolorArticular" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtDolorarticular" id="txtDolorarticular" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtDolorarticular" id="txtDolorarticular" disabled /></div>
 					</div>
 					<div class="row fila option optionHallazgo">
 						<div class="col-md-5 nameAntecedente nameHallazgo">Dolor muscular</div>
-						<div class="col-md-1"><input class="optionYes"  checked="checked"  type="radio" name="dolorMuscular" value="1"/></div>
+						<div class="col-md-1"><input class="optionYes"  type="radio" name="dolorMuscular" value="1"/></div>
 						<div class="col-md-1"><input class="optionNot" type="radio" name="dolorMuscular" value="0"/></div>
-						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtDolormuscular" id="txtDolormuscular" disabled value="hhhh"></div>
+						<div class="col-md-5 contentDes"><input type="text" class="form-control desHallazgo" placeholder="Descripcion" name="txtDolormuscular" id="txtDolormuscular" disabled /></div>
 					</div>
 				</div> <!-- fin cuarta parte formulario -->
 				
 				<div class="contentButtons">					
 					<button type="submit" class="btn btn-default" id="Guardar">Guardar</button>
-					<button type="reset" class="btn btn-default" id="Cancelar">Cancelar</button>
+					<button type="reset" class="btn btn-default clean" id="Cancelar">Cancelar</button>
+					<button type="reset" class="btn btn-default" id="index">Inicio</button>
 				</div>
 
 			</form>

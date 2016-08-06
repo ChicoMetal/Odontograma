@@ -10,6 +10,9 @@ $(document).ready(function(){
 	$("#linkAtencion").on( "click", function(){ 
 		window.location="./AtencionMedica.html";
 	});
+	$("#linkPaciente").on( "click", function(){ 
+		window.location="./pacientes.html";
+	});
 
 
 });
