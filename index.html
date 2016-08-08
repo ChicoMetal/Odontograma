@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="./css/normalize.css"/>
 	<link rel="stylesheet" type="text/css" href="./bootstrap-3.3.6-dist/css/bootstrap.min.css"/>
 	<link rel="stylesheet" type="text/css" href="./font-awesome-4.5.0/css/font-awesome.min.css"/>
+	<link rel="stylesheet" type="text/css" href="./css/styles.css"/>
 	<link rel="stylesheet" type="text/css" href="./css/styleIndex.css"/>
 
 
@@ -14,6 +15,7 @@
 	<script type="text/javascript" src="./js/jquery-1.12.3.min.js"></script>
 	<script type="text/javascript" src="./js/prefixfree.min.js"></script>
 	<script type="text/javascript" src="./bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./js/validate/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="./js/bootbox.min.js"></script>
 	<script type="text/javascript" src="./js/Methods.js"></script>
 	<script type="text/javascript" src="./js/index.js"></script>
@@ -21,13 +23,34 @@
 </head>
 <body>
 	
-	<h1 class="text-center"> MEDICINA ODONTOLOGICA</h1>
-	<section>
-		<button class="btn btn-default" id="linkCitas">Citas</button>
-		<button class="btn btn-default" id="linkAdmisiones">Admisiones</button>
-		<button class="btn btn-default" id="linkAtencion">Atender</button>
-		<button class="btn btn-default" id="linkPaciente">Nuevo paciente</button>
+	<h1 class="text-center"> Plataforma Odontologica </h1>
+
+	<section class="contentSession">
+
+		<figure>
+			<img src="./css/img/logo.svg">
+		</figure>
+
+		<div class="session">
+			<form role="form" class="center-block"  name="formLogin" id="formLogin">
+				<div class="from-group">
+					<label for="user">Usuario</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
+					<input type="text" class="form-control" id="user" name="user" placeholder="Usuario" required/>
+				</div>
+				<div class="from-group">
+					<label for="pass">Contraseña</label> <i class="fa fa-asterisk" aria-hidden="true"></i>
+					<input type="text" class="form-control" id="pass" name="pass" placeholder="Contraseña" required/>
+				</div>
+
+				<div class="from-group groupButtons">
+					<button type="submit" class="btn btn-success">Enviar</button>
+					<button type="reset" class="btn btn-warning">Cancelar</button>
+				</div>
+			</form>
+		</div>
+
 	</section>
+	
 
 </body>
 </html>

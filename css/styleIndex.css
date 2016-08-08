@@ -1,4 +1,46 @@
-.btn
+body
 {
-	width: 10%;
+	background: url('./img/fondo.png'), rgba(245,245,245,0.7);
+}
+
+figure
+{
+	width: 35%;
+}
+
+figure img 
+{
+	width: 100%;
+}
+button.btn
+{
+	width: 20%;
+}
+
+
+
+.contentSession
+{	
+	margin:  4em auto;
+	width: 70%;	
+}
+
+.contentSession figure, .contentSession .session
+{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.groupButtons
+{
+	margin-top: 1.2em;
+}
+
+.session
+{
+	border-radius: 0.5em;	
+	background: rgba(250,250,250,0.8);
+	box-shadow: rgb(10,10,10) 5px 5px 20px;
+	padding: 1em;
+	width: 60%;
 }
