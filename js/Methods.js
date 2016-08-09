@@ -143,3 +143,54 @@ function Limpiar(selector){
 	  this.reset();						  
 	});
 }
+
+function ValidarCookies(){ 
+// valida la session
+
+	return $.ajax({
+		beforeSend:function(){
+
+		},
+		type:"POST",
+		url:"./core/validateCookies.php",
+		dataType: 'json',
+		success: function( res){
+		
+		},
+		error: function(jqXHR,estado,error){
+			
+			console.log(jqXHR);
+		},
+		setTimeout:10000
+	});
+}
+
+function CloseSession(){ 
+//cierra la session
+  $.ajax({
+	beforeSend:function(){
+
+	},
+	url:"./core/closeSession.php",
+	type:"POST",
+	success: function( res){
+		console.log(res);
+
+	},
+	error: function(jqXHR,estado,error){
+		console.log(jqXHR);
+	},
+	complete: function(jqXHR,estado){	
+
+		var result = JSON.parse( jqXHR.responseText );
+
+		if( ValidateResponseServer( result, true ) )
+			window.location="./index.html";
+		else if( ValidateResponseServer( result, false ) ){
+			console.log(result);
+		}	
+
+	},
+	setTimeout:10000
+  });
+}

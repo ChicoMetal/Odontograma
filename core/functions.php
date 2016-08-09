@@ -36,4 +36,30 @@
 	function fechaHora(){
 		return date("Y")."-".date("m")."-".date("d")."~".date("G")."-".date("H")."-".date("s");
 	}
+
+	function ValidarToken(){
+
+		if ( isset( $_COOKIE['userOdonto'] ) && isset( $_COOKIE['tokenOdonto'] ) ){
+
+			$sql = " SELECT count(*) FROM logs 
+			WHERE usuario ='".base64_decode($_COOKIE['userOdonto'])."' AND 
+							token = '{$_COOKIE['tokenOdonto']}' AND 
+							salida IS NULL AND
+							estado = true";
+
+		
+			$resultado = buscarDatos( $sql );
+
+
+			return $resultado[0][0]->$resultado[1][0];
+			
+		}else{
+
+			return 0;
+
+		}
+
+
+
+	}
 ?>

@@ -1,5 +1,20 @@
 $(document).ready( function(){ 
 
+	var validateCookie = ValidarCookies();//obtengo ajax de peticion validar cookies
+
+	if( validateCookie != null ){//si se retorno el ajax
+
+		validateCookie.success(function(data) {//cuando se complete la peticion a php
+
+			if( ValidateResponseServer( data, true ) )
+				window.location="./platform.html";
+			
+
+		});
+
+	}
+
+
 	$('#formLogin').validate({//validacion del formulario		
 	    rules :{
 		    user : {
@@ -33,6 +48,7 @@ $(document).ready( function(){
 
     });	
 
+
 });
 
 function Login(){
@@ -52,9 +68,11 @@ function Login(){
 
 		var result = JSON.parse( jqXHR.responseText );
 
-		if( ValidateResponseServer( result, false ) )
-			console.log( result );		
-
+		if( ValidateResponseServer( result, true ) )
+			window.location="./platform.html";
+		else if( ValidateResponseServer( result, false ) ){
+			console.log(result);
+		}
 	},
 	setTimeout:10000
   });

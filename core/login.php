@@ -57,14 +57,12 @@
 
 			}else{
 				
-				$sql = "INSERT INTO logsfails(usuario, password, fecha) 
-					VALUES ('{$_POST['usuario']}','{$_POST['password']}', NOW() )";
+				$sql = "INSERT INTO logfails(Usuario, Password, Fecha) 
+					VALUES ('$user','$pass', NOW() )";
 					
 				insertarDatos( $sql );
 
-					
-
-				echo "0011";
+				echo json_encode( $GLOBALS['resA3'] );
 
 			}
 
