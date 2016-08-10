@@ -47,7 +47,7 @@ $(document).ready(function(){
 	});
 
 	$("#index").on( "click", function(){ 
-		window.location="./index.html";
+		window.location="./platform.html";
 	});
 
 	getCitasAdmitidas();

@@ -1446,7 +1446,7 @@ function CloseHistory(Historia) {
 			var result = JSON.parse(jqXHR.responseText);
 
 			if (ValidateResponseServer(result, true))
-				window.location = "./index.html";
+				window.location = "./platform.html";
 
 		},
 		setTimeout: 10000

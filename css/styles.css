@@ -132,6 +132,12 @@ svg.figureDent .faceDent:hover
 	border-bottom-color: #7F7F7F;
 	border-bottom-width: 1.5px;		
 }
+
+.navbar-brand
+{
+	padding: 0.5em;
+}
+
 .procedureNullRepresentacion
 {
 

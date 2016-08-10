@@ -71,7 +71,7 @@ $(document).ready(function(){
     });
 
     $("#index").on( "click", function(){ 
-		window.location="./index.html";
+		window.location="./platform.html";
 	});
 
     $('#dateCita').on('change', function(){
@@ -195,7 +195,7 @@ function Pacientes(){
 	beforeSend:function(){
 
 	},
-	url:"./core/getPacientes.php",
+	url:"./core/GetPacientes.php",
 	type:"POST",
 	success: function( res){
 							
