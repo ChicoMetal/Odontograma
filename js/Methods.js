@@ -1,3 +1,6 @@
+var TIPE_USER_MEDICO = "0111";
+var TIPE_USER_AUXILIAR = "0011";
+
 function ValidateResponseServer( result, HiddenAlert=false ){ 
 //Confirmar si la respuesta del server es o no un mensaje
 	
@@ -193,5 +196,25 @@ function CloseSession(){
 	},
 	setTimeout:10000
   });
+}
+
+function GetCookies(){
+//obtiene un objeto con las cookies
+	return $.ajax({
+		beforeSend:function(){
+
+		},
+		url:"./core/getCookies.php",
+		method:"POST",
+		error: function(jqXHR,estado,error){
+			console.log(jqXHR);
+		},
+		complete: function(jqXHR,estado){	
+			
+			
+
+		},
+		setTimeout:10000
+	});
 }
 

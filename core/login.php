@@ -20,49 +20,52 @@
 
 		$resultado = buscarDatos( $sql );
 
-		if ( is_array( $resultado ) ){//si es un array
+		if ( is_array( $resultado ) && $resultado[0] != 'msm' ){//si es un array
 
 			$valores = $resultado[0][0];
 
-			if(  $valores -> $resultado[1][0] > 0  ){
+			if(  $valores -> $resultado[1][0] > 0  ){//si esta en la tabla usuario
 				
-				$token = md5( $user.fechaHora()."-".date('u') );
+				
+				Loguear($user, $pass, "usuarios");
 
-				$sql = " INSERT INTO logs( usuario, token, estado) 
-						VALUES( '$user','$token', 1 )  ";				
 
-				$respuesta = insertarDatos( $sql );
+			}else{//si no esta en la tabla usuarios se busca en la de medicos
 
-				if( $respuesta === $GLOBALS['resA4'] ){
+				$sql = " SELECT count(*) as existencia, Id
+				FROM medicos 
+				WHERE usuario = '$user'  AND password = '$pass' AND estado = true";
 
-					$sql = "SELECT id, Tipo FROM usuarios WHERE usuario = '$user' AND estado = true";
-					$resultado = buscarDatos( $sql );
+
+				$resultado = buscarDatos( $sql );
+
+				if ( is_array( $resultado ) && $resultado[0] != 'msm' ){//si es un array
 
 					$valores = $resultado[0][0];
-					$duracion = time() + (60 * 60 * 5);
 
-					setcookie("userOdonto", base64_encode( $user ), $duracion );
-					setcookie("userid", base64_encode(  $valores -> $resultado[1][0] ), $duracion );
-					setcookie("tipeUser", base64_encode(  $valores -> $resultado[1][1] ), $duracion );
-					setcookie("tokenOdonto", $token, $duracion );
+					if(  $valores -> $resultado[1][0] > 0  ){
+												
+						Loguear($user, $pass, "medicos");
 
-					echo json_encode( $GLOBALS['resB3'] );
+					}else{
+						
+						$sql = "INSERT INTO logfails(Usuario, Password, Fecha) 
+							VALUES ('$user','$pass', NOW() )";
+							
+						insertarDatos( $sql );
+
+						echo json_encode( $GLOBALS['resA3'] );
+
+					}
+
 
 				}else{
-					
-					echo $respuesta;
+
+					echo json_encode( $resultado );
 
 				}
 				
-
-			}else{
 				
-				$sql = "INSERT INTO logfails(Usuario, Password, Fecha) 
-					VALUES ('$user','$pass', NOW() )";
-					
-				insertarDatos( $sql );
-
-				echo json_encode( $GLOBALS['resA3'] );
 
 			}
 
@@ -78,6 +81,44 @@
 	}
 
 
+	function Loguear($user, $pass, $table){
+		$token = md5( $user.fechaHora()."-".date('u') );
+
+		$sql = " INSERT INTO logs( usuario, token, estado) 
+				VALUES( '$user','$token', 1 )  ";				
+
+		$respuesta = insertarDatos( $sql );
+		
+		if( $respuesta === $GLOBALS['resA4'] ){
+
+
+			$sql = "SELECT id, Tipo FROM ".$table." WHERE usuario = '$user' AND estado = true";
+			$resultado = buscarDatos( $sql );
+
+			if( is_array( $resultado ) && $resultado[0] != 'msm' ){
+
+				$valores = $resultado[0][0];
+				$duracion = time() + (60 * 60 * 5);
+
+				setcookie("userOdonto", base64_encode( $user ), $duracion );
+				setcookie("userid", base64_encode(  $valores -> $resultado[1][0] ), $duracion );
+				setcookie("tipeUser", base64_encode(  $valores -> $resultado[1][1] ), $duracion );
+				setcookie("tokenOdonto", $token, $duracion );
+				
+
+				echo json_encode( $GLOBALS['resB3'] );
+
+			}else{
+				echo json_encode( $GLOBALS['resB2'] );
+				
+			}
+
+		}else{
+			
+			echo $respuesta;
+
+		}
+	}
 
 
 	

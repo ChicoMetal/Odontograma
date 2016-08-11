@@ -1,5 +1,8 @@
 $(document).ready( function(){
 
+	ShowHome();
+	
+
 	var validateCookie = ValidarCookies();//obtengo ajax de peticion validar cookies
 
 	if( validateCookie != null ){//si se retorno el ajax
@@ -14,9 +17,10 @@ $(document).ready( function(){
 
 	}
 
+
 	$("#home").on( "click", function(){ 
 		
-		$("#show").html('');
+		ShowHome();
 	
 	});
 
@@ -52,4 +56,13 @@ $(document).ready( function(){
 		CloseSession();
 	});
 
+
 });
+
+function ShowHome(){
+//mostrar el contenido del home	
+	var href ="./home.html";
+	$("#show").html('');
+	$("#show").load(href);
+}
+

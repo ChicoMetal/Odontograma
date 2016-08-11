@@ -1,4 +1,4 @@
-var USUARIO = 92654;
+var USUARIO = "";
 
 var JsonConfigTime = {
 	'minTime': '6:00am',
@@ -9,6 +9,23 @@ var JsonConfigTime = {
 };
 
 $(document).ready(function(){
+
+	var getCookies = GetCookies();//obtengo ajax de peticion para obtener las cookies
+	
+	if( getCookies != null ){//si se retorno el ajax
+		getCookies.success(function(data) {//almaceno las cookies
+
+
+			var result = JSON.parse(data);
+			
+			if( atob(result.tipeUser) == TIPE_USER_AUXILIAR )
+				USUARIO = atob( result.userid );
+
+			Pacientes();//traer los pacientes para agregarlos al select
+    		Medicos();//traer los pacientes para agregarlos al select
+		});
+
+	}
 	
 
 	$.datepicker.setDefaults({
@@ -84,8 +101,7 @@ $(document).ready(function(){
     	ChangeTimePicker();
     });
 
-    Pacientes();//traer los pacientes para agregarlos al select
-    Medicos();//traer los pacientes para agregarlos al select
+    
 
 });
 
