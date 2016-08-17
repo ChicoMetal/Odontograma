@@ -111,9 +111,6 @@ $(document).ready(function(){
     	$('.option .contentDes input').prop('disabled', true);
     });
 
-    $("#index").on( "click", function(){ 
-		window.location="./platform.html";
-	});
 	
 });
 

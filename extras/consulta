@@ -1,0 +1,31 @@
+SELECT 
+	p.Id,
+	p.Tipoid,
+	p.Nombres,
+	p.Apellidos,
+	p.Edad,
+	p.Sexo,
+	p.Telefono,
+	p.Celular,
+	p.Direccion,
+	p.Ocupacion,
+	p.EstadoCivil,
+	p.Municipio,
+	p.FechaNacimiento,
+	p.Responsable,
+	p.TelResponsable,
+	tp.Nombre AS tipoPaciente,
+	e.Nombre AS pacienteEps,
+	i.Nombre AS pacienteIps,
+	mc.Motivo AS motivoSimple,
+	mc.MotivoAmpliado,
+	pa.Observacion AS antecdenteFamiliar
+FROM pacientes p, tipopacientes tp, eps e, ips i, motivosconsulta mc, pacienteantecedentes pa
+WHERE p.TipPaciente = tp.Id AND
+		p.Ips = i.Id AND
+		p.Eps = e.Id AND
+		mc.Cita = 66 AND
+		pa.Antecedente = 1 AND
+		pa.Paciente = 1104379214 AND
+		p.Id = 1104379214
+		LIMIT 1

@@ -87,10 +87,6 @@ $(document).ready(function(){
     	ResetSelects(this);
     });
 
-    $("#index").on( "click", function(){ 
-		window.location="./platform.html";
-	});
-
     $('#dateCita').on('change', function(){
     //traer horas ocupadas en la fecha
     	ChangeTimePicker();

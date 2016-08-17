@@ -84,95 +84,106 @@ var REPRESENTACION_GRAFICO = 2;
 
 $(document).ready(function() {
 
-	getHistory(PACIENTE); //obtengo el codigo de la historia abierta
+	var getCookies = GetCookies();//obtengo ajax de peticion para obtener las cookies
+	
+	if( getCookies != null ){//si se retorno el ajax
+		getCookies.success(function(data) {//almaceno las cookies
 
-	$("#ContentOdontograma .nav.nav-tabs li").on('click', function() {
-		ShowOdontograma();
-	});
+			getHistory(PACIENTE); //obtengo el codigo de la historia abierta
 
-	$(".subGroup").on("DOMNodeInserted", ".contentAdsolute figure.figureItemProcedure", function() {
-		//evento para encajar las alturas de los svg a la altura de su contendor 
-		//en los procedimientos que van en una cara del diente o en todo el dente
-		var altura = $(this).children("svg").css("height");
-		if (altura != undefined && altura != null && altura != '') { //verifica que sea contenga un svg
+			GetInfoPaciente();//infomacion del paciente
 
-			$(this).children("svg").css({
-				top: 0,
-				left: 0
+			$("#ContentOdontograma .nav.nav-tabs li").on('click', function() {
+				ShowOdontograma();
 			});
-			var newH = parseInt(altura.slice(0, -2));
-			newH = newH + 3;
 
-			$(this).css("height", newH);
-		}
+			$(".subGroup").on("DOMNodeInserted", ".contentAdsolute figure.figureItemProcedure", function() {
+				//evento para encajar las alturas de los svg a la altura de su contendor 
+				//en los procedimientos que van en una cara del diente o en todo el dente
+				var altura = $(this).children("svg").css("height");
+				if (altura != undefined && altura != null && altura != '') { //verifica que sea contenga un svg
 
-	});
+					$(this).children("svg").css({
+						top: 0,
+						left: 0
+					});
+					var newH = parseInt(altura.slice(0, -2));
+					newH = newH + 3;
 
+					$(this).css("height", newH);
+				}
 
-	$('.contentProcedures').on("click", "h4.panel-title .btn", function() {
-		//evento para agregar cada procedimiento de cada grupo en el menu
-
-		var idGroup = $(this).parents(".panel").attr('id');
-
-		if (!$("#collapse" + idGroup).hasClass('in'))
-			$(".panel-collapse").removeClass('in');
-
-		GetProcedures(idGroup);
-
-	});
+			});
 
 
-	$(".subGroup").on("mouseenter", ".contentOneDent", function() {
-		//evento de ocultar y mostrar popover
+			$('.contentProcedures').on("click", "h4.panel-title .btn", function() {
+				//evento para agregar cada procedimiento de cada grupo en el menu
 
-		var Dent = $(this).attr('cod');
-		var Tipe = $(this).parents('.tab-pane').attr('id');
+				var idGroup = $(this).parents(".panel").attr('id');
 
-		if (Tipe == "diagnosticos")
-			Tipe = PROCEDURE_TIPE_DIAGNOSTICO
-		else if (Tipe == "tratamientos")
-			Tipe = PROCEDURE_TIPE_TRATAMIENTO
-		else
-			Tipe = null;
+				if (!$("#collapse" + idGroup).hasClass('in'))
+					$(".panel-collapse").removeClass('in');
 
-		if (Tipe != null)
-			getProcedureDent(this, HISTORIA, Dent, Tipe);
-		else
-			getEvolutionDent(this, HISTORIA, Dent);
+				GetProcedures(idGroup);
 
-	});
+			});
 
-	$(".subGroup").hover(function(e) { //ocultar popover habiertos
-		$(".contentOneDent").popover('hide');
-	});
 
-	$(".procedureNullRepresentacion").on("click", ".delProcedurePaciente", function() {
-	//evento del boton eliminar procedimientos generales de un paciente en una historia
-		var codigoProcedure = $(this).parents('.row').attr('cod');
-		DelProcedurePaciente(codigoProcedure);
-	});
+			$(".subGroup").on("mouseenter", ".contentOneDent", function() {
+				//evento de ocultar y mostrar popover
 
-	$('.subGroup').on('click', '.delProcedurePaciente', function() {
-	//evento del boton eliminar procedimientos de un paciente  en una historia
-		var codigoProcedure = $(this).parents('.row').attr('cod');
-		DelProcedurePaciente(codigoProcedure);
-	});
+				var Dent = $(this).attr('cod');
+				var Tipe = $(this).parents('.tab-pane').attr('id');
 
-	$('.subGroup').on('click', '.EvolProcedurePaciente', function() {
-		//evento del boton evolucionar procedimientos de un paciente en una historia
+				if (Tipe == "diagnosticos")
+					Tipe = PROCEDURE_TIPE_DIAGNOSTICO
+				else if (Tipe == "tratamientos")
+					Tipe = PROCEDURE_TIPE_TRATAMIENTO
+				else
+					Tipe = null;
 
-		EventEvolucionarProcedimientos(this);
+				if (Tipe != null)
+					getProcedureDent(this, HISTORIA, Dent, Tipe);
+				else
+					getEvolutionDent(this, HISTORIA, Dent);
 
-	});
+			});
 
-	$('#evolucion .procedureNullRepresentacion').on('click', '.EvolProcedurePaciente', function() {
-		//evento del boton evolucionar procedimientos generales de un paciente en una historia
-		EventEvolucionarProcedimientos(this);
-	});
+			$(".subGroup").hover(function(e) { //ocultar popover habiertos
+				$(".contentOneDent").popover('hide');
+			});
 
-	$("#closeHistory").on("click", function() {
-		CloseHistory(HISTORIA);
-	});
+			$(".procedureNullRepresentacion").on("click", ".delProcedurePaciente", function() {
+			//evento del boton eliminar procedimientos generales de un paciente en una historia
+				var codigoProcedure = $(this).parents('.row').attr('cod');
+				DelProcedurePaciente(codigoProcedure);
+			});
+
+			$('.subGroup').on('click', '.delProcedurePaciente', function() {
+			//evento del boton eliminar procedimientos de un paciente  en una historia
+				var codigoProcedure = $(this).parents('.row').attr('cod');
+				DelProcedurePaciente(codigoProcedure);
+			});
+
+			$('.subGroup').on('click', '.EvolProcedurePaciente', function() {
+				//evento del boton evolucionar procedimientos de un paciente en una historia
+
+				EventEvolucionarProcedimientos(this);
+
+			});
+
+			$('#evolucion .procedureNullRepresentacion').on('click', '.EvolProcedurePaciente', function() {
+				//evento del boton evolucionar procedimientos generales de un paciente en una historia
+				EventEvolucionarProcedimientos(this);
+			});
+
+			$("#closeHistory").on("click", function() {
+				CloseHistory(HISTORIA);
+			});
+			
+		});
+
+	}
 
 });
 
@@ -201,7 +212,6 @@ function getHistory(Paciente) {
 
 			if (ValidateResponseServer(result)) {
 				HISTORIA = result[0][0][result[1][0]]; //obtener el codigo de la ultima historia
-				console.log(HISTORIA);
 				ShowOdontograma();
 			}
 
@@ -1446,11 +1456,82 @@ function CloseHistory(Historia) {
 			var result = JSON.parse(jqXHR.responseText);
 
 			if (ValidateResponseServer(result, true))
-				window.location = "./platform.html";
+				window.location = "./home.html";
 
 		},
 		setTimeout: 10000
 
 	});
 
+}
+
+function GetInfoPaciente(){
+//obtener la informacion del paciente para mostrarla	
+	
+	var getInfoGeneral = PeticionInfo('1', '66');//obtengo ajax de peticion para obtener las cookies
+	var getInfoHistoria = PeticionInfo('2', '-');//obtengo ajax de peticion para obtener las cookies
+	
+	if( getInfoGeneral != null && getInfoHistoria != null ){//si se retorno el ajax
+
+		getInfoGeneral.success(function(data) {//Respuesta de la informacion general
+
+			getInfoHistoria.success(function(infohistoria) {//respuesta de la informacion de la historia
+
+				ShowInfoPaciente( data, infohistoria );
+			});
+			
+		});
+
+	}
+	
+	
+}
+
+function PeticionInfo(Option, Cita) {
+//Buscara la informacion general y medico del paciente
+
+	return $.ajax({
+		beforeSend: function() {
+
+		},
+		type: "POST",
+		url: "./core/GetInfoPaciente.php",
+		dataType: 'json',
+		data: {
+			paciente: PACIENTE,
+			cita: Cita,
+			option: Option
+		},
+		error: function(jqXHR, estado, error) {
+
+			console.log(jqXHR);
+
+		},
+		setTimeout: 10000
+
+	});
+
+}
+
+function ShowInfoPaciente( Data, InfoHistoria ){
+//insertara la informacion del paciente en el html
+	var valores = Data[0];
+	var keys = Data[1];
+
+	for (var i = 18; i >= 0; i--) {
+
+		if( valores[0][ keys[i] ] != '' )
+			$("#"+keys[i]+" .panel-body").html( valores[0][ keys[i] ] );
+		else
+			$("#"+keys[i]+" .panel-body").html( '----' );
+
+	}
+
+	$("#numhc .panel-body").html( HISTORIA );	
+	$("#iniciotratamiento .panel-body").html( InfoHistoria[0][0][ InfoHistoria[1][0] ] );	
+
+	/*$("#nameips .panel-body").html( valores[0][ keys['17'] ] );	
+	$("#numhc .panel-body").html( HISTORIA );	
+	$("#nombres .panel-body").html( valores[0][ keys['2'] ] );	
+	$("#apellidos .panel-body").html( valores[0][ keys['3'] ] );	*/
 }

@@ -3,6 +3,8 @@
 	<head>
 		<meta charset="utf-8"/>
 		<title>Odontograma</title>
+
+		<link rel="icon" type="image/png" href="./css/img/icon.png" />
 		
 		<link rel="stylesheet" type="text/css" href="./css/normalize.css"/>
 		<link rel="stylesheet" type="text/css" href="./bootstrap-3.3.6-dist/css/bootstrap.min.css"/>
@@ -38,8 +40,241 @@
 		<div id="my-tab-content" class="tab-content">
 			
 			<section class="tab-pane active" id="ContentForm">
-				
+
 				<div id="ContentFormFirts">
+					<h2 class="text-center">Historia Clínica Odontológica</h2>
+					
+					<div class="row">
+						<div class="col-md-4" id="pacienteIps">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Nombre de la IPS</h3>
+							  </div>
+							  <div class="panel-body">
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-2" id="numhc">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Número de la HC</h3>
+							  </div>
+							  <div class="panel-body">
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-2" id="iniciotratamiento">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Fecha inicio tratamiento</h3>
+							  </div>
+							  <div class="panel-body">
+							  </div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4" id="Apellidos">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Apellidos</h3>
+							  </div>
+							  <div class="panel-body">
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-4" id="Nombres">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Nombres</h3>
+							  </div>
+							  <div class="panel-body">
+							  </div>
+							</div>
+						</div>						
+					</div>
+					<div class="row">
+						<div class="col-md-2" id="Identificacion">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Identificacion</h3>
+							  </div>
+							  <div class="panel-body">
+							    CC - 6855360
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-1" id="Sexo">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Sexo</h3>
+							  </div>
+							  <div class="panel-body">
+							    Masculino
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-1" id="Edad">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Edad</h3>
+							  </div>
+							  <div class="panel-body">
+							    25
+							  </div>
+							</div>
+						</div>						
+						<div class="col-md-4" id="FechaNacimiento">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Fecha de nacimiento</h3>
+							  </div>
+							  <div class="panel-body">
+							    05/09/1991
+							  </div>
+							</div>
+						</div>						
+					</div>
+					<div class="row">
+						<div class="col-md-3" id="Ocupacion">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Ocupación</h3>
+							  </div>
+							  <div class="panel-body">
+							    PENSIONADO 
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-1" id="EstadoCivil">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Estado civil</h3>
+							  </div>
+							  <div class="panel-body">
+							    Casado
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-2" id="tipoPaciente">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Tipo de usuario</h3>
+							  </div>
+							  <div class="panel-body">
+							    Cotizante
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-2" id="pacienteEps">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Aseguradora</h3>
+							  </div>
+							  <div class="panel-body">
+							    NACIONAL
+							  </div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4" id="Direccion">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Dirección de la residencia</h3>
+							  </div>
+							  <div class="panel-body">
+							    Tv 15 Dig 1 1 100 B GALILEA
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-2" id="Telefonos">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Telefono</h3>
+							  </div>
+							  <div class="panel-body">
+							    7864396- 3107058984
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-2" id="Municipio">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Municipio</h3>
+							  </div>
+							  <div class="panel-body">
+							    Sincelejo
+							  </div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4" id="Responsable">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Persona responsable</h3>
+							  </div>
+							  <div class="panel-body">
+							    MANUELA BILLALVA
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-4" id="TelResponsable">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Telefono persona responsable</h3>
+							  </div>
+							  <div class="panel-body">
+							    7864396
+							  </div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-11" id="motivoSimple">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Motivo de consulta</h3>
+							  </div>
+							  <div class="panel-body">
+							    " ME MOLESTA UNA MUELITA "  
+							  </div>
+							</div>
+						</div>				
+					</div>
+					<div class="row">
+						<div class="col-md-11" id="MotivoAmpliado">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Evolución y estado actual (Ampliación motivo de consulta - reporte de síntomas)</h3>
+							  </div>
+							  <div class="panel-body">
+							    PACIENTE REFIERE ODONTALGIA LEVE TIPO SENSIBILIDAD QUE APARECIO DE FORMA INCIDIOSA E INTERMITENTE; EL CUAL ES PROVOCADO Y SE EXACERBA CON LOS CAMBIOS TERMICOS; CUYA INTENSIDAD ES TOLERABLE; LOCALIZADO EN ÁREA PREMOLAR INFERIOR DERECHA DE 3 MESES DE EVOLUCIÓN. ULTIMA VISITA ODONTOLOGICA HACE 3 AÑOS POR OPERATORIA DENTAL.   
+							  </div>
+							</div>
+						</div>			
+					</div>
+					<div class="row">
+						<div class="col-md-11" id="antecedenteFamiliar">
+							<div class="panel panel-info">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">Antecedentes familiares</h3>
+							  </div>
+							  <div class="panel-body">
+							    LINEA MATERNA: HIPERTENSION  
+							  </div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+				<div id="ContentFormSecond">
+					<h2 class="text-center">Antecedentes Odontológicos y Médicos Generales</h2>
+				</div>
+				
+				<!-- <div id="ContentFormFirts">
 					<h2>Historia Clínica Odontológica</h2>
 					<table border="0" cellspacing="0" cellpadding="2">
 						<tbody>
@@ -195,7 +430,7 @@
 						</tbody>
 					</table>
 					<button>Guardar</button>
-				</div>
+				</div> -->
 				<div id="ContentFormSecond">
 					<h2>Antecedentes Odontológicos y Médicos Generales</h2>
 					<table border="1" cellspacing="0" cellpadding="2" id="tablaAntecedentesOdonto">

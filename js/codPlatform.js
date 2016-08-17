@@ -17,46 +17,6 @@ $(document).ready( function(){
 
 	}
 
-
-	$("#home").on( "click", function(){ 
-		
-		ShowHome();
-	
-	});
-
-	$("#linkCitas").on( "click", function(){ 
-		
-		var href ="./citas.html";
-		$("#show").html('');
-		$("#show").load(href);
-	
-		//window.location="./citas.html";
-	});
-	$("#linkAdmisiones").on( "click", function(){ 
-		var href ="./Admisiones.html";
-		$("#show").html('');
-		$("#show").load(href);
-		//.location="./Admisiones.html";
-	});
-	$("#linkAtencion").on( "click", function(){ 
-		var href ="./AtencionMedica.html";
-		$("#show").html('');
-		$("#show").load(href);
-		//window.location="./AtencionMedica.html";
-	});
-
-	$("#linkPaciente").on( "click", function(){ 
-		var href ="./pacientes.html";
-		$("#show").html('');
-		$("#show").load(href);
-		//window.location="./pacientes.html";
-	});
-
-	$("#closeSession").on( "click", function(){ 
-		CloseSession();
-	});
-
-
 });
 
 function ShowHome(){

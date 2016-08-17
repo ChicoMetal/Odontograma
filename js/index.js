@@ -69,7 +69,7 @@ function Login(){
 		var result = JSON.parse( jqXHR.responseText );
 
 		if( ValidateResponseServer( result, true ) )
-			window.location="./platform.html";
+			window.location="./home.html";
 		else if( ValidateResponseServer( result, false ) ){
 			console.log(result);
 		}

@@ -135,7 +135,7 @@ svg.figureDent .faceDent:hover
 
 .navbar-brand
 {
-	padding: 0.5em;
+	padding: 0.5em !important;
 }
 
 .procedureNullRepresentacion
@@ -192,9 +192,28 @@ svg.figureDent .faceDent:hover
 	padding: 0;
 }
 
+
 .row
 {
 	width: 99.9%;
+}
+
+#ContentFormFirts
+{
+	margin-left: 1em;
+}
+#ContentForm .row>div
+{
+	padding: 0 0.5em;
+}
+#ContentForm .panel 
+{
+	margin-bottom: 0.5em;
+}
+
+#ContentForm .panel .panel-body
+{
+	padding: 0.3em;
 }
 #diagnosticos .contentOneDent svg g .dent1
 {

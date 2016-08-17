@@ -1,3 +1,4 @@
+var TIPE_USER_ADMIN = "1111";
 var TIPE_USER_MEDICO = "0111";
 var TIPE_USER_AUXILIAR = "0011";
 
@@ -218,3 +219,29 @@ function GetCookies(){
 	});
 }
 
+function AdapterMenu( Data ){
+//alterar el menu para mostrar opciones que correponda a cada tipo de usuarios
+
+	if( atob(Data.tipeUser) == TIPE_USER_ADMIN ){
+		
+		$('#contentItemMenu').html('\
+				<li id="linkCitas"><a href="#">Citas <span class="sr-only">(current)</span></a></li>\
+		        <li id="linkAdmisiones"><a href="#">Admisiones</a></li>\
+		        <li id="linkAtencion"><a href="#">Atender</a></li>\
+		        <li id="linkPaciente"><a href="#">Nuevo paciente</a></li>\
+			');
+
+	}else if( atob(Data.tipeUser) == TIPE_USER_MEDICO ){
+		
+		$('#contentItemMenu').html('\
+		        <li id="linkAtencion"><a href="#">Atender</a></li>\
+			');
+
+	}else if( atob(Data.tipeUser) == TIPE_USER_AUXILIAR ){
+		$('#contentItemMenu').html('\
+				<li id="linkCitas"><a href="#">Citas <span class="sr-only">(current)</span></a></li>\
+		        <li id="linkAdmisiones"><a href="#">Admisiones</a></li>\
+		        <li id="linkPaciente"><a href="#">Nuevo paciente</a></li>\
+			');
+	}
+}

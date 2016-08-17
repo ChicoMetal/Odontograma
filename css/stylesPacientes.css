@@ -1,7 +1,4 @@
-form
-{
-	margin: 1em 1%;
-}
+
 
 form>div
 {
@@ -33,6 +30,12 @@ input[type=radio] {
 #antecedentesOption .yesAntecedentes, #antecedentesOption .notAntecedentes
 {
 	margin-top: 0.7em;
+}
+
+#ContentFormPaciente
+{
+	width: 98%;
+	margin: 1em 2%;
 }
 
 .btn

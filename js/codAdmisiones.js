@@ -25,10 +25,6 @@ $(document).ready(function(){
 
 	});
 
-	$("#index").on( "click", function(){ 
-		window.location="./platform.html";
-	});
-
 	
 });
 
