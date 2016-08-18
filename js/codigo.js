@@ -5,6 +5,7 @@
 var HISTORIA;
 var eventoa;
 
+
 /*$(".subGroup").on("DOMNodeInserted", function(){//evento q desencadena la vista de los procedimientos agregados en modo de tooltip
 	
 				
@@ -79,6 +80,17 @@ var PROCEDURE_TIPE_TRATAMIENTO = 2;
 //representacion de un procedimiento
 var REPRESENTACION_COLOR = 1;
 var REPRESENTACION_GRAFICO = 2;
+
+
+//*********************************
+//tipos de antecdentes
+var TIPE_ANTECEDENTES_GENERALES = 1;
+var TIPE_ANTECEDENTES_ESTOMATOLOGICO = 2;
+var TIPE_ANTECEDENTES_HALLAZGO = 3;
+var TIPE_ANTECEDENTES_OTROS = 4;
+
+//antecedentes especiales
+var ANTECEDENTE_GENERAL_OTRO = 'A23';
 
 //Diente simbolico para asignar procedimientos generales, que no se realizan en los dientes
 
@@ -1468,8 +1480,17 @@ function CloseHistory(Historia) {
 function GetInfoPaciente(){
 //obtener la informacion del paciente para mostrarla	
 	
-	var getInfoGeneral = PeticionInfo('1', '66');//obtengo ajax de peticion para obtener las cookies
-	var getInfoHistoria = PeticionInfo('2', '-');//obtengo ajax de peticion para obtener las cookies
+	var TipoA = '1';//opcion traer informacion general
+	var TipoB = '2';//opcion traer informacion de la historia
+	var TipoC = '3';//opcion traer antecdentes generales
+	var TipoD = '4';//opcion traer antecdentes estomatologicos
+	var TipoE = '5';//opcion traer antecdentes hallazgos
+
+	var getInfoGeneral = PeticionInfo(TipoA, CITA);//obtener informacion general del paciente
+	var getInfoHistoria = PeticionInfo(TipoB, '-');//obtener informacion de la historia
+	var getAntecdentesGenerales = PeticionInfo(TipoC, '-');//obtener antecdentes generales
+	var getAntecdentesEstomatologicos = PeticionInfo(TipoD, '-');//obtener antecdentes generales
+	var getAntecdentesHallazgos = PeticionInfo(TipoE, '-');//obtener antecdentes hallazgos
 	
 	if( getInfoGeneral != null && getInfoHistoria != null ){//si se retorno el ajax
 
@@ -1483,6 +1504,36 @@ function GetInfoPaciente(){
 		});
 
 	}
+
+	if( getAntecdentesGenerales != null ){//si se retorno el ajax
+
+		getAntecdentesGenerales.success(function( antecedentes ) {//obtener resultados de antecedentes generales
+
+			ShowAntecdentesPaciente( antecedentes, "#contentAntecedentesGenerales" );
+
+		});
+			
+	};
+
+	if( getAntecdentesEstomatologicos != null ){//si se retorno el ajax
+
+		getAntecdentesEstomatologicos.success(function( antecedentes ) {//obtener resultados de antecdenets estomatologicos
+
+			ShowAntecdentesPaciente( antecedentes, "#contentAntecedentesEstomatologico" );
+
+		});
+			
+	};
+
+	if( getAntecdentesHallazgos != null ){//si se retorno el ajax
+
+		getAntecdentesHallazgos.success(function( antecedentes ) {//obtener resultados de antecdenets hallazgos
+
+			ShowAntecdentesPaciente( antecedentes, "#contentAntecedentesHallazgo" );
+
+		});
+			
+	};
 	
 	
 }
@@ -1530,8 +1581,54 @@ function ShowInfoPaciente( Data, InfoHistoria ){
 	$("#numhc .panel-body").html( HISTORIA );	
 	$("#iniciotratamiento .panel-body").html( InfoHistoria[0][0][ InfoHistoria[1][0] ] );	
 
-	/*$("#nameips .panel-body").html( valores[0][ keys['17'] ] );	
-	$("#numhc .panel-body").html( HISTORIA );	
-	$("#nombres .panel-body").html( valores[0][ keys['2'] ] );	
-	$("#apellidos .panel-body").html( valores[0][ keys['3'] ] );	*/
+}
+
+function ShowAntecdentesPaciente( antecedentes, content ){
+//insertara la informacion del paciente en el html
+	var valores = antecedentes[0];
+	var keys = antecedentes[1];
+
+	var htmlItem = '';
+
+	for (var i = valores.length - 1; i >= 0; i--) {
+
+		if( valores[i][ keys['4'] ] != '' ){
+
+
+			if( valores[i][ keys['2'] ] != ANTECEDENTE_GENERAL_OTRO ){
+
+				
+				htmlItem += '<div class="col-md-4" id="'+valores[i][ keys['0'] ]+'">\
+								<div class="panel panel-info">\
+								  <div class="panel-heading">\
+								    <h3 class="panel-title">'+valores[i][ keys['3'] ]+'</h3>\
+								  </div>\
+								  <div class="panel-body">\
+								    '+valores[i][ keys['4'] ]+'\
+								  </div>\
+								</div>\
+							</div>';
+
+			}else{
+
+				htmlItem += '<div class="col-md-8" id="'+valores[i][ keys['0'] ]+'">\
+								<div class="panel panel-info">\
+								  <div class="panel-heading">\
+								    <h3 class="panel-title">'+valores[i][ keys['3'] ]+'</h3>\
+								  </div>\
+								  <div class="panel-body">\
+								    '+valores[i][ keys['4'] ]+'\
+								  </div>\
+								</div>\
+							</div>';
+			}
+		}else{
+			console.log('Error antecedentes generales');
+		}
+	}
+
+
+	
+	$(content).html( htmlItem );
+
 }

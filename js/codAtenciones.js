@@ -163,7 +163,7 @@ function OpenHistoria( Paciente, Cita, MotivoSimple, MotivoExtend ){
 			var result = JSON.parse( jqXHR.responseText );
 
 			if( ValidateResponseServer( result, true ) ){
-				window.location="./Odontograma.php?paciente="+Paciente;
+				window.location="./Odontograma.php?paciente="+Paciente+"&cita="+Cita;
 			}
 
 		},

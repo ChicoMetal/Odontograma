@@ -11,7 +11,7 @@
 
 	if( $paciente != ''   ){
 
-		$sql = " SELECT Codigo, Paciente FROM historias WHERE Paciente = '$paciente' AND Estado = TRUE ORDER BY Codigo DESC LIMIT 1";
+		$sql = " SELECT Codigo, Paciente FROM historias WHERE Paciente = '$paciente' ORDER BY Codigo DESC LIMIT 1";
 
 		$result = BuscarDatos( $sql );
 

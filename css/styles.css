@@ -198,23 +198,6 @@ svg.figureDent .faceDent:hover
 	width: 99.9%;
 }
 
-#ContentFormFirts
-{
-	margin-left: 1em;
-}
-#ContentForm .row>div
-{
-	padding: 0 0.5em;
-}
-#ContentForm .panel 
-{
-	margin-bottom: 0.5em;
-}
-
-#ContentForm .panel .panel-body
-{
-	padding: 0.3em;
-}
 #diagnosticos .contentOneDent svg g .dent1
 {
 	/*fill: rgb(108,189,202);*/

@@ -7,7 +7,7 @@ $(document).ready( function(){
 		validateCookie.success(function(data) {//cuando se complete la peticion a php
 
 			if( ValidateResponseServer( data, true ) )
-				window.location="./platform.html";
+				window.location="./home.html";
 			
 
 		});

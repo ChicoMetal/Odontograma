@@ -1,0 +1,28 @@
+#ContentForm .panel .panel-body
+{
+	height: auto;
+	padding: 0.3em;
+}
+
+#ContentFormFirts
+{
+	margin-left: 1em;
+}
+#ContentFormFirts .row>div
+{
+	padding: 0 0.5em;
+}
+#ContentFormFirts .panel 
+{
+	margin-bottom: 0.5em;
+}
+
+#ContentFormFirts 
+{
+	
+}
+
+#ContentFormSecond
+{
+	margin-left: 0.3em;
+}
