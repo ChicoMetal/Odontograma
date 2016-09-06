@@ -1,12 +1,17 @@
 var USUARIO = "";
 
+var start = "06:00:00";//hora de inicio de las citas
+var end = "22:00:00";//hora de fin de las citas
+
+var listTime = new Array();//objeto para almacenar el listado de horas
+
 var JsonConfigTime = {
-	'minTime': '6:00am',
-	'maxTime': '10:00pm',
+	'minTime': start,
+	'maxTime': end,
     'timeFormat': 'H:i:s',
     'step': 15,
     'forceRoundTime': true
-};
+};//json con parametros de personalizado del datapicker (selectro de hora)
 
 $(document).ready(function(){
 
@@ -85,19 +90,20 @@ $(document).ready(function(){
 
     $("form .clean").on("click",function(){ //limpiar selects
     	ResetSelects(this);
+    	$('#contentCitas').html('');//limpiar agenda
     });
 
     $('#dateCita').on('change', function(){
     //traer horas ocupadas en la fecha
-    	ChangeTimePicker();
+    	ChangeTimePicker();    	
     });
 
     $('#DrCita').on('change', function(){
     //traer horas ocupadas en la fecha
     	ChangeTimePicker();
     });
-
-    
+  
+  	GenerarIntervalos();//preparar objeto con listado de horas
 
 });
 
@@ -109,8 +115,9 @@ function ChangeTimePicker(){
 	$('#HoraCita').timepicker('remove');
 	$('#HoraCita').val('');
 
-	if( Medico != 'Vacio' && Fecha != '' ){
+	if( Medico != 'Vacio' && Fecha != '' ){		
 		GetTimeOff( Medico, Fecha );
+		GetAgenda(Medico, Fecha);
 	}
 
 }
@@ -138,6 +145,7 @@ function GetTimeOff( Medico, Fecha ){ //busca los medicos existentes en la BD pa
 			RefresTimeList( result );						
 		}else{//Si no hay citas pendientes agrego la lista de tiempo completa
 			$('#HoraCita').timepicker(JsonConfigTime);
+
 		}
 			
 	},
@@ -253,6 +261,122 @@ function Medicos(){ //busca los medicos existentes en la BD para agregarlas al S
   });
 }
 
+function GetAgenda(Medico, Fecha){ 
+//busca los medicos existentes en la BD para agregarlas al SELECT del DOM
+
+  $.ajax({
+	beforeSend:function(){
+
+	},
+	url:"./core/GetAgendaMedico.php",
+	type:"POST",
+	data : {medico:Medico, fecha:Fecha},
+	success: function( res){
+							
+	},
+	error: function(jqXHR,estado,error){
+		console.log(jqXHR);
+	},
+	complete: function(jqXHR,estado){		
+		
+		var result = JSON.parse( jqXHR.responseText );
+
+		if( ValidateResponseServer( result, true ) )
+			ShowAgendaMedico( result );
+		else
+			$('#contentCitas').html('');//limpiar agenda
+			
+	},
+	setTimeout:10000
+  });
+}
+
+
+function GenerarIntervalos(){
+//Genera laos intervalos de las horas de las citas
+	
+	
+	var hour;	
+
+	//moment('2000-01-1T09:54:51');
+	
+	// se toma una fecha cualquiera y se comienza desde la hora inicial de atencion
+	//var ahora = moment('01-01-2000 '+start);
+	var date = moment('2000-01-01T'+start);
+
+	listTime.push( 
+			{
+				military:date.format('HH:mm:ss'), //hora militar
+				standar:date.format('h:mm:ss a')//hora standar
+			}				
+		);//agrego la hora inicial
+
+	do{
+
+		// lapso 15 minutos 
+		var timeSpan = moment.duration('PT15M');
+
+		// sumar el lapso a la hora
+		hour = date.add(timeSpan).format('HH:mm:ss');
+
+		listTime.push( 
+				{
+					military:hour, standar:date.format('h:mm:ss a')
+				} 
+			);//agregar json con la hora en los dos formatos
+
+	}while( hour < end );
+
+}
+
+function ShowAgendaMedico( Citas ){
+//mostrar la agenda del medico segun el dia seleccionado, si tiene citas 
+	
+	function Html(hora, realizada, paciente){
+
+		return '<div class="row">\
+					<div class="col-md-4">'+ hora +'</div>\
+					<div class="col-md-3">'+ realizada +'</div>\
+					<div class="col-md-5">'+ paciente +'</div>\
+				</div>';
+	}
+
+	var valores = Citas[0];
+	var keys = Citas[1];
+	var item;
+
+	$('#contentCitas').html('');
+
+	for (var i = listTime.length - 1; i >= 0; i--) {//itero por cada una de las horas del listado 
+
+		for (var z = valores.length - 1; z >= 0; z--) {//itero por cada cita encontrada
+			
+			if( valores[z][ keys[1] ] == listTime[i].military ){//si la hora de la cita corresponde a la hora del listado
+
+				item = Html(
+							listTime[i].military+' | '+listTime[i].standar,
+							valores[z][ keys[2] ],
+							valores[z][ keys[4] ]
+						);
+			
+			}else{
+				item = Html(listTime[i].military+' | '+listTime[i].standar,'','');
+			}
+
+			
+		}
+
+		$('#contentCitas').prepend( item );
+
+	}
+
+	$('#contentCitas').prepend(
+
+			Html('Hora', 'Realizada', 'Paciente')
+			
+		);//agregar titulos
+
+}
 
 function GuardarCita(form){
 //guardar los datos de la nueva cita

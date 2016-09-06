@@ -8,7 +8,7 @@
 	include_once($PATH."/conexion.php");
 	include_once($PATH."/mesages.php");
 
-	$sql = "SELECT Id, CONCAT(Nombres, ' ', Apellidos) FROM medicos WHERE Estado = TRUE";
+	$sql = "SELECT Id, CONCAT(Nombres, ' ', Apellidos, ' - ', TipoId, '. ', Id ) FROM medicos WHERE Estado = TRUE LIMIT 50";
 
 	$result = BuscarDatos( $sql );
 

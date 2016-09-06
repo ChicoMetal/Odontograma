@@ -1,7 +1,9 @@
 form
 {
-	width: 60%;
+	margin-bottom: 2em;
+	width: 45%;
 }
+
 .error
 {
 	color: red;
@@ -9,4 +11,39 @@ form
 .fa-asterisk
 {
 	color: red;
+}
+
+#contentAgenda, form
+{
+	display: inline-block;
+	margin-left: 1%;
+	vertical-align: top;
+}
+#contentAgenda
+{
+	overflow: auto;
+	resize: both;
+	width: 50%;
+}
+#contentCitas
+{
+	font-size: 0.9em;
+	overflow: scroll;
+	height: 37em;
+	width: 100%;
+}
+#contentCitas .row
+{
+	border-bottom: solid;
+	border-bottom-style: dotted;
+	border-bottom-color: #7F7F7F;
+	border-bottom-width: 1px;	
+}
+#contentCitas .row>div
+{
+	border-left: solid;
+	border-left-style: dotted;
+	border-left-color: #7F7F7F;
+	border-left-width: 1px;	
+
 }
